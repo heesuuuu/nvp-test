@@ -1,0 +1,56 @@
+// ====================================
+
+/* Inter 폰트 로드 - CDN 사용 */
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
+
+// font-style
+$font-family-base: "Inter", sans-serif !default;
+
+@font-face {
+    font-family: "Gowun Dodum", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+// ========================================
+// Base Colors
+$white: #ffffff !default;
+$black: #121212 !default;
+
+// NVP Test Colors
+$primary: #61adc4 !default;
+$secondary: #bdd8eb !default;
+$bgColor: #e3edf0 !default;
+$hover: #f4fcff !default;
+$avtive: #51A0B8 !default;
+
+// Blue Scale (NVP)
+$blue-50: #E8EBEF !default; // Lightest blue
+$blue-80: #D2D9E3 !default; 
+$blue-100: #e0ebfa !default;
+$blue-200: #bdd8eb !default;
+$blue-300: #9ac2e0 !default;
+$blue-400: #7aacd5 !default;
+$blue-500: #047ec1 !default; // Main blue
+$blue-600: #0369a1 !default; // Hover state
+$blue-700: #025a8e !default;
+$blue-800: #014a76 !default;
+$blue-900: #01395f !default; // Darkest blue
+
+// Gray Scale
+$gray-default: #C8C8C8 !default; // Extremely light
+
+$gray-5: #f7f7f7 !default; // Extremely light
+$gray-10: #f0f0f0 !default; // Light : hover
+$gray-20: #e2e8f0 !default; // Light : active
+$gray-30: #d0d0d0 !default; 
+$gray-40: #c0c0c0 !default;
+$gray-50: #b0b0b0 !default; // Normal
+$gray-60: #a0a0a0 !default;
+$gray-70: #909090 !default;
+$gray-80: #808080 !default; // Dark
+$gray-90: #707070 !default; // Very dark
+$gray-100: #171717 !default; // Extremely dark
+

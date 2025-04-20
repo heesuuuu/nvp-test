@@ -1,0 +1,92 @@
+
+//SCSS 파일 Import
+@import '_reset';
+@import './font';
+@import '_variables';
+// Core Color System
+
+
+
+// State-based Colors
+$state-hover: var(--blue-600, #0369a1);
+$state-active: var(--blue-500, #047ec1);
+$state-disabled: var(--gray-30, #d0d0d0);
+
+// Theme Settings
+:root {
+    // Base colors
+    --white:#{$white};
+    --black:#{$black};
+    // Light Theme (Default)
+    --background: #{$bgColor};
+    --foreground: #{$gray-100};
+
+    --primary: #{$primary};
+    --secondary: #{$secondary};
+    --active: #{$avtive};
+    --hover: #{$hover};
+
+    // Gray scale
+    --gray-default: #{$gray-default};
+    --gray-10: #{$gray-10};
+    --gray-20: #{$gray-20};
+    --gray-30: #{$gray-30};
+    --gray-40: #{$gray-40};
+    --gray-50: #{$gray-50};
+    --gray-60: #{$gray-60};
+    --gray-70: #{$gray-70};
+    --gray-80: #{$gray-80};
+    --gray-90: #{$gray-90};
+
+    // Blue scale
+    --blue-50: #{$blue-50};
+    --blue-80: #{$blue-80};
+    --blue-100: #{$blue-100};
+    --blue-200: #{$blue-200};
+    --blue-300: #{$blue-300};
+    --blue-400: #{$blue-400};
+    --blue-500: #{$blue-500};
+    --blue-600: #{$blue-600};
+    --blue-700: #{$blue-700};
+    --blue-800: #{$blue-800};
+    --blue-900: #{$blue-900};
+
+    // Component states
+    --light: #{$gray-10};
+    --light-hover: #{$gray-20};
+    --light-active: #{$gray-30};
+
+    --normal: #{$gray-50};
+    --normal-hover: #{$gray-60};
+    --normal-active: #{$gray-70};
+
+    --dark: #{$gray-80};
+    --dark-hover: #{$gray-90};
+    --dark-active: #{$gray-100};
+
+    // Layout variables
+    --hdHeight: 80px;
+
+    // font-style
+  --font-family-base: 'Inter', sans-serif;
+  --font-family-heading: 'Diptyque', serif;
+  --font-size-base: 16px;
+  --font-weight-base: 400;
+  --font-weight-bold: 700;
+}
+
+// Dark Theme
+// @media (prefers-color-scheme: dark) {
+//     :root {
+//         --background: #0a0a0a;
+//         --foreground: #ededed;
+
+//         // Adjust other colors for dark mode if needed
+//         --light: #2a2a2a;
+//         --light-hover: #3a3a3a;
+//         --light-active: #4a4a4a;
+//     }
+// }
+
+// Base styling
+
