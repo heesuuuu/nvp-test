@@ -7,16 +7,19 @@ import Button, {
     ScrollButton,
     WrithButton,
 } from "@/components/common/Button";
-import InputField, { InputDefault, InputEdit, Search } from "@/components/common/InputField";
-import React from "react";
+import InputField, { InputDefault, InputEdit, InputPassword} from "@/components/common/InputField";
+import { Search } from "@/components/common/Search";
 
 const Home = () => {
+  
     return (
         <div>
             home
             {/* <Button /> */}
             <PrevBtn />
-            <ButtonDefault fontSize="20px">gd</ButtonDefault>
+            <ButtonDefault fontSize="20px" fontFamily="var(--font-family-gowun)">
+                gd
+            </ButtonDefault>
             <InputField />
             <InputDefault placeholder="제목을 입력해 주세요. (10자 이내)" />
             <ButtonCancel>취소</ButtonCancel>
@@ -27,9 +30,13 @@ const Home = () => {
             <ScrollButton />
             <ButtonCancel width="166px" background="var(--blue-80)" color="var(--white)">
                 취소2
-        </ButtonCancel>
-        <InputEdit defaultValue={"5분만 더.."} />
-        <InputDefault placeholder="비밀번호를 입력해 주세요"/>
+            </ButtonCancel>
+            <InputEdit defaultValue={"5분만 더.."} />
+            <InputDefault
+                placeholder="비밀번호를 입력해 주세요"
+                
+            />
+            <InputPassword />
         </div>
     );
 };

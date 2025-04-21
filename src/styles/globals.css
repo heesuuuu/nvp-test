@@ -1,8 +1,8 @@
 @charset "UTF-8";
 /* reset */
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 @import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
 @import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
-@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 body,
 div,
 dl,
@@ -89,11 +89,6 @@ table {
   border-spacing: 0;
 }
 
-body {
-  -webkit-text-size-adjust: none;
-  background-color: var(--background);
-}
-
 /* 뷰표트 변환시 폰트크기 자동확대 방지 */
 input[type=text], input[type=password], input[type=submit], input[type=search] {
   -webkit-appearance: none;
@@ -157,13 +152,14 @@ legend {
   overflow: hidden;
 }
 
+/* Inter 폰트 로드 - CDN 사용 */
 /* 기본 폰트 설정 */
 html,
 body {
   overflow-x: hidden;
   font-size: 13px;
   line-height: 1.5;
-  font-family: "Pretendard", sans-serif;
+  font-family: "Inter", sans-serif;
   color: #1d1d1d;
   font-weight: 400;
 }
@@ -188,13 +184,6 @@ body {
   font-style: normal;
 }
 /* Tablet,Mobile 폰트 설정 */
-/* Inter 폰트 로드 - CDN 사용 */
-@font-face {
-  font-family: "Gowun Dodum", sans-serif;
-  src: url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
-  font-weight: 400;
-  font-style: normal;
-}
 :root {
   --white:#ffffff;
   --black:#121212;
@@ -236,8 +225,27 @@ body {
   --dark-active: #171717;
   --hdHeight: 80px;
   --font-family-base: "Inter", sans-serif;
-  --font-family-heading: "Diptyque", serif;
+  --font-family-gowun: "Gowun Dodum", sans-serif;
   --font-size-base: 16px;
   --font-weight-base: 400;
   --font-weight-bold: 700;
+}
+
+body {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+  background-color: var(--background);
+}
+
+html {
+  font-family: var(--font-family-base), sans-serif;
+}
+
+@font-face {
+  font-family: "Gowun Dodum";
+  src: url("/fonts/GowunDodum-Regular.ttf") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }/*# sourceMappingURL=globals.css.map */

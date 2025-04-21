@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const InputField = () => {
@@ -31,80 +31,7 @@ export const InputDefault = styled.input`
     }
 `;
 
-////////////////////////////////////
-// 질문지 수정 input
-////////////////////////////////////
 
-export const SearchWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    width: 351px;
-    height: 51px;
-    background-color: var(--white);
-    padding: 15px;
-    gap: 15px;
-`;
-
-export const StyledSearchInput = styled.input`
-    width: 244px;
-    border: none;
-    outline: none;
-    font-size: 14px;
-    color: var(--black);
-    &::placeholder {
-        color: var(--gray-default);
-    }
-    /* &:focus {
-        border: 1px solid var(--primary); // 필요에 따라 조절
-        border-radius: 5px;
-    } */
-`;
-
-export const Search = () => {
-    return (
-       <SearchWrapper>
-      <StyledSearchInput type="text" placeholder="검색할 내용을 입력하세요." />
-            {/* 닫기 아이콘 */}
-            <div
-                style={{
-                    // display: ${(props) => props.display || bloack};
-                    cursor: "pointer",
-                }}
-            >
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M7.5 0C11.6421 0 15 3.35786 15 7.5C15 11.6421 11.6421 15 7.5 15C3.35786 15 0 11.6421 0 7.5C0 3.35786 3.35786 0 7.5 0ZM10.1477 4.85225L10.0847 4.79779C9.8889 4.65255 9.62025 4.65076 9.4227 4.79241L9.35227 4.85225L7.5 6.70425L5.64775 4.85225L5.58466 4.79779C5.38892 4.65255 5.12026 4.65076 4.92271 4.79241L4.85225 4.85225L4.79779 4.91534C4.65255 5.11108 4.65076 5.37974 4.79241 5.57729L4.85225 5.64775L6.70425 7.5L4.85225 9.35227L4.79779 9.41535C4.65255 9.6111 4.65076 9.87975 4.79241 10.0773L4.85225 10.1477L4.91534 10.2022C5.11108 10.3474 5.37974 10.3492 5.57729 10.2076L5.64775 10.1477L7.5 8.29575L9.35227 10.1477L9.41535 10.2022C9.6111 10.3474 9.87975 10.3492 10.0773 10.2076L10.1477 10.1477L10.2022 10.0847C10.3474 9.8889 10.3492 9.62025 10.2076 9.4227L10.1477 9.35227L8.29575 7.5L10.1477 5.64775L10.2022 5.58466C10.3474 5.38892 10.3492 5.12026 10.2076 4.92271L10.1477 4.85225Z"
-                        fill="#B8C1CF"
-                    />
-                </svg>
-            </div>
-
-            {/* 실선 */}
-            <div
-                style={{
-                    border: "0.5px solid var(--blue-50)",
-                    height: "32px",
-                    width: "0.5px",
-                }}
-            ></div>
-
-            {/* 돋보기 버튼 */}
-            <div
-                style={{
-                    cursor: "pointer",
-                }}
-            >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M2 7C2 4.23858 4.23858 2 7 2C9.7614 2 12 4.23858 12 7C12 9.7614 9.7614 12 7 12C4.23858 12 2 9.7614 2 7ZM7 0C3.13401 0 0 3.13401 0 7C0 10.866 3.13401 14 7 14C8.5723 14 10.0236 13.4816 11.1922 12.6064L16.2929 17.7071C16.6834 18.0976 17.3166 18.0976 17.7071 17.7071C18.0976 17.3166 18.0976 16.6834 17.7071 16.2929L12.6064 11.1922C13.4816 10.0236 14 8.5723 14 7C14 3.13401 10.866 0 7 0Z"
-                        fill="#61ADC4"
-                    />
-                </svg>
-            </div>
-        </SearchWrapper>
-    );
-};
 
 ////////////////////////////////////
 /* 관리자 */
@@ -129,3 +56,71 @@ export const InputEdit = styled.input`
         border: 1px solid var(--primary);
     }
 `;
+
+////////////////////////////////////
+// 비밀번호 입력
+////////////////////////////////////
+export const PasswordWrapper = styled.div`
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-between;
+    border-radius: 10px;
+    width: ${(props) => props.width || "351px"};
+    height: 51px;
+    background-color: ${(props) => props.background || " var(--white)"};
+    padding: 15px;
+    gap: 15px;
+    /* border: ${(props) => (props.$focused ? "1px solid var(--primary)" : "none")}; */
+    border: none;
+    transition: border 0.2s ease;
+
+    &:focus-within {
+        border: 1px solid var(--primary);
+    }
+`;
+
+export const StyleInputPassword = styled.input`
+    width: 244px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--black);
+    &::placeholder {
+        color: var(--gray-default);
+    }
+`;
+
+export const InputPassword = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisible = () => {
+        setShowPassword((prev) => !prev);
+    };
+    return (
+        <PasswordWrapper>
+            <StyleInputPassword type={showPassword ? "text" : "password"} placeholder="비밀번호를 입력해 주세요" />
+            <div
+                style={{
+                    cursor: "pointer",
+                }}
+                onClick={togglePasswordVisible}
+                aria-label="비밀번호 보기 토글"
+            >
+                {showPassword ? (
+                    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M9.37492 7.25346C11.0317 7.25346 12.3749 8.59662 12.3749 10.2534C12.3749 11.9103 11.0317 13.2535 9.37492 13.2535C7.71805 13.2535 6.3749 11.9103 6.3749 10.2534C6.3749 8.59662 7.71805 7.25346 9.37492 7.25346ZM9.37492 4.625C12.835 4.625 15.822 6.98751 16.6507 10.2983C16.7262 10.5996 16.543 10.9051 16.2417 10.9806C15.9403 11.056 15.6349 10.8729 15.5594 10.5715C14.8552 7.75847 12.3159 5.75 9.37492 5.75C6.43261 5.75 3.89248 7.76019 3.18955 10.5749C3.11428 10.8762 2.80892 11.0596 2.50752 10.9843C2.20612 10.909 2.0228 10.6037 2.09807 10.3023C2.92539 6.98954 5.91327 4.625 9.37492 4.625Z"
+                            fill="#212121"
+                        />
+                    </svg>
+                ) : (
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M1.66475 1.66475C1.46505 1.86445 1.4469 2.17695 1.61029 2.39716L1.66475 2.46025L4.69068 5.48617C3.24919 6.49828 2.17183 8.00992 1.72416 9.7983C1.64873 10.0996 1.83188 10.4051 2.13323 10.4806C2.4346 10.5559 2.74005 10.3729 2.81549 10.0714C3.2126 8.48512 4.19334 7.1546 5.50062 6.29589L6.85784 7.65322C6.32721 8.19435 6 8.93572 6 9.75345C6 11.4103 7.34314 12.7534 9 12.7534C9.8178 12.7534 10.5591 12.4262 11.1003 11.8956L15.5398 16.3352C15.7594 16.5549 16.1156 16.5549 16.3352 16.3352C16.535 16.1356 16.5531 15.823 16.3897 15.6028L16.3352 15.5398L11.7501 10.9541L11.751 10.953L6.53908 5.74336L6.54 5.742L5.69004 4.89412L2.46025 1.66475C2.24058 1.44508 1.88442 1.44508 1.66475 1.66475ZM9 4.125C8.24977 4.125 7.52183 4.23605 6.83332 4.44375L7.76107 5.37089C8.16292 5.29149 8.5773 5.25 9 5.25C11.9423 5.25 14.4824 7.26019 15.1853 10.0749C15.2606 10.3762 15.5659 10.5595 15.8674 10.4843C16.1688 10.409 16.3521 10.1037 16.2768 9.80227C15.4496 6.48954 12.4616 4.125 9 4.125ZM9.14603 6.75696L11.997 9.6075C11.9207 8.06482 10.6854 6.83073 9.14603 6.75696Z"
+                            fill="#212121"
+                        />
+                    </svg>
+                )}
+            </div>
+        </PasswordWrapper>
+    );
+};

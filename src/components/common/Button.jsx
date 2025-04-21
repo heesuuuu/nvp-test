@@ -15,14 +15,7 @@ const Button = () => {
                 backgroundColor: "var(--gray-20)",
             }}
         >
-            {/* <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M5.25 0.75L1.25204 5.41429C0.963147 5.75133 0.963147 6.24867 1.25204 6.58571L5.25 11.25"
-                    stroke="white"
-                    stroke-width="1.125"
-                    stroke-linecap="round"
-                />
-            </svg> */}
+            
         </div>
     );
 };
@@ -44,6 +37,7 @@ export const ButtonDefault = styled.button`
     cursor: pointer;
     /* font-weight: 600; */
     font-size: ${(props) => props.fontSize || "13px"};
+    font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
 
     &:hover {
         background-color: var(--active);

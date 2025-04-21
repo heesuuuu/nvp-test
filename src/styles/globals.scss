@@ -1,8 +1,8 @@
 
 //SCSS 파일 Import
 @import '_reset';
-@import './font';
 @import '_variables';
+@import './font';
 // Core Color System
 
 
@@ -69,11 +69,30 @@ $state-disabled: var(--gray-30, #d0d0d0);
 
     // font-style
   --font-family-base: 'Inter', sans-serif;
-  --font-family-heading: 'Diptyque', serif;
+  --font-family-gowun: 'Gowun Dodum', sans-serif;
   --font-size-base: 16px;
   --font-weight-base: 400;
   --font-weight-bold: 700;
 }
+
+body {
+  font-family: var(--font-family-base), sans-serif;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+  background-color: var(--background);
+}
+html {
+  font-family: var(--font-family-base), sans-serif;
+}
+
+@font-face {
+  font-family: 'Gowun Dodum';
+  src: url('/fonts/GowunDodum-Regular.ttf') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 // Dark Theme
 // @media (prefers-color-scheme: dark) {
