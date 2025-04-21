@@ -1,8 +1,193 @@
 @charset "UTF-8";
-/* reset */
+/* Inter 폰트 로드 - CDN 사용 */
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
+/* 기본 폰트 설정 */
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
 @import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 @import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
 @import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+html,
+body {
+  overflow-x: hidden;
+  font-size: 13px;
+  line-height: 1.5;
+  font-family: "Inter", sans-serif;
+  color: #1d1d1d;
+  font-weight: 400;
+}
+
+a {
+  color: #1d1d1d;
+  text-decoration: none;
+}
+a:active, a:hover {
+  text-decoration: underline;
+}
+
+/* Inter 폰트 로드 - CDN 사용 */
+body {
+  font-family: "Gowun Dodum", sans-serif;
+}
+
+@font-face {
+  font-family: "Gowun Dodum", sans-serif;
+  src: url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+  font-weight: 400;
+  font-style: normal;
+}
+/* Tablet,Mobile 폰트 설정 */
+/* reset */
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+textarea,
+p,
+blockquote,
+th,
+td,
+input,
+select,
+button,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+fieldset,
+img {
+  border: 0 none;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+dl,
+ul,
+ol,
+menu,
+li {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+input,
+select,
+textarea {
+  font-size: 100%;
+  vertical-align: middle;
+}
+
+button {
+  font-size: 100%;
+  vertical-align: middle;
+  border: 0 none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 뷰표트 변환시 폰트크기 자동확대 방지 */
+input[type=text], input[type=password], input[type=submit], input[type=search] {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 0;
+}
+input:checked[type=checkbox] {
+  background-color: #e4e4e4;
+  -webkit-appearance: checkbox;
+     -moz-appearance: checkbox;
+          appearance: checkbox;
+}
+
+button {
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
+  border-radius: 0;
+}
+
+input[type=button], input[type=submit], input[type=reset], input[type=file] {
+  -webkit-appearance: button;
+     -moz-appearance: button;
+          appearance: button;
+  border-radius: 0;
+}
+input[type=search]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+          appearance: none;
+}
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+hr {
+  display: none;
+}
+
+input[type=password] {
+  font-family: "Malgun Gothic";
+}
+
+/* 중요한 이미지 대체텍스트로 이미지off시에도 대체 텍스트를 보여주고자 할때 */
+.blind,
+caption,
+legend {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+}
+
+/* reset */
 body,
 div,
 dl,
@@ -185,8 +370,8 @@ body {
 }
 /* Tablet,Mobile 폰트 설정 */
 :root {
-  --white:#ffffff;
-  --black:#121212;
+  --white: #ffffff;
+  --black: #121212;
   --background: #e3edf0;
   --foreground: #171717;
   --primary: #61adc4;
@@ -223,7 +408,7 @@ body {
   --dark: #808080;
   --dark-hover: #707070;
   --dark-active: #171717;
-  --hdHeight: 80px;
+  --content-pd: 20px;
   --font-family-base: "Inter", sans-serif;
   --font-family-gowun: "Gowun Dodum", sans-serif;
   --font-size-base: 16px;
@@ -248,4 +433,19 @@ html {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-}/*# sourceMappingURL=globals.css.map */
+}
+.headerWrapper {
+  padding: 0 var(--content-pd);
+  background-color: var(--white);
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerWrapper a {
+  width: auto;
+}
+.headerWrapper img {
+  cursor: pointer;
+  display: block;
+}/*# sourceMappingURL=styles.css.map */

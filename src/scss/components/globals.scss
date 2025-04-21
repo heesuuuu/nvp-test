@@ -1,11 +1,8 @@
-
 //SCSS 파일 Import
-@import '_reset';
-@import '_variables';
-@import './font';
+@import "reset.scss";
+@import "variables";
+@import "fonts";
 // Core Color System
-
-
 
 // State-based Colors
 $state-hover: var(--blue-600, #0369a1);
@@ -15,8 +12,8 @@ $state-disabled: var(--gray-30, #d0d0d0);
 // Theme Settings
 :root {
     // Base colors
-    --white:#{$white};
-    --black:#{$black};
+    --white: #{$white};
+    --black: #{$black};
     // Light Theme (Default)
     --background: #{$bgColor};
     --foreground: #{$gray-100};
@@ -65,34 +62,34 @@ $state-disabled: var(--gray-30, #d0d0d0);
     --dark-active: #{$gray-100};
 
     // Layout variables
-    --hdHeight: 80px;
+    --content-pd: 20px;
 
     // font-style
-  --font-family-base: 'Inter', sans-serif;
-  --font-family-gowun: 'Gowun Dodum', sans-serif;
-  --font-size-base: 16px;
-  --font-weight-base: 400;
-  --font-weight-bold: 700;
+    --font-family-base: "Inter", sans-serif;
+    --font-family-gowun: "Gowun Dodum", sans-serif;
+    --font-size-base: 16px;
+    --font-weight-base: 400;
+    --font-weight-bold: 700;
 }
 
 body {
-  font-family: var(--font-family-base), sans-serif;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-base);
-  background-color: var(--background);
+    font-family: var(--font-family-base), sans-serif;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-base);
+    background-color: var(--background);
+   
 }
 html {
-  font-family: var(--font-family-base), sans-serif;
+    font-family: var(--font-family-base), sans-serif;
 }
 
 @font-face {
-  font-family: 'Gowun Dodum';
-  src: url('/fonts/GowunDodum-Regular.ttf') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: "Gowun Dodum";
+    src: url("/fonts/GowunDodum-Regular.ttf") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
-
 
 // Dark Theme
 // @media (prefers-color-scheme: dark) {
@@ -108,4 +105,3 @@ html {
 // }
 
 // Base styling
-

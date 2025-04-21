@@ -1,9 +1,20 @@
-import Home from "./home/home";
+'use client'; 
+
+import { usePathname } from 'next/navigation';
+import Header from '@/components/layout/header/Header';
+import Home from './home/home';
+
+
 
 export default function Page() {
+  const pathname = usePathname();
+  const isMainPage = pathname === '/';
+
   return (
-    <div>
-      <Home/>
+    <div
+    >
+      {!isMainPage && <Header />}
+      <Home />
     </div>
   );
 }
