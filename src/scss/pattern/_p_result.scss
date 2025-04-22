@@ -1,0 +1,164 @@
+.result {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    padding-bottom: 80px;
+    .inner {
+        display: grid;
+        gap: 55px;
+        .title-wrapper {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            .result-title {
+                text-align: center;
+                position: relative;
+                font-size: 17px;
+
+                :nth-child(1) {
+                    font-family: var(--font-family-gowun);
+                }
+                :nth-child(2) {
+                    font-size: 29px;
+                    color: var(--white);
+                    position: relative;
+                    letter-spacing: 0.1em;
+                    @include text-outline;
+                }
+            }
+            .result-img-wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                flex-wrap: wrap;
+                .result-img {
+                    width: 200px;
+                    height: 200px;
+                    background-color: var(--white);
+                    border-radius: 13px;
+                    margin-top: 54px;
+                    img {
+                        margin: 0 auto;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+                .result-position {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                    height: auto;
+                    margin-top: 20px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 200px;
+                        height: 55px;
+                        @include posXY;
+                        background-image: url("/images/Items/HighlightShortImg.svg");
+                        background-size: 100% 100%;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        z-index: -1;
+                    }
+
+                    p {
+                        font-weight: bold;
+                        font-family: var(--font-family-gowun);
+                        color: var(--white);
+                        z-index: 2;
+                        font-size: 24px;
+                        text-align: center;
+                        padding: 5px 10px;
+                    }
+                }
+            }
+        }
+
+        // result 설명
+
+        .des-wrapper {
+            .description {
+                background-color: var(--white);
+                padding: 15px;
+                border-radius: 10px;
+                margin-top: 10px;
+                p {
+                    font-weight: bold;
+                    padding-bottom: 20px;
+                }
+            }
+            .des-title {
+                width: fit-content;
+                background-color: var(--white);
+                padding: 10px;
+                border-radius: 10px;
+            }
+        }
+
+        //전체 유형 순위
+        .rank-wrapper {
+            width: 100%;
+            height: auto;
+            gap: 25px;
+            display: grid;
+            .rank-title {
+                color: var(--blue-300);
+                text-align: center;
+            }
+        }
+    }
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("/images/Items/background-img.jpg");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.27;
+        z-index: -1;
+    }
+
+    // 페이지 이동 버튼
+    .page-btn-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        .page-btn {
+            font-size: 13px;
+            font-weight: regular;
+            letter-spacing: 16%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            svg {
+                margin-left: 5px;
+            }
+        }
+    }
+
+    // sns
+    .sns-wrapper {
+        @include flexCenter;
+        flex-direction: column;
+        .sns-title {
+            font-size: 15px;
+            color: var(--blue-300);
+            padding-bottom: 20px;
+        }
+        .sns-link{
+            display: flex;
+            gap: 18px;
+        }
+    }
+}

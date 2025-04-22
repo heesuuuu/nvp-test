@@ -14,9 +14,7 @@ const Button = () => {
                 height: "51px",
                 backgroundColor: "var(--gray-20)",
             }}
-        >
-            
-        </div>
+        ></div>
     );
 };
 
@@ -27,8 +25,8 @@ export default Button;
 ////////////////////////////////////
 
 export const ButtonDefault = styled.button`
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: ${(props) => props.background || "var(--primary)"};
+    color: ${(props) => props.fontColor || "var(--white)"};
     width: 351px;
     height: 51px;
     /* padding: 8px 16px; */
@@ -40,7 +38,12 @@ export const ButtonDefault = styled.button`
     font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
 
     &:hover {
-        background-color: var(--active);
+        background-color: ${(props) => props.backgroundColor || "var(--active)"};
+        color: var(--white);
+    }
+    &:active {
+        background-color: ${(props) => props.backgroundColor || "var(--active)"};
+        color: var(--white);
     }
 `;
 
@@ -65,49 +68,9 @@ export const ButtonCancel = styled.button`
     }
 `;
 
-// export const RestartLg = () => {
-//     return (
-//         <div
-//             style={{
-//                 position: "relative",
-//                 width: "98px",
-//                 height: "100px",
-//                 backdropFilter: "blur(15px)",
-//             }}
-//         >
-//             <svg width="98" height="100" viewBox="0 0 98 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-//                 <g filter="url(#filter0_b_4_7390)">
-//                     <rect width="98" height="100" rx="49" fill="#DBDBDB" fillOpacity="0.25098" />
-//                     <g clipPath="url(#clip0_4_7390)">
-//                         <path
-//                             d="M57.3185 41.6815C55.0068 39.2842 51.839 38 48.5 38C45.5034 38 42.5925 39.0274 40.3664 40.9966L37.9692 38.5993L37.4555 46.8185L45.8459 46.2192L43.4486 44.0788C44.9041 42.9658 46.6164 42.3664 48.5 42.3664C53.0377 42.3664 56.7192 46.0479 56.7192 50.5856C56.7192 55.1233 53.0377 58.8048 48.5 58.8048C46.4452 58.8048 44.476 58.0342 42.9349 56.5788C41.3938 55.2089 40.5377 53.2397 40.3664 51.1849L40.2808 50.5H36L36.0856 51.2705C36.4281 57.863 41.9075 63 48.5 63C51.839 63 55.0068 61.7158 57.3185 59.3185C59.7158 56.9212 61 53.839 61 50.5C61 47.161 59.7158 43.9932 57.3185 41.6815Z"
-//                             fill="black"
-//                         />
-//                     </g>
-//                 </g>
-//                 <defs>
-//                     <filter
-//                         id="filter0_b_4_7390"
-//                         x="-30"
-//                         y="-30"
-//                         width="158"
-//                         height="160"
-//                         filterUnits="userSpaceOnUse"
-//                         colorInterpolationFilters="sRGB"
-//                     >
-//                         <feFlood floodOpacity="0" result="BackgroundImageFix" />
-//                         <feGaussianBlur in="BackgroundImageFix" stdDeviation="15" />
-//                         <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_4_7390" />
-//                         <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_4_7390" result="shape" />
-//                     </filter>
-//                     <clipPath id="clip0_4_7390">
-//                         <rect width="32" height="26" fill="white" transform="translate(33 37)" />
-//                     </clipPath>
-//                 </defs>
-//             </svg>
-//         </div>
-//     );
-// };
+////////////////////////////////////
+//이전 버튼
+////////////////////////////////////
 
 export const PrevBtn = () => {
     return (
@@ -120,6 +83,7 @@ export const PrevBtn = () => {
                 width: "41px",
                 height: "29px",
                 backgroundColor: "var(--gray-20)",
+                cursor: "pointer",
             }}
         >
             <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">

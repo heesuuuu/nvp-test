@@ -16,6 +16,7 @@ $state-disabled: var(--gray-30, #d0d0d0);
     --black: #{$black};
     // Light Theme (Default)
     --background: #{$bgColor};
+    --background-out: #{$bgOutColor};
     --foreground: #{$gray-100};
 
     --primary: #{$primary};
@@ -76,7 +77,7 @@ body {
     font-family: var(--font-family-base), sans-serif;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-base);
-    background-color: var(--background);
+    background-color: var(--white);
    
 }
 html {

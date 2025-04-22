@@ -1,11 +1,29 @@
-import React from 'react'
+"use client";
+import React from "react";
+import "../../../scss/styles.scss";
+import Navigate from "@/components/layout/navigate/Navigate";
+import { ButtonDefault, PrevBtn } from "@/components/common/Button";
 
 const TestMain = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+    return (
+        <div className="inner">
+            <Navigate />
+
+            {/* 테스트 질문 */}
+            <div className="question-title">아침에 눈 떴을 때 당신의 반응은?</div>
+
+            {/* 테스트 답변 */}
+            <ButtonDefault background="var(--white)" fontColor="var(--black)">
+                “5분만 더…" 이불과 전쟁 중
+            </ButtonDefault>
+
+            {/*  이전,다음 버튼*/}
+            <div className="prev-btn">
+                <PrevBtn />
+                <PrevBtn />
+            </div>
+        </div>
+    );
+};
 
 export default TestMain;

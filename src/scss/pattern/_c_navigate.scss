@@ -1,0 +1,15 @@
+.naviagate {
+    @include flexitems;
+    button {
+        position: left;
+    }
+    .navigate-wrapper {
+        @include flexitems;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        color: var(--blue-100);
+        font-weight: 200;
+    }
+}

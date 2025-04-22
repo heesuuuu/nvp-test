@@ -157,3 +157,14 @@ legend {
     margin: -1px;
     overflow: hidden;
 }
+
+.page-btn-wrapper {
+  a {
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+}

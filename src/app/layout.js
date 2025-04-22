@@ -28,11 +28,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body
-        className={`${gowun.variable} ${inter.variable} antialiased`}
-        style={{maxWidth: "390px", minWidth: "390px", margin: "0 auto"}}
+        className={`${gowun.variable} ${inter.variable} antialiased `}
+        style={{
+          maxWidth: "390px", minWidth: "390px", margin: "0 auto", backgroundColor: "var(--background-out)",
+          display: "flex",
+          justifyContent: "center"
+}}
       >
-        <HeaderWrapper />
-        {children}
+        <div style={{
+          backgroundColor: "var(--background)",
+          width: "390px",
+          minHeight: "100vh"
+        }}>
+          <HeaderWrapper />
+          {children}
+        </div>
       </body>
     </html>
   );
