@@ -1,0 +1,66 @@
+.homeWrapper {
+    width: auto;
+    height: 100vh;
+    position: relative;
+    .homeContent {
+        text-align: center;
+        @include posXY;
+        position: relative;
+        background-image: url("/images/Items/background-img.jpg");
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        .nvp-ball {
+            @include posX;
+            opacity: 17%;
+            top: 11%;
+        }
+        .title {
+            font-size: 41px;
+            font-family: "Gowun Dodum";
+            color: var(--white);
+            z-index: 2;
+            width: 100%;
+            top: 18%;
+            @include posX;
+            :nth-child(1) {
+                font-size: 25px;
+                font-weight: 100;
+            }
+            .big-title {
+                position: relative;
+                @include flexCenter;
+                margin-top: 5px;
+                z-index: -1;
+                background-image: url("/images/Items/HighlightImg.svg");
+                background-repeat: no-repeat;
+                :nth-child(1) {
+                    font-size: 40px;
+                    font-weight: 100;
+                }
+            }
+        }
+
+        .position {
+            position: fixed;
+            top: 38%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .start-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            transform: translateX(-50%);
+            left: 50%;
+            bottom: 85px;
+            .start-button {
+                font-weight: 150%;
+            }
+        }
+    }
+}
