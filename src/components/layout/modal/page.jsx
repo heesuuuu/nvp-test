@@ -2,7 +2,7 @@ import React from "react";
 import "../../../scss/styles.scss";
 import { ButtonDefault } from "@/components/common/Button";
 
-const Modal = ({ isOpen, onClose, title, children }) => {
+const Modal = ({ isOpen, onClose, onConfirm}) => {
     if (!isOpen) return null;
     return (
         <>
@@ -15,7 +15,9 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                         <ButtonDefault width="144px" bgColor="var(--gray-30)" onClick={onClose}>
                             취소
                         </ButtonDefault>
-                        <ButtonDefault width="144px">확인</ButtonDefault>
+                        <ButtonDefault width="144px" onClick={onConfirm}>
+                            확인
+                        </ButtonDefault>
                     </div>
                 </div>
             </div>

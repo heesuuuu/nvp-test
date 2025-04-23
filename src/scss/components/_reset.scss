@@ -76,6 +76,9 @@ select,
 textarea {
     font-size: 100%;
     vertical-align: middle;
+    font-family: var(--font-family-base);
+    font-size: 14px;
+    color: var(--black);
 }
 
 button {
@@ -90,7 +93,6 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
 
 /* 뷰표트 변환시 폰트크기 자동확대 방지 */
 input {
@@ -159,12 +161,12 @@ legend {
 }
 
 .page-btn-wrapper {
-  a {
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: none;
-      color: inherit;
+    a {
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+            color: inherit;
+        }
     }
-  }
 }

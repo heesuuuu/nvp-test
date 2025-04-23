@@ -10,65 +10,32 @@ import { useRouter } from "next/navigation";
 const Write = () => {
     const router = useRouter();
 
+    const exception = (value) => value.replace(/[!@#$%^&*_-]/g, "");
+
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [password, setPassword] = useState("");
 
-    const [nameError, setNameError] = useState("");
-    const [contentError, setContentError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [isValid, setIsValid] = useState(false);
+    const [nameTouched, setNameTouched] = useState(false);
+    const [contentTouched, setContentTouched] = useState(false);
+    const [passwordTouched, setPasswordTouched] = useState(false);
+
+    const isNameValid = name.trim().length > 0 && name.trim().length <= 10;
+    const isContentValid = content.trim().length >= 4 && content.trim().length <= 50;
+    const isPasswordValid = password.trim().length >= 4 && password.trim().length <= 8;
+    const isFormValid = isNameValid && isContentValid && isPasswordValid;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const handleValidation = () => {
-        let valid = true;
-
-        if (!name.trim()) {
-            setNameError("이름을 입력해 주세요.");
-            valid = false;
-        } else if (name.length > 10) {
-            setNameError("이름은 10자 이내로 입력해 주세요.");
-            valid = false;
-        } else {
-            setNameError("");
-        }
-
-        if (!content.trim()) {
-            setContentError("내용을 입력해 주세요.");
-            valid = false;
-        } else if (content.length < 4 || content.length > 70) {
-            setContentError("내용은 4자 이상 70자 이내로 입력해 주세요.");
-            valid = false;
-        } else {
-            setContentError("");
-        }
-
-        if (!password.trim()) {
-            setPasswordError("비밀번호를 입력해 주세요.");
-            valid = false;
-        } else if (password.length <= 4 || password.length > 8) {
-            setPasswordError("비밀번호는 최소 4자 이상 8자 이내입니다.");
-            valid = false;
-        } else {
-            setPasswordError("");
-        }
-
-        setIsValid(valid);
-    };
-
-    useEffect(() => {
-        handleValidation();
-    }, [name, content, password]);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!isValid) return;
-        console.log("방명록 제출!", { name, content, password });
-        // 여기에서 등록 처리 로직 추가 가능
+        if (!isFormValid) return;
+
+      console.log("방명록 제출!", { name, content, password });
+      router.push("/user/guestbook");
     };
 
     const handleConfirmCancel = () => {
@@ -90,11 +57,19 @@ const Write = () => {
                             <span className="required">*</span> 이름
                         </p>
                         <InputDefault
-                            placeholder="이름을 입력해 주세요. (10자 이내)"
+                            placeholder="이름을 입력해 주세요. (특수문자 제외, 10자 이내)"
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => {
+                                const inputValue = e.target.value;
+                                const filtered = exception(inputValue);
+                                setName(filtered);
+                            }}
+                            onBlur={() => setNameTouched(true)}
                         />
-                        {nameError && <p className="error">{nameError}</p>}
+
+                        {!isNameValid && nameTouched && (
+                            <p className="error">이름은 특수문제 제외, 1~10자 이내로 입력해주세요.</p>
+                        )}
                     </div>
 
                     {/* 내용 입력 */}
@@ -104,12 +79,17 @@ const Write = () => {
                         </p>
                         <InputTextarea
                             placeholder="글을 작성해 주세요 
-                            (4자이상 70자 이내)"
+                            (4 ~ 70자 이내)"
+                            // placeholder={`글을 작성해 주세요.\n(4자 이상 50자 이내)`}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
+                            onBlur={() => setContentTouched(true)}
                             height="225px"
                         />
-                        {contentError && <p className="error">{contentError}</p>}
+
+                        {!isContentValid && contentTouched && (
+                            <p className="error">내용은 4~7자이내로 작성해 주세요.</p>
+                        )}
                         <p className="check">제출 이후 수정은 어렵기 때문에, 다시 한 번 확인해 주세요!</p>
                     </div>
 
@@ -119,18 +99,22 @@ const Write = () => {
                             <span className="required">*</span> 비밀번호
                         </p>
                         <InputPassword
-                            placeholder="비밀번호를 입력해 주세요. (4자 이상 8자 이내)"
+                            placeholder="비밀번호를 입력해 주세요. (4 ~ 8자 이내)"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            onBlur={() => setPasswordTouched(true)}
                         />
-                        {passwordError && <p className="error">{passwordError}</p>}
+
+                        {!isPasswordValid && passwordTouched && (
+                            <p className="error">비밀번호는 4자이상 8자이내로 입력해 주세요.</p>
+                        )}
                         <p className="check">방명록 삭제 시 비밀번호가 일치해야 합니다.</p>
                     </div>
                 </section>
 
                 {/* 버튼 영역 */}
                 <section className="write-button">
-                    <ButtonDefault onClick={handleSubmit} disabled={!isValid}>
+                    <ButtonDefault onClick={handleSubmit} disabled={!isFormValid}>
                         등록하기
                     </ButtonDefault>
                     <ButtonCancel onClick={openModal}>취소</ButtonCancel>

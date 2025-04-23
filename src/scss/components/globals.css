@@ -74,6 +74,9 @@ select,
 textarea {
   font-size: 100%;
   vertical-align: middle;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  color: var(--black);
 }
 
 button {
@@ -195,6 +198,7 @@ body {
 :root {
   --white: #ffffff;
   --black: #121212;
+  --error: #FF3F3F;
   --background: #e3edf0;
   --background-out: #f3f7f9;
   --foreground: #171717;

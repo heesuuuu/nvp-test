@@ -106,7 +106,7 @@ export const PasswordWrapper = styled.div`
 `;
 
 export const StyleInputPassword = styled.input`
-    width: 244px;
+    width: 100%;
     border: none;
     outline: none;
     font-size: 14px;

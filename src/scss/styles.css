@@ -109,6 +109,9 @@ select,
 textarea {
   font-size: 100%;
   vertical-align: middle;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  color: var(--black);
 }
 
 button {
@@ -267,6 +270,9 @@ select,
 textarea {
   font-size: 100%;
   vertical-align: middle;
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  color: var(--black);
 }
 
 button {
@@ -388,6 +394,7 @@ body {
 :root {
   --white: #ffffff;
   --black: #121212;
+  --error: #FF3F3F;
   --background: #e3edf0;
   --background-out: #f3f7f9;
   --foreground: #171717;
@@ -907,7 +914,7 @@ html {
 .write-bg-wrapper .write-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 35px;
 }
 .write-bg-wrapper .write-wrapper .write-title {
   display: flex;
@@ -915,6 +922,12 @@ html {
   gap: 5px;
   font-size: 14px;
   font-weight: bold;
+}
+.write-bg-wrapper .write-wrapper .write-title .error {
+  color: var(--error);
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 3px;
 }
 .write-bg-wrapper .write-wrapper .write-title .required {
   color: var(--primary);
@@ -930,7 +943,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 35px;
+  margin-top: 55px;
 }
 .write-bg-wrapper .write-button:disabled {
   background-color: var(--gray-light);
