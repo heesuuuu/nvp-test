@@ -46,8 +46,11 @@ const Result = () => {
 
                 {/* 페이지 이동 버튼 */}
                 <div className="page-btn-wrapper">
-                    <Link href={"/guestbook/test/guestbook"}>
-                        <ButtonDefault style={{ backgroundColor: "var(--blue-500)" }} className="page-btn">
+                    <Link href={"/user/guestbook/"}>
+                        <ButtonDefault  
+                            style={{ backgroundColor: "var(--blue-500)" }}
+                            className="page-btn blue-button"
+                        >
                             방명록 보러가기{" "}
                             <svg
                                 width="12"

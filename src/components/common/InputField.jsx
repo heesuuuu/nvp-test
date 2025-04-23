@@ -21,7 +21,9 @@ export const InputDefault = styled.input`
     border: ${(props) => props.border || "none"};
     border-radius: 10px;
     font-size: 14px;
+    font-weight: 200;
     transition: border 0.2s ease;
+
     &::placeholder {
         color: var(--gray-default);
     }
@@ -31,7 +33,31 @@ export const InputDefault = styled.input`
     }
 `;
 
+////////////////////////////////////
+//Textarea
+////////////////////////////////////
 
+export const InputTextarea = styled.textarea`
+    background-color: ${(props) => props.background || "var(--white)"};
+    color: var(--black);
+    width: ${(props) => props.width || "351px"};
+    height: ${(props) => props.height || "225px"};
+    padding: 15px;
+    border: ${(props) => props.border || "none"};
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 200;
+    resize: none;
+    overflow-y: auto;
+    vertical-align: top;
+    &::placeholder {
+        color: var(--gray-default);
+    }
+    &:focus {
+        outline: none;
+        border: 1px solid var(--primary);
+    }
+`;
 
 ////////////////////////////////////
 /* 관리자 */
@@ -90,14 +116,20 @@ export const StyleInputPassword = styled.input`
     }
 `;
 
-export const InputPassword = () => {
+export const InputPassword = ({ value, onChange, placeholder, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisible = () => {
         setShowPassword((prev) => !prev);
     };
     return (
         <PasswordWrapper>
-            <StyleInputPassword type={showPassword ? "text" : "password"} placeholder="비밀번호를 입력해 주세요" />
+            <StyleInputPassword
+                type={showPassword ? "text" : "password"}
+                placeholder={placeholder || "비밀번호를 입력해 주세요"}
+                value={value}
+                onChange={onChange}
+                {...props}
+            />
             <div
                 style={{
                     cursor: "pointer",

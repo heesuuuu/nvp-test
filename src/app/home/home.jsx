@@ -8,7 +8,7 @@ const Home = () => {
     const router = useRouter();
 
     const handleStart = () => {
-        router.push("/guestbook/test");
+        router.push("/user/test");
     };
 
     return (

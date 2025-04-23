@@ -25,14 +25,14 @@ export default Button;
 ////////////////////////////////////
 
 export const ButtonDefault = styled.button`
-    background-color: ${(props) => props.background || "var(--primary)"};
-    color: ${(props) => props.fontColor || "var(--white)"};
-    width: 351px;
-    height: 51px;
+    background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
+    color: ${(props) => props.color || "var(--white)"};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    width: ${(props) => props.width || "351px"};
+    height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: none;
     border-radius: 7px;
-    cursor: pointer;
     /* font-weight: 600; */
     font-size: ${(props) => props.fontSize || "13px"};
     font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
@@ -42,7 +42,7 @@ export const ButtonDefault = styled.button`
         color: var(--white);
     }
     &:active {
-        background-color: ${(props) => props.backgroundColor || "var(--active)"};
+        background-color: ${(props) => props.backgroundColor || "var(--active)"} var(--active);
         color: var(--white);
     }
 `;

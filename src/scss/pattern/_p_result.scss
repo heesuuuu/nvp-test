@@ -96,7 +96,7 @@
                 width: fit-content;
                 background-color: var(--white);
                 padding: 10px;
-                border-radius: 10px;
+                border-radius: 7px;
             }
         }
 
@@ -128,21 +128,23 @@
 
     // 페이지 이동 버튼
     .page-btn-wrapper {
-        display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        @include flexCenter;
         gap: 15px;
 
         .page-btn {
             font-size: 13px;
             font-weight: regular;
             letter-spacing: 16%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include flexCenter;
+
             svg {
                 margin-left: 5px;
+            }
+            &.blue-button {
+                &:hover {
+                    background-color: var(--blue-700) !important;
+                }
             }
         }
     }
@@ -156,7 +158,7 @@
             color: var(--blue-300);
             padding-bottom: 20px;
         }
-        .sns-link{
+        .sns-link {
             display: flex;
             gap: 18px;
         }
