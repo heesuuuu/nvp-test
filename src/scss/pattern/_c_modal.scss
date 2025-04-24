@@ -1,15 +1,17 @@
 .modal-bg {
     background-color: rgba(0, 0, 0, 0.65);
-    width: 100%;
+    width: auto;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+
     @include posXY;
     .modal-wrapper {
         background-color: var(--white);
         border-radius: 20px;
         padding: 45px 26px 30px 26px;
+        margin: 0 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -24,9 +26,19 @@
             font-weight: 300;
             color: var(--blue-100);
         }
+        .modal-txt {
+            white-space: pre-line;
+            text-align: center;
+        }
         .modal-btn-wrapper {
             display: flex;
             gap: 12px;
+        }
+        .modal-input-wrapper{
+            .pw-title{
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
         }
     }
 }

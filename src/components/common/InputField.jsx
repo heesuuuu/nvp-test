@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { validatePassword } from "@/utils/validation";
 
 const InputField = () => {
     return <div></div>;
@@ -22,6 +23,7 @@ export const InputDefault = styled.input`
     border-radius: 10px;
     font-size: 14px;
     font-weight: 200;
+    font-family: var(--font-family-default);
     transition: border 0.2s ease;
 
     &::placeholder {
@@ -110,24 +112,35 @@ export const StyleInputPassword = styled.input`
     border: none;
     outline: none;
     font-size: 14px;
+    font-weight: 100;
     color: var(--black);
     &::placeholder {
         color: var(--gray-default);
     }
 `;
 
-export const InputPassword = ({ value, onChange, placeholder, ...props }) => {
+export const InputPassword = ({ value, onChange,onBlur, placeholder, backgroundColor, onValidChange, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const togglePasswordVisible = () => {
-        setShowPassword((prev) => !prev);
-    };
+    const [focused, setFocused]= useState(false)
+    
+
+    useEffect(() => {
+        if (onValidChange) {
+            onValidChange(validatePassword(value));
+        }
+    }, [value, onValidChange]);
+
+    const togglePasswordVisible = () => setShowPassword((prev) => !prev);
     return (
-        <PasswordWrapper>
+        <PasswordWrapper background={backgroundColor} $focused={focused}>
             <StyleInputPassword
                 type={showPassword ? "text" : "password"}
                 placeholder={placeholder || "비밀번호를 입력해 주세요"}
                 value={value}
                 onChange={onChange}
+                onBlur={(e)=>{setFocused(false); onBlur(e)}}
+                style={{ backgroundColor: backgroundColor || "var(--white)" }}
+                onFocus={() => setFocused(true)}
                 {...props}
             />
             <div

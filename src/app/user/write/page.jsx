@@ -15,6 +15,7 @@ const Write = () => {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordValid, setPasswordValid] = useState(false);
 
     const [nameTouched, setNameTouched] = useState(false);
     const [contentTouched, setContentTouched] = useState(false);
@@ -23,7 +24,7 @@ const Write = () => {
     const isNameValid = name.trim().length > 0 && name.trim().length <= 10;
     const isContentValid = content.trim().length >= 4 && content.trim().length <= 50;
     const isPasswordValid = password.trim().length >= 4 && password.trim().length <= 8;
-    const isFormValid = isNameValid && isContentValid && isPasswordValid;
+    const isFormValid = isNameValid && isContentValid && passwordValid;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,8 +35,8 @@ const Write = () => {
         e.preventDefault();
         if (!isFormValid) return;
 
-      console.log("방명록 제출!", { name, content, password });
-      router.push("/user/guestbook");
+        console.log("방명록 제출!", { name, content, password });
+        router.push("/user/guestbook");
     };
 
     const handleConfirmCancel = () => {
@@ -103,6 +104,7 @@ const Write = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             onBlur={() => setPasswordTouched(true)}
+                            onValidChange={(isValid) => setPasswordValid(isValid)}
                         />
 
                         {!isPasswordValid && passwordTouched && (
@@ -126,7 +128,8 @@ const Write = () => {
                 isOpen={isModalOpen}
                 onClose={closeModal}
                 onConfirm={handleConfirmCancel}
-                title="취소 모달 창"
+                title="작성중인 방명록을 취소 하시겠습니까?"
+                txt=" 작성중인 내용은 저장되지 않습니다."
                 className="cancel-modal"
             />
         </div>

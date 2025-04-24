@@ -1,0 +1,112 @@
+//////////////////////
+// Admin 메인 페이지
+//////////////////////
+.admin-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+//////////////////////
+// 로그인 페이지
+//////////////////////
+
+.login-wrapper {
+    .inner {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        .login-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .login-stitle {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--gray-default);
+            margin-top: 15px;
+        }
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            .input-title {
+                font-weight: bold;
+            }
+            .button-wrapper {
+                display: flex;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            .input-box {
+                .error {
+                    color: var(--error);
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+//////////////////////
+// Test 질문지 관리 페이지
+//////////////////////
+.question-manage-wrapper {
+    .inner {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        .num-wrapper {
+            @include flexCenter;
+            gap: 5px;
+        }
+        .question-wrapper {
+            margin-top: 5px;
+            .question-header {
+                @include flexitems;
+                justify-content: space-between;
+                padding:  5px 10px 10px;
+                margin-top: 10px;
+                .admin-question-title {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: var(--primary);
+                }
+            }
+            .answer-wrapper {
+                background-color: var(--white);
+                padding: 10px 0;
+                margin-bottom: 30px;
+                font-size: 14px;
+                border-left: 3px solid var(--primary);
+
+                .answer-title {
+                    display: flex;
+                    padding: 15px 20px;
+                    p {
+                        color: var(--primary);
+                        margin-right: 5px;
+                    }
+                    :nth-child(2) {
+                        color: var(--black);
+                        width: 242px;
+                        margin-right: 10px;
+                    }
+                    :nth-child(3) {
+                        color: var(--secondary);
+                        width: auto;
+                    }
+                }
+            }
+            .answer-line {
+                width: auto;
+                height: 2px;
+                background-color: #c9e3eb;
+            }
+        }
+    }
+}

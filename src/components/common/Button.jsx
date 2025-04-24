@@ -1,6 +1,6 @@
 "use client";
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
 
 const Button = () => {
     return (
@@ -38,11 +38,11 @@ export const ButtonDefault = styled.button`
     font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
 
     &:hover {
-        background-color: ${(props) => props.backgroundColor || "var(--active)"};
+        background-color: ${(props) => props.hoverbg || "var(--active)"};
         color: var(--white);
     }
     &:active {
-        background-color: ${(props) => props.backgroundColor || "var(--active)"} var(--active);
+        background-color: ${(props) => props.activebg || "var(--active)"} ;
         color: var(--white);
     }
 `;
@@ -64,7 +64,7 @@ export const ButtonCancel = styled.button`
     font-size: ${(props) => props.fontSize || "13px"};
 
     &:hover {
-        background-color: ${(props) => props.backgroundColor || "var(--blue-80)"};
+        background-color: ${(props) => props.hoverbg || "var(--blue-80)"};
     }
 `;
 
@@ -176,6 +176,51 @@ export const ScrollButton = () => {
 /* 관리자 */
 ////////////////////////////////////
 
+////////////////////////////////////
+// 메인 이동 버튼
+////////////////////////////////////
+const StyledPageButton = styled.button`
+    width: 100%;
+    height: 44px;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 10px;
+    color: var(--primary);
+    font-size: 15px;
+    border-radius: 7px;
+    font-weight: 400px;
+    .desc {
+        font-size: 13px;
+        color: var(--blue-80);
+    }
+    &:hover {
+        background-color: var(--primary);
+        color: var(--white);
+        .desc {
+            color: var(--secondary);
+        }
+    }
+    &:active {
+        background-color: var(--avtive);
+    }
+`;
+
+export const PageButton = ({ text,desc, Icon, hoverColor = "var(--white)", defaultColor = "var(--primary)" }) => {
+    const [isHover, setIsHover] = React.useState(false);
+    return (
+        <StyledPageButton onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <Icon fill={isHover ? hoverColor : defaultColor} />
+                <p>{text}</p>
+            </div>
+            <p className="desc" style={{textAlign:"right" }}>{desc}</p>
+        </StyledPageButton>
+    );
+};
+
 // 수정 버튼
 const StyledEditButton = styled.div`
     display: flex;
@@ -193,6 +238,7 @@ const StyledEditButton = styled.div`
     &:hover {
         background-color: var(--hover); // 원하는 hover 색상
     }
+
     &:active {
         background-color: var(--secondary); // 원하는 hover 색상
     }

@@ -70,6 +70,67 @@ button,
   padding: 0;
   box-sizing: border-box;
 }
+body a,
+div a,
+dl a,
+dt a,
+dd a,
+ul a,
+ol a,
+li a,
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+pre a,
+code a,
+form a,
+fieldset a,
+legend a,
+textarea a,
+p a,
+blockquote a,
+th a,
+td a,
+input a,
+select a,
+button a,
+* a {
+  text-decoration: none;
+}
+body a:hover,
+div a:hover,
+dl a:hover,
+dt a:hover,
+dd a:hover,
+ul a:hover,
+ol a:hover,
+li a:hover,
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover,
+pre a:hover,
+code a:hover,
+form a:hover,
+fieldset a:hover,
+legend a:hover,
+textarea a:hover,
+p a:hover,
+blockquote a:hover,
+th a:hover,
+td a:hover,
+input a:hover,
+select a:hover,
+button a:hover,
+* a:hover {
+  text-decoration: none;
+  color: inherit;
+}
 
 fieldset,
 img {
@@ -230,6 +291,67 @@ button,
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+body a,
+div a,
+dl a,
+dt a,
+dd a,
+ul a,
+ol a,
+li a,
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+pre a,
+code a,
+form a,
+fieldset a,
+legend a,
+textarea a,
+p a,
+blockquote a,
+th a,
+td a,
+input a,
+select a,
+button a,
+* a {
+  text-decoration: none;
+}
+body a:hover,
+div a:hover,
+dl a:hover,
+dt a:hover,
+dd a:hover,
+ul a:hover,
+ol a:hover,
+li a:hover,
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover,
+pre a:hover,
+code a:hover,
+form a:hover,
+fieldset a:hover,
+legend a:hover,
+textarea a:hover,
+p a:hover,
+blockquote a:hover,
+th a:hover,
+td a:hover,
+input a:hover,
+select a:hover,
+button a:hover,
+* a:hover {
+  text-decoration: none;
+  color: inherit;
 }
 
 fieldset,
@@ -402,7 +524,7 @@ body {
   --secondary: #bdd8eb;
   --active: #51a0b8;
   --hover: #f4fcff;
-  --gray-default: #c8c8c8;
+  --gray-default: #737373;
   --gray-10: #efefef;
   --gray-20: #dedede;
   --gray-30: #969696;
@@ -539,7 +661,7 @@ html {
 
 .modal-bg {
   background-color: rgba(0, 0, 0, 0.65);
-  width: 100%;
+  width: auto;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -553,6 +675,7 @@ html {
   background-color: var(--white);
   border-radius: 20px;
   padding: 45px 26px 30px 26px;
+  margin: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -568,9 +691,17 @@ html {
   font-weight: 300;
   color: var(--blue-100);
 }
+.modal-bg .modal-wrapper .modal-txt {
+  white-space: pre-line;
+  text-align: center;
+}
 .modal-bg .modal-wrapper .modal-btn-wrapper {
   display: flex;
   gap: 12px;
+}
+.modal-bg .modal-wrapper .modal-input-wrapper .pw-title {
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 .inner {
@@ -949,4 +1080,103 @@ html {
   background-color: var(--gray-light);
   color: var(--gray-dark);
   cursor: not-allowed;
+}
+
+.admin-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 35px;
+}
+
+.login-wrapper .inner {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+.login-wrapper .inner .login-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+}
+.login-wrapper .inner .login-stitle {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--gray-default);
+  margin-top: 15px;
+}
+.login-wrapper .inner .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-wrapper .inner .input-wrapper .input-title {
+  font-weight: bold;
+}
+.login-wrapper .inner .input-wrapper .button-wrapper {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+.login-wrapper .inner .input-wrapper .input-box .error {
+  color: var(--error);
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.question-manage-wrapper .inner {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.question-manage-wrapper .inner .num-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.question-manage-wrapper .inner .question-wrapper {
+  margin-top: 5px;
+}
+.question-manage-wrapper .inner .question-wrapper .question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px 10px;
+  margin-top: 10px;
+}
+.question-manage-wrapper .inner .question-wrapper .question-header .admin-question-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--primary);
+}
+.question-manage-wrapper .inner .question-wrapper .answer-wrapper {
+  background-color: var(--white);
+  padding: 10px 0;
+  margin-bottom: 30px;
+  font-size: 14px;
+  border-left: 3px solid var(--primary);
+}
+.question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title {
+  display: flex;
+  padding: 15px 20px;
+}
+.question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title p {
+  color: var(--primary);
+  margin-right: 5px;
+}
+.question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title :nth-child(2) {
+  color: var(--black);
+  width: 242px;
+  margin-right: 10px;
+}
+.question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title :nth-child(3) {
+  color: var(--secondary);
+  width: auto;
+}
+.question-manage-wrapper .inner .question-wrapper .answer-line {
+  width: auto;
+  height: 2px;
+  background-color: #c9e3eb;
 }/*# sourceMappingURL=styles.css.map */

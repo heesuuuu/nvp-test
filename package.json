@@ -10,6 +10,7 @@
         "build:sass": "sass src/scss/styles.scss src/assets/css/output/styles.css --source-map"
     },
     "dependencies": {
+        "axios": "^1.8.4",
         "next": "15.3.1",
         "next-swagger-doc": "^0.4.1",
         "node-sass": "^9.0.0",

@@ -22,7 +22,8 @@ const guestbook = () => {
             <section className="guestbook-list-wrapper">
                 <GuestBookItem />
                 <GuestBookItem />
-            </section>
+        </section>
+        
         </>
     );
 };

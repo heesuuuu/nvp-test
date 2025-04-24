@@ -35,6 +35,67 @@ button,
   padding: 0;
   box-sizing: border-box;
 }
+body a,
+div a,
+dl a,
+dt a,
+dd a,
+ul a,
+ol a,
+li a,
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+pre a,
+code a,
+form a,
+fieldset a,
+legend a,
+textarea a,
+p a,
+blockquote a,
+th a,
+td a,
+input a,
+select a,
+button a,
+* a {
+  text-decoration: none;
+}
+body a:hover,
+div a:hover,
+dl a:hover,
+dt a:hover,
+dd a:hover,
+ul a:hover,
+ol a:hover,
+li a:hover,
+h1 a:hover,
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h5 a:hover,
+h6 a:hover,
+pre a:hover,
+code a:hover,
+form a:hover,
+fieldset a:hover,
+legend a:hover,
+textarea a:hover,
+p a:hover,
+blockquote a:hover,
+th a:hover,
+td a:hover,
+input a:hover,
+select a:hover,
+button a:hover,
+* a:hover {
+  text-decoration: none;
+  color: inherit;
+}
 
 fieldset,
 img {
@@ -206,7 +267,7 @@ body {
   --secondary: #bdd8eb;
   --active: #51a0b8;
   --hover: #f4fcff;
-  --gray-default: #c8c8c8;
+  --gray-default: #737373;
   --gray-10: #efefef;
   --gray-20: #dedede;
   --gray-30: #969696;
