@@ -32,13 +32,18 @@ export default function RootLayout({ children }) {
         style={{
           maxWidth: "390px", minWidth: "390px", margin: "0 auto", backgroundColor: "var(--background-out)",
           display: "flex",
+          // 이 부분 입력하면 배경 색이 화면 크기에 맞춰짐 스크롤 있을 때 스크롤 범위의 배경 색이 적용 안됨
+          // overflowY: "auto",
+          // height: "100vh",
           justifyContent: "center"
-}}
+        }}
       >
-        <div style={{
+        <div className="layout-inner" style={{
           backgroundColor: "var(--background)",
           width: "390px",
-          minHeight: "100vh"
+          minHeight: "100vh",
+          // height: "auto",
+          position: "relative"
         }}>
           <HeaderWrapper />
           {children}

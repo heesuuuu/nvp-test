@@ -119,10 +119,9 @@ export const StyleInputPassword = styled.input`
     }
 `;
 
-export const InputPassword = ({ value, onChange,onBlur, placeholder, backgroundColor, onValidChange, ...props }) => {
+export const InputPassword = ({ value, onChange, onBlur, placeholder, backgroundColor, onValidChange, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
-    const [focused, setFocused]= useState(false)
-    
+    const [focused, setFocused] = useState(false);
 
     useEffect(() => {
         if (onValidChange) {
@@ -138,7 +137,10 @@ export const InputPassword = ({ value, onChange,onBlur, placeholder, backgroundC
                 placeholder={placeholder || "비밀번호를 입력해 주세요"}
                 value={value}
                 onChange={onChange}
-                onBlur={(e)=>{setFocused(false); onBlur(e)}}
+                onBlur={(e) => {
+                    setFocused(false);
+                    onBlur(e);
+                }}
                 style={{ backgroundColor: backgroundColor || "var(--white)" }}
                 onFocus={() => setFocused(true)}
                 {...props}

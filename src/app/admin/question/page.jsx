@@ -1,10 +1,17 @@
-'use client";';
-import { EditButton, NumberButton } from "@/components/common/Button";
+"use client";
+import { EditButton, NumberButton, ScrollButton } from "@/components/common/Button";
 import React from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 
+import { scrollToTop } from "@/utils/scroll";
+import { useRouter } from "next/navigation";
+
 const question = () => {
+    const router = useRouter();
+    const handlePage = () => {
+        router.push("/admin/question/edit/");
+    };
     return (
         <div className="question-manage-wrapper">
             <div className="inner">
@@ -16,13 +23,13 @@ const question = () => {
                         ))}
                     </section>
                     {[...Array(10)].map((_, qIndex) => (
-                        <section className="question-wrapper">
+                        <section key={qIndex} className="question-wrapper">
                             <div className="question-header">
                                 <div className="admin-question-title">Q1. 아침에 눈을 떴을 때 당신의 반응은?</div>
-                                <EditButton />
+                                <EditButton onClick={handlePage} />
                             </div>
 
-                            <div key={qIndex}>
+                            <div>
                                 <div className="answer-wrapper">
                                     {[...Array(4)].map((_, aIndex) => (
                                         <div className="answer-title" key={aIndex}>
@@ -36,6 +43,13 @@ const question = () => {
                             </div>
                         </section>
                     ))}
+                </div>
+
+                <div className="scroll-position">
+                    <div className="scroll-wrapper">
+                        <ScrollButton onClick={scrollToTop} />
+                        <ScrollButton />
+                    </div>
                 </div>
             </div>
         </div>
