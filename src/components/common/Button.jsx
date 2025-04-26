@@ -57,7 +57,7 @@ export const ButtonCancel = styled.button`
     width: ${(props) => props.width || "351px"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
-    border: 1px solid var(--blue-80);
+    border: ${(props)=> props.border ||" 1px solid var(--blue-80)"} ;
     border-radius: 7px;
     cursor: pointer;
     /* font-weight: 600; */

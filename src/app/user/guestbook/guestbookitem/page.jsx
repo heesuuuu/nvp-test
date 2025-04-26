@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 
-const GuestBookItem = ({ name, content, createdAt }) => {
+const GuestBookItem = ({ name, content, createdAt, isRegist }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const getTimeAgo = (timestamp) => {
         const time = new Date(timestamp);
