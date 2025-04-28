@@ -2,7 +2,7 @@ import Navigate from "@/components/layout/navigate/Navigate";
 import React from "react";
 import "../../../../scss/styles.scss";
 import Rank from "@/components/layout/rank/Rank";
-import { ButtonDefault } from "@/components/common/Button";
+import { ButtonEnroll } from "@/components/common/Button";
 import Link from "next/link";
 
 const Result = () => {
@@ -47,10 +47,7 @@ const Result = () => {
                 {/* 페이지 이동 버튼 */}
                 <div className="page-btn-wrapper">
                     <Link href={"/user/guestbook/"}>
-                        <ButtonDefault  
-                            style={{ backgroundColor: "var(--blue-500)" }}
-                            className="page-btn blue-button"
-                        >
+                        <ButtonEnroll style={{ backgroundColor: "var(--blue-500)" }} className="page-btn blue-button">
                             방명록 보러가기{" "}
                             <svg
                                 width="12"
@@ -65,10 +62,10 @@ const Result = () => {
                                     strokeWidth="1.125"
                                 />
                             </svg>
-                        </ButtonDefault>
+                        </ButtonEnroll>
                     </Link>
                     <Link href="/">
-                        <ButtonDefault className="page-btn">
+                        <ButtonEnroll className="page-btn">
                             테스트 다시하기
                             <svg
                                 width="18"
@@ -102,7 +99,7 @@ const Result = () => {
                                     strokeLinecap="round"
                                 />
                             </svg>
-                        </ButtonDefault>
+                        </ButtonEnroll>
                     </Link>
                 </div>
 

@@ -1,10 +1,10 @@
-.homeWrapper {
+.home-wrapper {
     width: auto;
     height: 100vh;
     position: relative;
-    .homeContent {
+    .home-content {
         text-align: center;
-        @include posXY;
+        // @include posXY;
         position: relative;
         background-image: url("/images/Items/background-img.jpg");
         background-size: cover;
@@ -42,25 +42,35 @@
                 }
             }
         }
-
-        .position {
-            position: fixed;
-            top: 38%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .start-btn-wrapper {
-            display: flex;
-            justify-content: center;
-            position: fixed;
-            transform: translateX(-50%);
-            left: 50%;
-            bottom: 85px;
-            .start-button {
-                font-weight: 150%;
-            }
+    }
+    .position {
+        margin: 0 auto;
+        width: fit-content;
+        position: fixed;
+        top: 38%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: row-reverse;
+        width: 300px;
+        align-items: center;
+        top: 57%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    .start-btn-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: fixed;
+        gap: 15px;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 5%;
+        color: var(--white);
+        font-weight:400;
+        .start-button {
+            font-weight: 150%;
         }
     }
 }

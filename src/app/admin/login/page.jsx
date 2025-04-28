@@ -2,7 +2,7 @@
 import { InputDefault, InputPassword } from "@/components/common/InputField";
 import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
-import { ButtonCancel, ButtonDefault } from "@/components/common/Button";
+import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "@/utils/validation";
 
@@ -21,7 +21,7 @@ const login = () => {
         const isPasswordOk = validatePassword(password);
         setIsFormValid(isAdminnameValid && isPasswordOk);
     }, [adminname, password]);
- 
+
     const handleConfirm = (e) => {
         e.preventDefault();
         if (!isFormValid) return;
@@ -71,14 +71,14 @@ const login = () => {
                         >
                             취소
                         </ButtonCancel>
-                        <ButtonDefault
+                        <ButtonEnroll
                             onClick={handleConfirm}
                             disabled={!isFormValid}
                             width="168px"
                             activebg="var(--active)"
                         >
                             확인
-                        </ButtonDefault>
+                        </ButtonEnroll>
                     </div>
                 </form>
             </div>

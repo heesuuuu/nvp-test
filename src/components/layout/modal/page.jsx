@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../../scss/styles.scss";
-import { ButtonCancel, ButtonDefault } from "@/components/common/Button";
+import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { InputPassword } from "@/components/common/InputField";
 
 const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = false }) => {
@@ -43,9 +43,9 @@ const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = fal
                         <ButtonCancel width="144px" background="var(--gary-20)" onClick={onClose}>
                             취소
                         </ButtonCancel>
-                        <ButtonDefault width="144px" onClick={onConfirm}>
+                        <ButtonEnroll width="144px" onClick={onConfirm}>
                             확인
-                        </ButtonDefault>
+                        </ButtonEnroll>
                     </div>
                 </div>
             </div>

@@ -219,3 +219,37 @@
         position: absolute;
     }
 }
+
+//////////////////////
+// 포지션 통계
+//////////////////////
+.inner{
+    display: flex;
+    gap: 35px;
+    .all-test{
+        width: 100%;
+        height: 50px;
+        background-color: var(--white);
+        @include flexitems;
+        justify-content: space-between;
+        padding: 15px;
+        p{
+            font-style: 14px;
+            color: var(--gray-default);
+        }
+        :nth-child(2){
+            color: var(--primary);
+            font-weight: bold;
+        }
+    }
+    .statis-title{
+        color: var(--blue-200);
+        border-bottom: 2px solid var(--blue-80);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+

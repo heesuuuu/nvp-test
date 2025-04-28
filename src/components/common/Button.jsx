@@ -24,7 +24,33 @@ export default Button;
 //기본 버튼
 ////////////////////////////////////
 
-export const ButtonDefault = styled.button`
+export const ButtonDafult = styled.button`
+    background-color: ${(props) => (props.backgroundColor ||  "var(--white)")};
+    color: ${(props) => props.color || "var(--white)"};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    width: ${(props) => props.width || "351px"};
+    height: ${(props) => props.height || "51px"};
+    /* padding: 8px 16px; */
+    border: none;
+    border-radius: 7px;
+    /* font-weight: 600; */
+    font-size: ${(props) => props.fontSize || "13px"};
+    font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
+
+    &:hover {
+        background-color: ${(props) => props.hoverbg || "var(--active)"};
+        color: var(--white);
+    }
+    &:active {
+        background-color: ${(props) => props.activebg || "var(--active)"};
+        color: var(--white);
+    }
+`;
+////////////////////////////////////
+//등록,확인 버튼
+////////////////////////////////////
+
+export const ButtonEnroll = styled.button`
     background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
@@ -42,7 +68,7 @@ export const ButtonDefault = styled.button`
         color: var(--white);
     }
     &:active {
-        background-color: ${(props) => props.activebg || "var(--active)"} ;
+        background-color: ${(props) => props.activebg || "var(--active)"};
         color: var(--white);
     }
 `;
@@ -57,7 +83,7 @@ export const ButtonCancel = styled.button`
     width: ${(props) => props.width || "351px"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
-    border: ${(props)=> props.border ||" 1px solid var(--blue-80)"} ;
+    border: ${(props) => props.border || " 1px solid var(--blue-80)"};
     border-radius: 7px;
     cursor: pointer;
     /* font-weight: 600; */
@@ -208,7 +234,7 @@ const StyledPageButton = styled.button`
     }
 `;
 
-export const PageButton = ({ text,desc, Icon, hoverColor = "var(--white)", defaultColor = "var(--primary)" }) => {
+export const PageButton = ({ text, desc, Icon, hoverColor = "var(--white)", defaultColor = "var(--primary)" }) => {
     const [isHover, setIsHover] = React.useState(false);
     return (
         <StyledPageButton onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -216,7 +242,9 @@ export const PageButton = ({ text,desc, Icon, hoverColor = "var(--white)", defau
                 <Icon fill={isHover ? hoverColor : defaultColor} />
                 <p>{text}</p>
             </div>
-            <p className="desc" style={{textAlign:"right" }}>{desc}</p>
+            <p className="desc" style={{ textAlign: "right" }}>
+                {desc}
+            </p>
         </StyledPageButton>
     );
 };

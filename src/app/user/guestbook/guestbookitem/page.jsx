@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import "../../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 
-const GuestBookItem = ({ name, content, createdAt, isRegist }) => {
+const GuestBookItem = ({id, name, content, createdAt, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [password, setPassword] = useState("");
     const getTimeAgo = (timestamp) => {
         const time = new Date(timestamp);
         const now = new Date();
@@ -17,8 +18,16 @@ const GuestBookItem = ({ name, content, createdAt, isRegist }) => {
     };
 
     const handleDelete = () => {
-        console.log("삭제 확인");
+        console.log("삭제 확인", "비밀번호:", password);
         setIsModalOpen(false);
+        if (onDelete) {
+            onDelete(id, password);
+        }
+        setIsModalOpen(false);
+        setPassword("");
+    };
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
     };
 
     return (
@@ -54,6 +63,8 @@ const GuestBookItem = ({ name, content, createdAt, isRegist }) => {
                         title="방명록을 삭제하시겠습니까?"
                         txt={`방명록 작성 시 설정한 비밀번호를 입력해 주세요 :)\n비밀번호가 일치해야 삭제가 완료됩니다.`}
                         showPasswordInput={true}
+                        password={password}
+                        onPasswordChange={handlePasswordChange}
                     />
                 </div>
                 <div className="guestbook-desc">{content}</div>

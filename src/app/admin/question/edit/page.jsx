@@ -1,16 +1,16 @@
-'use client'
+"use client";
 import Navigate from "@/components/layout/navigate/Navigate";
 import React from "react";
 import "../../../../scss/styles.scss";
 import InputField, { InputEdit } from "@/components/common/InputField";
-import { ButtonCancel, ButtonDefault } from "@/components/common/Button";
+import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 
 const edit = () => {
-    const router = useRouter()
+    const router = useRouter();
     const handlePage = () => {
         router.push("/admin/question");
-    }
+    };
     return (
         <div className="inner">
             <Navigate />
@@ -41,7 +41,7 @@ const edit = () => {
                 <ButtonCancel onClick={handlePage} background="var(--gray-20)" color="var(--white)" width="166px">
                     취소
                 </ButtonCancel>
-                <ButtonDefault width="166px">수정하기</ButtonDefault>
+                <ButtonEnroll width="166px">수정하기</ButtonEnroll>
             </div>
         </div>
     );

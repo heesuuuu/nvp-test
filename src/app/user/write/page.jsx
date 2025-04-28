@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonCancel, ButtonDefault } from "@/components/common/Button";
+import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { InputDefault, InputPassword, InputTextarea } from "@/components/common/InputField";
 import Modal from "@/components/layout/modal/page";
 import Navigate from "@/components/layout/navigate/Navigate";
@@ -116,9 +116,9 @@ const Write = () => {
 
                 {/* 버튼 영역 */}
                 <section className="write-button">
-                    <ButtonDefault onClick={handleSubmit} disabled={!isFormValid}>
+                    <ButtonEnroll onClick={handleSubmit} disabled={!isFormValid}>
                         등록하기
-                    </ButtonDefault>
+                    </ButtonEnroll>
                     <ButtonCancel onClick={openModal}>취소</ButtonCancel>
                 </section>
             </div>
