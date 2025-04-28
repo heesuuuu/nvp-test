@@ -6,6 +6,7 @@ import Modal from "@/components/layout/modal/page";
 import Navigate from "@/components/layout/navigate/Navigate";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Write = () => {
     const router = useRouter();
@@ -31,9 +32,16 @@ const Write = () => {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isFormValid) return;
+        try {
+            await axios.post("https://pbem22.store/api/guestbook", { name, content, password })
+            router.push("/user/guestbook")
+        } catch (error) {
+            console.log("방명록 저장 실패",error);
+            
+        }
 
         console.log("방명록 제출!", { name, content, password });
         router.push("/user/guestbook");

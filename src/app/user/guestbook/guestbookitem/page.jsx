@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import "../../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
+import axios from "axios";
 
-const GuestBookItem = ({id, name, content, createdAt, onDelete }) => {
+const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [password, setPassword] = useState("");
     const getTimeAgo = (timestamp) => {
@@ -17,8 +18,17 @@ const GuestBookItem = ({id, name, content, createdAt, onDelete }) => {
         return `${Math.floor(diff / 86400)}일 전`;
     };
 
-    const handleDelete = () => {
+    const handleDelete = async (id, inputPassword) => {
         console.log("삭제 확인", "비밀번호:", password);
+
+        try {
+            await axios.delete(`api/guestbook/${id}`, { data: { password: inputPassword } })
+            setRegistItems((prev) => prev.filer((item) => item.id !== id))
+            alert("방명록이 삭제되었습니다.")
+        } catch (error) {
+            alert("비밀번호가 일치하지 않습니다.")
+        }
+
         setIsModalOpen(false);
         if (onDelete) {
             onDelete(id, password);

@@ -1,19 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 import { Search } from "@/components/common/Search";
 import { WrithButton } from "@/components/common/Button";
 import GuestBookItem from "./guestbookitem/page";
 import Link from "next/link";
+import axios from "axios";
 
 const guestbook = () => {
     const initalregistbooks = Array.from({ length: 10 }, (_, idx) => ({
         id: idx,
         name: `User${idx + 1}`,
+        content: `Content${idx + 1}`,
         createdAt: new Date().toISOString(),
     }));
+
     const [registItems, setRegistItems] = useState(initalregistbooks);
+    const [searchValue, setSearchValue] = useState("");
+
     const handleDeleteGuestbook = (id, inputPassword) => {
         const guestbookToDelete = registItems.find((item) => item.id === id);
         if (guestbookToDelete && guestbookToDelete.password === inputPassword) {
@@ -24,11 +29,31 @@ const guestbook = () => {
             alert("비밀번호가 일치하지 않습니다.");
         }
     };
+    useEffect(() => {
+        const fetchGuestbooks = async () => {
+            try {
+                const res = await axios.get("https://pbem22.store/api/guestbook");
+                setRegistItems(res.data);
+            } catch (error) {
+                console.log("방명록 불러오기 실패", error);
+            }
+        };
+        fetchGuestbooks();
+    }, []);
+
+    const filteredGuestbooks = registItems.filter(
+        (item) =>
+            item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.content.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    const handleSearch = () => {
+        setSearchValue(searchValue)
+    }
     return (
         <>
             <div className="inner-wrapper">
                 <Navigate />
-                <Search />
+                <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <div className="guestbook-title">
                     <p>총 방명록 {registItems.length}개</p>
                     <Link href={"/user/write"} className="write-button">
@@ -37,7 +62,7 @@ const guestbook = () => {
                 </div>
             </div>
             <section className="guestbook-list-wrapper">
-                {registItems.map((item) => (
+                {filteredGuestbooks.map((item) => (
                     <GuestBookItem
                         key={item.id}
                         name={item.name}
