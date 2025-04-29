@@ -1,0 +1,255 @@
+//////////////////////
+// Admin 메인 페이지
+//////////////////////
+.admin-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+//////////////////////
+// 로그인 페이지
+//////////////////////
+
+.login-wrapper {
+    .inner {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        .login-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .login-stitle {
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--gray-default);
+            margin-top: 15px;
+        }
+        .input-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            .input-title {
+                font-weight: bold;
+            }
+            .button-wrapper {
+                display: flex;
+                gap: 15px;
+                margin-top: 30px;
+            }
+            .input-box {
+                .error {
+                    color: var(--error);
+                    font-size: 12px;
+                    font-weight: bold;
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+//////////////////////
+// Test 질문지 관리 페이지
+//////////////////////
+.question-manage-wrapper {
+    .inner {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        position: relative;
+        .num-wrapper {
+            @include flexCenter;
+            gap: 5px;
+        }
+        .question-wrapper {
+            margin-top: 5px;
+            .question-header {
+                @include flexitems;
+                justify-content: space-between;
+                padding: 5px 10px 10px;
+                margin-top: 10px;
+                .admin-question-title {
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: var(--primary);
+                }
+            }
+            .answer-wrapper {
+                background-color: var(--white);
+                padding: 10px 0;
+                margin-bottom: 30px;
+                font-size: 14px;
+                border-left: 3px solid var(--primary);
+
+                .answer-title {
+                    display: flex;
+                    padding: 15px 20px;
+                    p {
+                        color: var(--primary);
+                        margin-right: 5px;
+                    }
+                    :nth-child(2) {
+                        color: var(--black);
+                        width: 242px;
+                        margin-right: 10px;
+                    }
+                    :nth-child(3) {
+                        color: var(--secondary);
+                        width: auto;
+                    }
+                }
+            }
+            .answer-line {
+                width: auto;
+                height: 2px;
+                background-color: #c9e3eb;
+            }
+        }
+        .scroll-position {
+            position: fixed;
+            bottom: 30px;
+            right: calc(50% - 195px + 20px);
+            z-index: 10;
+            .scroll-wrapper {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                gap: 5px;
+                width: fit-content;
+                :nth-child(2) {
+                    transform: scaleY(-1);
+                }
+            }
+        }
+    }
+}
+
+//////////////////////
+// Test 질문지 수정 페이지
+//////////////////////
+.inner {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    .test-edit-wrapper {
+        .test-title {
+            width: 100%;
+            height: 46px;
+            background: var(--white);
+            padding-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: 1px solid var(--primary);
+            span {
+                color: var(--primary);
+                margin-right: 5px;
+            }
+            .title-input {
+                &:focus {
+                    outline: none;
+                }
+                border: none;
+            }
+        }
+        .answer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            .answer-wrapper {
+                display: flex;
+                .edit-position {
+                    width: 50px;
+                    margin-right: 8px;
+                    font-size: 13px;
+                    font-weight: bold;
+                    color: var(--primary);
+                    @include flexCenter;
+                }
+            }
+        }
+    }
+    .test-button-wrapper {
+        display: flex;
+        gap: 15px;
+    }
+}
+
+//////////////////////
+// admin 방명록
+//////////////////////
+.inner-wrapper {
+    position: relative;
+    .guestbook-title {
+        .delete-btn-wrapper {
+            display: flex;
+            gap: 5px;
+            font-weight: 300;
+            .admin-guestbook-delete {
+                width: auto;
+                padding: 10px;
+            }
+        }
+    }
+
+    .admin-delete-button {
+        width: auto;
+        height: 38px;
+        border-radius: 7px;
+        background-color: var(--white);
+        @include flexCenter;
+        padding: 10px;
+        gap: 10px;
+        font-size: 14px;
+        color: var(--primary);
+        &:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+    }
+    .guestbook-list-wrapper {
+        cursor: pointer;
+    }
+    .delete-modal {
+        position: absolute;
+    }
+}
+
+//////////////////////
+// 포지션 통계
+//////////////////////
+.inner{
+    display: flex;
+    gap: 35px;
+    .all-test{
+        width: 100%;
+        height: 50px;
+        background-color: var(--white);
+        @include flexitems;
+        justify-content: space-between;
+        padding: 15px;
+        p{
+            font-style: 14px;
+            color: var(--gray-default);
+        }
+        :nth-child(2){
+            color: var(--primary);
+            font-weight: bold;
+        }
+    }
+    .statis-title{
+        color: var(--blue-200);
+        border-bottom: 2px solid var(--blue-80);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+

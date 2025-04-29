@@ -1,0 +1,97 @@
+.inner-wrapper {
+    padding: 35px 20px 0 20px;
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+
+    .guestbook-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .write-button {
+            margin: 0;
+        }
+        p {
+            color: var(--blue-300);
+            font-size: 14px;
+        }
+    }
+}
+
+.guestbook-list-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.guestbook-wrapper {
+    background-color: var(--white);
+    padding: 20px;
+    .title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        .title-header {
+            display: flex;
+            .name {
+                font-size: 15px;
+                color: var(--black);
+            }
+            .time {
+                font-size: 14px;
+                color: var(--blue-100);
+                padding-left: 10px;
+            }
+        }
+    }
+    .guestbook-desc {
+        font-size: 16px;
+        color: var(--gray-40);
+        margin-top: 10px;
+    }
+}
+
+//////////////////////////
+// Write Page
+//////////////////////////
+.write-bg-wrapper {
+    position: relative;
+    .write-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+        .write-title {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            .error {
+                color: var(--error);
+                font-size: 12px;
+                font-weight: bold;
+                margin-top: 3px;
+            }
+            .required {
+                color: var(--primary);
+                margin-right: 4px;
+            }
+            .check {
+                font-size: 13px;
+                font-weight: normal;
+                color: var(--blue-100);
+                text-align: right;
+            }
+        }
+    }
+    .write-button {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 55px;
+        &:disabled {
+            background-color: var(--gray-light);
+            color: var(--gray-dark);
+            cursor: not-allowed;
+        }
+    }
+}

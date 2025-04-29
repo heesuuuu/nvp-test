@@ -1,0 +1,86 @@
+"use client";
+import React, { useState } from "react";
+import "../../../../scss/styles.scss";
+import Modal from "@/components/layout/modal/page";
+import axios from "axios";
+
+const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [password, setPassword] = useState("");
+    const getTimeAgo = (timestamp) => {
+        const time = new Date(timestamp);
+        const now = new Date();
+        const diff = Math.floor((now - time) / 1000);
+
+        if (diff < 60) return `${diff}초 전`;
+        if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+        return `${Math.floor(diff / 86400)}일 전`;
+    };
+
+    const handleDelete = async (id, inputPassword) => {
+        console.log("삭제 확인", "비밀번호:", password);
+
+        try {
+            await axios.delete(`api/guestbook/${id}`, { data: { password: inputPassword } })
+            setRegistItems((prev) => prev.filer((item) => item.id !== id))
+            alert("방명록이 삭제되었습니다.")
+        } catch (error) {
+            alert("비밀번호가 일치하지 않습니다.")
+        }
+
+        setIsModalOpen(false);
+        if (onDelete) {
+            onDelete(id, password);
+        }
+        setIsModalOpen(false);
+        setPassword("");
+    };
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    return (
+        <>
+            <div className="guestbook-wrapper">
+                <div className="title-wrapper">
+                    <div className="title-header">
+                        <div className="name">{name}</div>
+                        <div className="time">{getTimeAgo(createdAt)}</div>
+                    </div>
+                    <button onClick={() => setIsModalOpen(true)}>
+                        <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M1.45406 11.2729L11 1.72699"
+                                stroke="#D2D9E3"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                            <path
+                                d="M1.45406 1.72707L11 11.273"
+                                stroke="#D2D9E3"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </button>
+                    <Modal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onConfirm={handleDelete}
+                        title="방명록을 삭제하시겠습니까?"
+                        txt={`방명록 작성 시 설정한 비밀번호를 입력해 주세요 :)\n비밀번호가 일치해야 삭제가 완료됩니다.`}
+                        showPasswordInput={true}
+                        password={password}
+                        onPasswordChange={handlePasswordChange}
+                    />
+                </div>
+                <div className="guestbook-desc">{content}</div>
+            </div>
+        </>
+    );
+};
+
+export default GuestBookItem;

@@ -1,0 +1,53 @@
+// ====================================
+
+/* Inter 폰트 로드 - CDN 사용 */
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
+
+// font-style
+$font-family-base: "Inter", sans-serif !default;
+
+// ========================================
+// Base Colors
+$white: #ffffff !default;
+$black: #121212 !default;
+$error: #ff3f3f !default;
+
+// NVP Test Colors
+$primary: #61adc4 !default;
+$secondary: #bdd8eb !default;
+$bgColor: #e3edf0 !default;
+$bgOutColor: #f3f7f9 !default;
+$hover: #f4fcff !default;
+$avtive: #51a0b8 !default;
+
+// Blue Scale (NVP)
+$blue-50: #e8ebef !default; // Lightest blue
+$blue-80: #d2d9e3 !default;
+$blue-100: #b8c1cf !default;
+$blue-200: #96a3b7 !default;
+$blue-300: #667996 !default;
+$blue-400: #485f82 !default;
+$blue-500: #1a3763 !default; // Main blue
+$blue-600: #18325a !default; // Hover state
+$blue-700: #122746 !default;
+$blue-800: #0e1e36 !default;
+$blue-900: #0b172a !default; // Darkest blue
+
+// Gray Scale
+$gray-default: #737373 !default; // Extremely light
+
+$gray-5: #f5f5f5 !default; // Extremely light
+$gray-10: #efefef !default; // Light : hover
+$gray-20: #dedede !default; // Light : active
+$gray-30: #969696 !default;
+$gray-40: #878787 !default; // hover
+$gray-50: #787878 !default; // Normal
+$gray-60: #717171 !default;
+$gray-70: #5a5a5a !default; // Dark
+$gray-80: #444444 !default; // Very dark
+$gray-90: #353535 !default;
+$gray-100: #171717 !default; // Extremely dark
+
+// layout
+$grid: 1340px !default; // 1280px + 30 + 30 = 1340px
+$p-mobile: 20px !default;

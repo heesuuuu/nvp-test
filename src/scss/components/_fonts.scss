@@ -1,0 +1,64 @@
+// font-style
+$font-family-base: "Pretendard", sans-serif !default;
+$font-size-base: 13px !default;
+$font-color-base: #1d1d1d !default;
+$font-weight-base: 400 !default;
+
+//line height style
+$line-height-none: 1 !default;
+$line-height-base: 1.5 !default;
+
+/* 기본 폰트 설정 */
+html,
+body {
+    overflow-x: hidden;
+    font-size: $font-size-base; // 16px
+    line-height: $line-height-base; // 1.5
+    font-family: $font-family-base; // "Noto Sans KR", sans-serif;
+    color: $font-color-base; // #1d1d1d;
+    font-weight: $font-weight-base; // 400
+}
+
+a {
+    color: $font-color-base;
+    text-decoration: none;
+
+    &:active,
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+
+// ============================================================
+// 폰트 설정
+// ============================================================
+
+/* Inter 폰트 로드 - CDN 사용 */
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+body {
+  font-family: "Gowun Dodum", sans-serif;
+}
+
+@font-face {
+    font-family: "Gowun Dodum", sans-serif;
+    src: url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+    font-weight: 400;
+    font-style: normal;
+}
+
+// ============================================================
+// 폰트 사이즈 설정
+// ============================================================
+
+/* Tablet,Mobile 폰트 설정 */
+$font-size-display1-mobile: 34px !default;
+$font-size-heading1-mobile: 27px !default;
+$font-size-heading2-mobile: 21px !default;
+$font-size-heading3-mobile: 18px !default;
+$font-size-heading4-mobile: 14px !default;
+$font-size-body1-mobile: 17px !default;
+$font-size-body2-mobile: 13px !default;
+$font-size-body3-mobile: 12px !default;
