@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <div className="headerWrapper">
             <Link href={isAdmin ? "/admin" : "/"}>
-                <img src="/images/Items/LogoText.svg" alt="Logo" />
+                <img src="/images/Items/LogoText.png" alt="Logo" />
             </Link>
         </div>
     );
