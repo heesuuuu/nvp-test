@@ -32,7 +32,7 @@ const guestbook = () => {
     useEffect(() => {
         const fetchGuestbooks = async () => {
             try {
-                const res = await axios.get("https://pbem22.store/api/guestbook");
+                const res = await axios.get("https://nvp.kr/v1/questbooks?limit=10");
                 setRegistItems(res.data);
             } catch (error) {
                 console.log("방명록 불러오기 실패", error);
@@ -46,9 +46,9 @@ const guestbook = () => {
             item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
             item.content.toLowerCase().includes(searchValue.toLowerCase())
     );
-    const handleSearch = () => {
-        setSearchValue(searchValue)
-    }
+    // const handleSearch = () => {
+    //     setSearchValue(searchValue)
+    // }
     return (
         <>
             <div className="inner-wrapper">

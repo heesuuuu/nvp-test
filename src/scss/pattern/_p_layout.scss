@@ -6,13 +6,28 @@
     padding: 35px $p-mobile 85px $p-mobile;
 }
 
+
+.layout-inner {
+    position: relative;
+    padding-top: 50px;
+    // .layout-header {
+    // }
+}
+
 .headerWrapper {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 390px;
+    z-index: 100;
     padding: 0 var(--content-pd);
     background-color: var(--white);
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     a {
         width: auto;
     }
@@ -33,5 +48,3 @@
         background-color: var(--background); // 390px 내부만 배경
     }
 }
-
-

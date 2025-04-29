@@ -36,7 +36,7 @@ const Write = () => {
         e.preventDefault();
         if (!isFormValid) return;
         try {
-            await axios.post("https://pbem22.store/api/guestbook", { name, content, password })
+            await axios.post("https://nvp.kr/v1/questbooks", { name, content, password });
             router.push("/user/guestbook")
         } catch (error) {
             console.log("방명록 저장 실패",error);

@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${gowun.variable} ${inter.variable} antialiased `}
         style={{
-          maxWidth: "390px", minWidth: "390px", margin: "0 auto", backgroundColor: "var(--background-out)",
+          maxWidth: "390px", minWidth: "390px", margin: "0 auto",
           display: "flex",
           // 이 부분 입력하면 배경 색이 화면 크기에 맞춰짐 스크롤 있을 때 스크롤 범위의 배경 색이 적용 안됨
           // overflowY: "auto",
@@ -38,15 +38,18 @@ export default function RootLayout({ children }) {
           justifyContent: "center"
         }}
       >
-        <div className="layout-inner" style={{
-          backgroundColor: "var(--background)",
-          width: "390px",
-          minHeight: "100vh",
-          // height: "auto",
-          position: "relative"
-        }}>
-          <HeaderWrapper />
-          {children}
+        <div className="layout-wrapper">
+
+          <HeaderWrapper className="layout-header" />
+          <div className="layout-inner" style={{
+            backgroundColor: "var(--background)",
+            width: "390px",
+            minHeight: "100vh",
+            // height: "auto",
+            position: "relative"
+          }}>
+            {children}
+          </div>
         </div>
       </body>
     </html>

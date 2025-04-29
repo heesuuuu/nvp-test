@@ -712,7 +712,18 @@ html {
   padding: 35px 20px 85px 20px;
 }
 
+.layout-inner {
+  position: relative;
+  padding-top: 50px;
+}
+
 .headerWrapper {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  width: 390px;
+  z-index: 100;
   padding: 0 var(--content-pd);
   background-color: var(--white);
   height: 50px;

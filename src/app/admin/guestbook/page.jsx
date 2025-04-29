@@ -8,26 +8,42 @@ import Modal from "@/components/layout/modal/page";
 import AdminGuestBookItem from "./guestbookitem/page";
 
 const AdminGuestbook = () => {
+    const initialGuestbooks = Array.from({ length: 10 }, (_, idx) => ({
+        id: idx,
+        name: `User${idx + 1}`,
+        content:`방명록 내용 ${idx +1}`,
+        createdAt: new Date().toISOString(),
+    }));
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-     const initialGuestbooks = Array.from({ length: 10 }, (_, idx) => ({
-         id: idx,
-         name: `User${idx + 1}`,
-         createdAt: new Date().toISOString(),
-     }));
+
+    // search
     const [guestbookItems, setGuestbookItems] = useState(initialGuestbooks);
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
+    
+    // search filter
+    const filterGuestbooks = guestbookItems.filter(
+        (item) =>
+            item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+            item.content.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    
+    
     const handleDelete = () => {
         const updatedItems = guestbookItems.filter((item) => !selectedItems.includes(item.id));
         setIsModalOpen(false);
         setGuestbookItems(updatedItems);
         setSelectedItems([]);
     };
-    const [selectedItems, setSelectedItems] = useState([]);
+    
 
     return (
         <>
             <div className="inner-wrapper">
                 <Navigate />
-                <Search />
+                <Search setSearchValue={setSearchValue} searchValue={searchValue} />
                 <div className="guestbook-title">
                     <p>선택항목 {selectedItems.length}개</p>
                     <div className="delete-btn-wrapper">
@@ -54,11 +70,13 @@ const AdminGuestbook = () => {
                 </div>
             </div>
             <section className="guestbook-list-wrapper">
-                {guestbookItems.map((item) => (
+                {filterGuestbooks.map((item) => (
                     <AdminGuestBookItem
                         key={item.id}
                         id={item.id}
+                        content={item.content}
                         isSelected={selectedItems.includes(item.id)}
+                        isRegist={selectedItems.includes(item.id)}
                         name={item.name}
                         createdAt={item.createdAt}
                         toggleSelect={() => {
