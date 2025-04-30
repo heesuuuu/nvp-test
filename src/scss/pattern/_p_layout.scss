@@ -1,11 +1,12 @@
 .inner {
     position: relative;
-    width: 100%;
-    max-width: $grid;
-    margin: 0 auto;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 35px $p-mobile 85px $p-mobile;
 }
-
 
 .layout-inner {
     position: relative;
@@ -45,7 +46,9 @@
     .page-inner {
         width: 100%;
         max-width: 390px;
-        min-height: 100vh;
-        background-color: var(--background); // 390px 내부만 배경
+        height: calc(100vh - 50px); // 헤더 높이만큼 뺌
+        margin-top: 50px; // 헤더 공간만큼 내려줌
+        background-color: var(--background);
+        overflow-y: auto; // 필요 시 내부 스크롤 가능
     }
 }

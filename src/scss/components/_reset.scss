@@ -40,6 +40,11 @@ button,
     }
 }
 
+html, body{
+    height: 100%;
+    // overflow: hidden;
+}
+
 fieldset,
 img {
     border: 0 none;
