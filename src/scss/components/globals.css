@@ -97,6 +97,10 @@ button a:hover,
   color: inherit;
 }
 
+html, body {
+  height: 100%;
+}
+
 fieldset,
 img {
   border: 0 none;
