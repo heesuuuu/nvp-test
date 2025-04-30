@@ -13,18 +13,18 @@ const Write = () => {
 
     const exception = (value) => value.replace(/[!@#$%^&*_-]/g, "");
 
-    const [name, setName] = useState("");
-    const [content, setContent] = useState("");
-    const [password, setPassword] = useState("");
+    const [guestBookNickname, setGuestBookNickname] = useState("");
+    const [guestBookInfo, setGuestBookInfo] = useState("");
+    const [guestBookPassword, setGuestBookPassword] = useState("");
     const [passwordValid, setPasswordValid] = useState(false);
 
     const [nameTouched, setNameTouched] = useState(false);
     const [contentTouched, setContentTouched] = useState(false);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    const isNameValid = name.trim().length > 0 && name.trim().length <= 10;
-    const isContentValid = content.trim().length >= 4 && content.trim().length <= 50;
-    const isPasswordValid = password.trim().length >= 4 && password.trim().length <= 8;
+    const isNameValid = guestBookNickname.trim().length > 0 && guestBookNickname.trim().length <= 10;
+    const isContentValid = guestBookInfo.trim().length >= 4 && guestBookInfo.trim().length <= 50;
+    const isPasswordValid = guestBookPassword.trim().length >= 4 && guestBookPassword.trim().length <= 8;
     const isFormValid = isNameValid && isContentValid && passwordValid;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,21 +36,31 @@ const Write = () => {
         e.preventDefault();
         if (!isFormValid) return;
         try {
-            await axios.post("https://nvp.kr/v1/questbooks", { name, content, password });
-            router.push("/user/guestbook")
+            await axios.post("https://api.nvp.kr/v1/questbooks", {
+                guestBookNickname,
+                guestBookInfo,
+                guestBookPassword,
+            });
+            router.push("/user/guestbook");
+            console.log("Api 응답 확인:", res.data);
+
         } catch (error) {
-            console.log("방명록 저장 실패",error);
-            
+            console.log("방명록 저장 실패", error);
+            if (error.response) {
+                console.log("서버 응답 오류:", error.response.data);
+            } else {
+                console.log("네트워크 오류 또는 서버 연결 실패:", error.message);
+            }
         }
 
-        console.log("방명록 제출!", { name, content, password });
+        console.log("방명록 제출!", { guestBookNickname, guestBookInfo, guestBookPassword });
         router.push("/user/guestbook");
     };
 
     const handleConfirmCancel = () => {
-        setName("");
-        setContent("");
-        setPassword("");
+        setGuestBookNickname("");
+        setGuestBookInfo("");
+        setGuestBookPassword("");
         closeModal();
         router.push("/user/guestbook");
     };
@@ -67,11 +77,11 @@ const Write = () => {
                         </p>
                         <InputDefault
                             placeholder="이름을 입력해 주세요. (특수문자 제외, 10자 이내)"
-                            value={name}
+                            value={guestBookNickname}
                             onChange={(e) => {
                                 const inputValue = e.target.value;
                                 const filtered = exception(inputValue);
-                                setName(filtered);
+                                setGuestBookNickname(filtered);
                             }}
                             onBlur={() => setNameTouched(true)}
                         />
@@ -90,8 +100,8 @@ const Write = () => {
                             placeholder="글을 작성해 주세요 
                             (4 ~ 70자 이내)"
                             // placeholder={`글을 작성해 주세요.\n(4자 이상 50자 이내)`}
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
+                            value={guestBookInfo}
+                            onChange={(e) => setGuestBookInfo(e.target.value)}
                             onBlur={() => setContentTouched(true)}
                             height="225px"
                         />
@@ -109,8 +119,8 @@ const Write = () => {
                         </p>
                         <InputPassword
                             placeholder="비밀번호를 입력해 주세요. (4 ~ 8자 이내)"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={guestBookPassword}
+                            onChange={(e) => setGuestBookPassword(e.target.value)}
                             onBlur={() => setPasswordTouched(true)}
                             onValidChange={(isValid) => setPasswordValid(isValid)}
                         />

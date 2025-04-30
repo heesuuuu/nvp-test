@@ -15,7 +15,8 @@
         .nvp-ball {
             @include posX;
             opacity: 17%;
-            top: 11%;
+            top: 8%;
+            width: 190px;
         }
         .title {
             font-size: 41px;
@@ -23,7 +24,7 @@
             color: var(--white);
             z-index: 2;
             width: 100%;
-            top: 18%;
+            top: 15%;
             @include posX;
             :nth-child(1) {
                 font-size: 25px;

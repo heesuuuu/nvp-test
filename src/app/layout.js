@@ -4,6 +4,7 @@ import { Gowun_Dodum, Inter } from "next/font/google";
 
 import HeaderWrapper from "@/components/layout/header/HeaderWrapper";
 import "../scss/styles.scss";
+import PaddingWrapper from "@/components/layout/PaddingWrapper";
 
 const gowun = Gowun_Dodum({
   subsets: ["latin"],
@@ -38,8 +39,7 @@ export default function RootLayout({ children }) {
           justifyContent: "center"
         }}
       >
-        <div className="layout-wrapper">
-
+        <PaddingWrapper >
           <HeaderWrapper className="layout-header" />
           <div className="layout-inner" style={{
             backgroundColor: "var(--background)",
@@ -50,7 +50,7 @@ export default function RootLayout({ children }) {
           }}>
             {children}
           </div>
-        </div>
+        </PaddingWrapper>
       </body>
     </html>
   );

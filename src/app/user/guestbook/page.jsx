@@ -20,9 +20,9 @@ const guestbook = () => {
     const [searchValue, setSearchValue] = useState("");
 
     const handleDeleteGuestbook = (id, inputPassword) => {
-        const guestbookToDelete = registItems.find((item) => item.id === id);
+        const guestbookToDelete = registItems.find((item) => item.guestBookId === id);
         if (guestbookToDelete && guestbookToDelete.password === inputPassword) {
-            const updatedGuestbooks = registItems.filter((item) => item.id !== id);
+            const updatedGuestbooks = registItems.filter((item) => item.guestBookId !== id);
             setRegistItems(updatedGuestbooks);
             alert("방명록이 삭제되었습니다.");
         } else {
@@ -32,8 +32,11 @@ const guestbook = () => {
     useEffect(() => {
         const fetchGuestbooks = async () => {
             try {
-                const res = await axios.get("https://nvp.kr/v1/questbooks?limit=10");
-                setRegistItems(res.data);
+                const res = await axios.get("https://api.nvp.kr/v1/questbooks?limit=10");
+                console.log("Api 응답 확인:", res.data);
+                console.log("API 응답 전체:", res);
+
+                setRegistItems(res.data.data);
             } catch (error) {
                 console.log("방명록 불러오기 실패", error);
             }
@@ -41,11 +44,13 @@ const guestbook = () => {
         fetchGuestbooks();
     }, []);
 
-    const filteredGuestbooks = registItems.filter(
-        (item) =>
-            item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-            item.content.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    const filteredGuestbooks = Array.isArray(registItems)
+        ? registItems.filter(
+              (item) =>
+                  item.guestBookNickname?.toLowerCase().includes(searchValue.toLowerCase()) ||
+                  item.guestBookInfo?.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        : [];
     // const handleSearch = () => {
     //     setSearchValue(searchValue)
     // }
@@ -64,11 +69,11 @@ const guestbook = () => {
             <section className="guestbook-list-wrapper">
                 {filteredGuestbooks.map((item) => (
                     <GuestBookItem
-                        key={item.id}
-                        name={item.name}
-                        content={item.content}
+                        key={item.guestBookId}
+                        name={item.guestBookNickname}
+                        content={item.guestBookInfo}
                         createdAt={item.createdAt}
-                        isRegist={registItems.includes(item.id)}
+                        isRegist={!!registItems.find((regist) => regist.guestBookId === item.guestBookId)}
                         onDelete={handleDeleteGuestbook}
                     />
                 ))}
