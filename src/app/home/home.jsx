@@ -26,10 +26,10 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="position">
-                    <img src="/images/Position/MiddleBlocker.svg" alt="속공수 캐릭터" />
-                    <img src="/images/Position/Setter.svg" alt="세터 캐릭터" />
-                    <img src="/images/Position/Libero.svg" alt="수비 캐릭터" />
-                    <img src="/images/Position/LeftRight.svg" alt="공격 캐릭터" />
+                    <img src="/images/Position/MiddleBlocker.png" alt="속공수 캐릭터" />
+                    <img src="/images/Position/Setter.png" alt="세터 캐릭터" />
+                    <img src="/images/Position/Libero.png" alt="수비 캐릭터" />
+                    <img src="/images/Position/LeftRight.png" alt="공격 캐릭터" />
                 </div>
 
                 <div className="start-btn-wrapper">
