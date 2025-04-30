@@ -765,9 +765,10 @@ html {
 }
 
 .home-wrapper {
-  width: auto;
+  width: 390px;
   height: 100vh;
   position: relative;
+  display: flex;
 }
 .home-wrapper .home-content {
   text-align: center;
@@ -854,6 +855,7 @@ html {
 
 .inner {
   position: relative;
+  height: 100%;
   overflow: hidden;
 }
 .inner .gauge-bar {

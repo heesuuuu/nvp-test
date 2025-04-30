@@ -7,6 +7,7 @@ import { ButtonDafult, PrevBtn } from "@/components/common/Button";
 const TestMain = () => {
     return (
         <>
+            
             <div className="inner">
                 <div className="gauge-bar"></div>
 

@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
           display: "flex", backgroundColor: "var(--background-out)",
           // 이 부분 입력하면 배경 색이 화면 크기에 맞춰짐 스크롤 있을 때 스크롤 범위의 배경 색이 적용 안됨
           // overflowY: "auto",
-          // height: "100vh",
+          height: "100vh",
           justifyContent: "center",
         }}
       >
