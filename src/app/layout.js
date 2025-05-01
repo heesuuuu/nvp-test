@@ -22,6 +22,9 @@ export const metadata = {
   description: " Volleyball Position Test",
   icons: {
     icons: "/favicon.ico",
+  },
+  viewport: {
+    maximumScale:1
   }
 };
 

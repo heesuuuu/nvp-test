@@ -151,12 +151,12 @@
 
 @mixin text-outline {
   text-shadow:
-    -2px -2px 0 var(--primary),
-     2px -2px 0 var(--primary),
-    -2px  2px 0 var(--primary),
-     2px  2px 0 var(--primary),
-     0px  2px 0 var(--primary),
-     2px  0px 0 var(--primary),
-     0px -2px 0 var(--primary),
-    -2px  0px 0 var(--primary);
+    -1.5px -1.5px 0 var(--primary),
+     1.5px -1.5px 0 var(--primary),
+    -1.5px  1.5px 0 var(--primary),
+     1.5px  1.5px 0 var(--primary),
+     0px  1.5px 0 var(--primary),
+     1.5px  0px 0 var(--primary),
+     0px -1.5px 0 var(--primary),
+    -1.5px  0px 0 var(--primary);
 }
