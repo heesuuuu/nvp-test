@@ -25,7 +25,7 @@ export default Button;
 ////////////////////////////////////
 
 export const ButtonDafult = styled.button`
-    background-color: ${(props) => (props.backgroundColor ||  "var(--white)")};
+    background-color: ${(props) => props.backgroundColor || "var(--white)"};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     width: ${(props) => props.width || "351px"};
@@ -176,10 +176,10 @@ const StyledScrollButton = styled.svg`
         opacity: 1; /* 클릭(누르고 있는 중) 상태에서 더 선명하게 */
     }
 `;
-export const ScrollButton = () => {
+export const ScrollButton = ({ onClick }) => {
     return (
         <StyledScrollButton
-            style={{}}
+            onClick={onClick}
             width="40"
             height="40"
             cursor="pointer"

@@ -1304,6 +1304,7 @@ html {
 }
 .inner .test-edit-wrapper .answer .answer-wrapper {
   display: flex;
+  flex-direction: row;
 }
 .inner .test-edit-wrapper .answer .answer-wrapper .edit-position {
   width: 50px;
