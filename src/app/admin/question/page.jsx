@@ -15,7 +15,7 @@ const question = () => {
     return (
         <div className="question-manage-wrapper">
             <div className="inner">
-                <Navigate />
+                <Navigate title="Test 질문지 관리" isAdmin/>
                 <div>
                     <section className="num-wrapper">
                         {[...Array(10)].map((_, i) => (

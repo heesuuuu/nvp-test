@@ -39,10 +39,14 @@ button,
         }
     }
 }
-html, body{
-    height: 100%;
-    // overflow: hidden;
+html {
+    // height: 100%;
+    overflow-x: hidden;
 }
+// html,
+// body {
+//     // min-height: 100vh;
+// }
 
 fieldset,
 img {

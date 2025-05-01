@@ -3,15 +3,15 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import "../../../scss/styles.scss";
 
-const Navigate = () => {
+const Navigate = ({ title, step, isAdmin }) => {
     const router = useRouter();
-    const [isClicked, setIsClicked] = useState(false)
+    const [isClicked, setIsClicked] = useState(false);
     const onClickBtn = () => {
         setIsClicked(true);
         router.back();
     };
     return (
-        <div className="naviagate">
+        <div className={`navigate ${isAdmin ? "admin" : ""}`}>
             <button onClick={onClickBtn}>
                 <svg width="9" height="17" viewBox="0 0 9 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -23,8 +23,15 @@ const Navigate = () => {
                 </svg>
             </button>
             <div className="navigate-wrapper">
-                <div>MBTI는 끝났다. 이제는 VBPI</div>
-                <div>1/10</div>
+                {isAdmin ? (
+                    <div className="admin-title">
+                        <div className="admin-label">[관리자]</div>
+                        <div className="admin-text">{title}</div>
+                    </div>
+                ) : (
+                    <div>{title}</div>
+                )}
+                {step && <div>{step}</div>}
             </div>
         </div>
     );

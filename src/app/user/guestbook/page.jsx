@@ -57,7 +57,7 @@ const guestbook = () => {
     return (
         <>
             <div className="inner-wrapper">
-                <Navigate />
+                <Navigate title="방명록" />
                 <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <div className="guestbook-title">
                     <p>총 방명록 {registItems.length}개</p>

@@ -68,7 +68,7 @@ const Write = () => {
     return (
         <div className="write-bg-wrapper">
             <div className="inner">
-                <Navigate />
+                <Navigate title="방명록 작성" />
                 <section className="write-wrapper">
                     {/* 이름 입력 */}
                     <div className="write-title">

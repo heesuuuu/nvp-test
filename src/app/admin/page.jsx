@@ -11,7 +11,7 @@ const admin = () => {
     return (
         <>
             <div className="inner">
-                <Navigate />
+                <Navigate  isAdmin />
                 <div className="admin-wrapper">
                     <Link href="/admin/guestbook">
                         <PageButton

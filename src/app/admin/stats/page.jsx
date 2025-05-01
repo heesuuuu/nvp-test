@@ -8,10 +8,10 @@ const stats = () => {
     const total = seriesData.reduce((acc, cur) => acc + cur, 0);
     return (
         <div className="inner">
-            <Navigate />
+            <Navigate title="포지션 통계" isAdmin />
             <div className="all-test">
                 <p>총 테스트 인원</p>
-          <div>{total.toLocaleString()}명</div>
+                <div>{total.toLocaleString()}명</div>
             </div>
             <section>
                 <div className="statis-title">포지션 결과</div>

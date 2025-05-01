@@ -97,8 +97,8 @@ button a:hover,
   color: inherit;
 }
 
-html, body {
-  height: 100%;
+html {
+  overflow-x: hidden;
 }
 
 fieldset,
@@ -307,6 +307,7 @@ body {
   --font-size-base: 16px;
   --font-weight-base: 400;
   --font-weight-bold: 700;
+  --vh:100% ;
 }
 
 body {
