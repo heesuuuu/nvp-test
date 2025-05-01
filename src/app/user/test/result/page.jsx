@@ -9,7 +9,8 @@ const Result = () => {
     return (
         <div className="result">
             <div className="inner">
-                <Navigate />
+                {/* <Navigate title="포지션 테스트 결과" /> */}
+                <div className="result-top-title">포지션 테스트 결과</div>
                 <div className="title-wrapper">
                     <div className="result-title">
                         <div>코트 위 내 자리는...</div>
@@ -19,7 +20,7 @@ const Result = () => {
                     </div>
                     <div className="result-img-wrapper">
                         <div className="result-img">
-                            <img src="/images/Position/LeftRight.svg" />
+                            <img src="/images/Position/LeftRight.png" />
                         </div>
                         <div className="result-position">
                             <p>레프트</p>
