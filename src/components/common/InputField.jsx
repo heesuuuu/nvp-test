@@ -22,8 +22,8 @@ export const InputDefault = styled.input`
     border: ${(props) => props.border || "none"};
     border-radius: 10px;
     font-size: 14px;
-    font-weight: 200;
-    font-family: var(--font-family-default);
+    /* font-weight: 300; */
+    /* font-family: var(--font-family-default); */
     transition: border 0.2s ease;
 
     &::placeholder {
@@ -48,7 +48,7 @@ export const InputTextarea = styled.textarea`
     border: ${(props) => props.border || "none"};
     border-radius: 10px;
     font-size: 14px;
-    font-weight: 200;
+    /* font-weight: 200; */
     resize: none;
     overflow-y: auto;
     vertical-align: top;
@@ -112,7 +112,7 @@ export const StyleInputPassword = styled.input`
     border: none;
     outline: none;
     font-size: 14px;
-    font-weight: 100;
+    /* font-weight: 100; */
     color: var(--black);
     &::placeholder {
         color: var(--gray-default);
