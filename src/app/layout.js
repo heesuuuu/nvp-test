@@ -23,9 +23,9 @@ export const metadata = {
   icons: {
     icons: "/favicon.ico",
   },
-  viewport: {
-    maximumScale:1
-  }
+  viewport:
+    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+
 };
 
 export default function RootLayout({ children }) {
@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
           <div className="layout-inner" style={{
             backgroundColor: "var(--background)",
             width: "100%",
-            height:"100%",
+            height: "100%",
             minHeight: "100vh",
             position: "relative"
           }}>
