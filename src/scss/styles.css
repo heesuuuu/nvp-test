@@ -132,8 +132,8 @@ button a:hover,
   color: inherit;
 }
 
-html, body {
-  height: 100%;
+html {
+  overflow-x: hidden;
 }
 
 fieldset,
@@ -358,8 +358,8 @@ button a:hover,
   color: inherit;
 }
 
-html, body {
-  height: 100%;
+html {
+  overflow-x: hidden;
 }
 
 fieldset,
@@ -568,6 +568,7 @@ body {
   --font-size-base: 16px;
   --font-weight-base: 400;
   --font-weight-bold: 700;
+  --vh:100% ;
 }
 
 body {
@@ -588,22 +589,37 @@ html {
   font-style: normal;
   font-display: swap;
 }
-.naviagate {
+.navigate {
   display: flex;
   align-items: center;
 }
-.naviagate button {
+.navigate button {
   position: left;
 }
-.naviagate .navigate-wrapper {
+.navigate .navigate-wrapper {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   flex-direction: column;
   width: 100%;
   height: auto;
-  color: var(--blue-100);
+  color: var(--blue-300);
   font-weight: 200;
+  font-size: 14px;
+}
+.navigate .navigate-wrapper .admin-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--primary);
+  font-weight: 400;
+  gap: 2px;
+}
+.navigate .navigate-wrapper .admin-title .admin-text {
+  font-weight: bold;
+}
+.navigate.admin .admin-text {
+  color: var(--primary);
 }
 
 .ranking-wrapper {
@@ -714,16 +730,12 @@ html {
 
 .inner {
   position: relative;
-  height: 100%;
+  min-height: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 35px 20px 85px 20px;
-}
-
-.layout-inner {
-  position: relative;
+  overflow: hidden;
 }
 
 .headerWrapper {
@@ -875,7 +887,7 @@ html {
   font-weight: bold;
 }
 .inner .answer-wrapper {
-  flex: 1;
+  flex: 0.5;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -1067,7 +1079,7 @@ html {
 }
 
 .guestbook-list-wrapper {
-  margin-top: 20px;
+  padding: 20px 0 50px 0;
   display: flex;
   flex-direction: column;
   gap: 15px;

@@ -1,4 +1,4 @@
-.naviagate {
+.navigate {
     @include flexitems;
     button {
         position: left;
@@ -9,7 +9,24 @@
         flex-direction: column;
         width: 100%;
         height: auto;
-        color: var(--blue-100);
+        color: var(--blue-300);
         font-weight: 200;
+        font-size: 14px;
+        .admin-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 400;
+            gap: 2px;
+            .admin-text {
+                font-weight: bold;
+            }
+        }
+    }
+    &.admin {
+        .admin-text {
+            color: var(--primary);
+        }
     }
 }

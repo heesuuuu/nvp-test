@@ -2,26 +2,30 @@
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { Search } from "@/components/common/Search";
 import Navigate from "@/components/layout/navigate/Navigate";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 import AdminGuestBookItem from "./guestbookitem/page";
 
 const AdminGuestbook = () => {
-    const initialGuestbooks = Array.from({ length: 10 }, (_, idx) => ({
-        id: idx,
-        name: `User${idx + 1}`,
-        content:`방명록 내용 ${idx +1}`,
-        createdAt: new Date().toISOString(),
-    }));
+    
+    const [guestbookItems, setGuestbookItems] = useState(() =>
+        Array.from({ length: 10 }, (_, idx) => ({
+            id: idx,
+            name: `User${idx + 1}`,
+            content: `방명록 내용 ${idx + 1}`,
+            createdAt: new Date().toISOString(),
+        }))
+    );
+    
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // search
-    const [guestbookItems, setGuestbookItems] = useState(initialGuestbooks);
+    
     const [selectedItems, setSelectedItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-    
+
     // search filter
     const filterGuestbooks = guestbookItems.filter(
         (item) =>
@@ -29,20 +33,17 @@ const AdminGuestbook = () => {
             item.content.toLowerCase().includes(searchValue.toLowerCase())
     );
 
-    
-    
     const handleDelete = () => {
         const updatedItems = guestbookItems.filter((item) => !selectedItems.includes(item.id));
         setIsModalOpen(false);
         setGuestbookItems(updatedItems);
         setSelectedItems([]);
     };
-    
 
     return (
         <>
             <div className="inner-wrapper">
-                <Navigate />
+                <Navigate title="방명록 관리" isAdmin />
                 <Search setSearchValue={setSearchValue} searchValue={searchValue} />
                 <div className="guestbook-title">
                     <p>선택항목 {selectedItems.length}개</p>
@@ -69,26 +70,28 @@ const AdminGuestbook = () => {
                     </div>
                 </div>
             </div>
-            <section className="guestbook-list-wrapper">
-                {filterGuestbooks.map((item) => (
-                    <AdminGuestBookItem
-                        key={item.id}
-                        id={item.id}
-                        content={item.content}
-                        isSelected={selectedItems.includes(item.id)}
-                        isRegist={selectedItems.includes(item.id)}
-                        name={item.name}
-                        createdAt={item.createdAt}
-                        toggleSelect={() => {
-                            if (selectedItems.includes(item.id)) {
-                                setSelectedItems((prev) => prev.filter((id) => id !== item.id));
-                            } else {
-                                setSelectedItems((prev) => [...prev, item.id]);
-                            }
-                        }}
-                    />
-                ))}
-            </section>
+            {guestbookItems.length > 0 && (
+                <section className="guestbook-list-wrapper">
+                    {filterGuestbooks.map((item) => (
+                        <AdminGuestBookItem
+                            key={item.id}
+                            id={item.id}
+                            content={item.content}
+                            isSelected={selectedItems.includes(item.id)}
+                            isRegist={selectedItems.includes(item.id)}
+                            name={item.name}
+                            createdAt={item.createdAt}
+                            toggleSelect={() => {
+                                if (selectedItems.includes(item.id)) {
+                                    setSelectedItems((prev) => prev.filter((id) => id !== item.id));
+                                } else {
+                                    setSelectedItems((prev) => [...prev, item.id]);
+                                }
+                            }}
+                        />
+                    ))}
+                </section>
+            )}
             <Modal
                 className="delete-modal"
                 isOpen={isModalOpen}

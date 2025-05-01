@@ -13,7 +13,7 @@ const edit = () => {
     };
     return (
         <div className="inner">
-            <Navigate />
+            <Navigate title="Test 질문지 수정" isAdmin />
             <div className="test-edit-wrapper">
                 <div className="test-title">
                     <span>1.</span> <input type="text" defaultValue="아침에 " className="title-input" />

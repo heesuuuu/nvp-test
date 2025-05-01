@@ -32,10 +32,9 @@ export default function RootLayout({ children }) {
         className={`${gowun.variable} ${inter.variable} antialiased `}
         style={{
           maxWidth: "390px", minWidth: "390px", margin: "0 auto",
-          display: "flex", backgroundColor: "var(--background-out)",
-          // 이 부분 입력하면 배경 색이 화면 크기에 맞춰짐 스크롤 있을 때 스크롤 범위의 배경 색이 적용 안됨
-          // overflowY: "auto",
-          height: "100vh",
+          backgroundColor: "var(--background-out)",
+          minHeight: "100vh",
+          flexDirection: "column",
           justifyContent: "center",
         }}
       >
@@ -44,9 +43,8 @@ export default function RootLayout({ children }) {
           <div className="layout-inner" style={{
             backgroundColor: "var(--background)",
             width: "100%",
-            height: "100%",
-            // minHeight: "100vh",
-            // height: "auto",
+            // height:"100%",
+            minHeight: "100vh",
             position: "relative"
           }}>
             {children}

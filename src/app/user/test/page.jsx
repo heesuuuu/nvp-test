@@ -7,11 +7,10 @@ import { ButtonDafult, PrevBtn } from "@/components/common/Button";
 const TestMain = () => {
     return (
         <>
-            
             <div className="inner">
                 <div className="gauge-bar"></div>
 
-                <Navigate />
+                <Navigate title="MBTI는 끝났다. 이제는 VBPI" step="1/10" />
 
                 {/* 테스트 질문 */}
                 <div className="question-title">아침에 눈 떴을 때 당신의 반응은?</div>
