@@ -7,7 +7,7 @@ const Rank = () => {
                 <div className="position-wrapper">
                     <div className="position-img-wrapper">
                         <div className="position">
-                            <img src="/images/Position/LeftRight.svg" alt="" />
+                            <img src="/images/Position/LeftRight.png" alt="" />
                         </div>
                         <div className="position-title">레프트</div>
                     </div>
