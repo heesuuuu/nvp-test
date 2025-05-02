@@ -9,17 +9,24 @@
     overflow: hidden;
 }
 
-// .layout-inner {
-//     position: relative;
-   
-// }
+.layout-wrapper {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
+    @media (min-width: 768px) {
+        max-width: 390px;
+    }
+}
 .headerWrapper {
     position: fixed;
     top: 0;
     left: 50%;
     transform: translate(-50%);
-    width: 390px;
+    width: 100vw;
     z-index: 50;
     padding: 0 var(--content-pd);
     background-color: var(--white);
@@ -27,7 +34,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    @media (min-width: 768px) {
+        max-width: 390px;
+    }
     a {
         width: auto;
     }
@@ -41,14 +50,14 @@
 .page-wrapper {
     display: flex;
     justify-content: center;
-    background-color: #fff; // 전체 화면 배경
+    background-color: #fff;
 
     .page-inner {
         width: 100%;
         max-width: 390px;
-        height: calc(100vh - 50px); // 헤더 높이만큼 뺌
-        margin-top: 50px; // 헤더 공간만큼 내려줌
+        height: calc(100vh - 50px);
+        margin-top: 50px;
         background-color: var(--background);
-        overflow-y: auto; // 필요 시 내부 스크롤 가능
+        overflow-y: auto;
     }
 }

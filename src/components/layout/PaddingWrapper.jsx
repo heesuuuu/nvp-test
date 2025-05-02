@@ -6,7 +6,7 @@ const PaddingWrapper = ({children}) => {
     const pathname = usePathname();
     const isMain = pathname === "/";
     return (
-        <div className="layout-wrapper" style={{ paddingTop: isMain ? 0 : "50px"  }}>
+        <div style={{ paddingTop: isMain ? 0 : "50px"  }}>
             {children}
         </div>
     );
