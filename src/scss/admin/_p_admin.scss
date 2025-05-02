@@ -112,7 +112,7 @@
         .scroll-position {
             position: fixed;
             bottom: 30px;
-            right: calc(50% - 195px + 20px);
+            right: max(calc(50% - 195px + 20px), 20px);
             z-index: 10;
             .scroll-wrapper {
                 display: flex;
