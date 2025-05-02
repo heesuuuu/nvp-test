@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
           margin: "0",
           padding: "0",
           backgroundColor: "var(--background-out)",
-
+          // minHeight: "100vh"
         }}
       >
         <div className="layout-wrapper">
@@ -47,6 +47,7 @@ export default function RootLayout({ children }) {
               backgroundColor: "var(--background)",
               width: "100%",
               height: "100%",
+              minHeight:"100vh",
               position: "relative"
             }}>
               {children}
