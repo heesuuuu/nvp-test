@@ -47,14 +47,14 @@ export const ButtonDafult = styled.button`
     }
 `;
 ////////////////////////////////////
-//등록,확인 버튼
+//메인화면 테스트 시작하기 버튼
 ////////////////////////////////////
 
 export const MainButton = styled.button`
     background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: none;
