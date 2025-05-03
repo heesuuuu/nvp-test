@@ -136,6 +136,10 @@ html {
   overflow-x: hidden;
 }
 
+input, textarea, select {
+  font-size: 16px !important;
+}
+
 fieldset,
 img {
   border: 0 none;
@@ -360,6 +364,10 @@ button a:hover,
 
 html {
   overflow-x: hidden;
+}
+
+input, textarea, select {
+  font-size: 16px !important;
 }
 
 fieldset,
@@ -738,12 +746,26 @@ html {
   overflow: hidden;
 }
 
+.layout-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  .layout-wrapper {
+    max-width: 390px;
+  }
+}
+
 .headerWrapper {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translate(-50%);
-  width: 390px;
+  width: 100vw;
   z-index: 50;
   padding: 0 var(--content-pd);
   background-color: var(--white);
@@ -751,6 +773,11 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+@media (min-width: 768px) {
+  .headerWrapper {
+    max-width: 390px;
+  }
 }
 .headerWrapper a {
   width: auto;
@@ -777,8 +804,9 @@ html {
 }
 
 .home-wrapper {
-  width: 390px;
+  width: 100%;
   height: 100vh;
+  margin: 0 auto;
   position: relative;
   display: flex;
 }
@@ -824,6 +852,7 @@ html {
   z-index: -1;
   background-image: url("/images/Items/HighlightImg.svg");
   background-repeat: no-repeat;
+  background-position: center;
 }
 .home-wrapper .home-content .title .big-title :nth-child(1) {
   font-size: 40px;
@@ -890,6 +919,7 @@ html {
   flex: 0.5;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
 .inner .prev-btn {
@@ -936,7 +966,7 @@ html {
   color: var(--white);
   position: relative;
   letter-spacing: 0.1em;
-  text-shadow: -2px -2px 0 var(--primary), 2px -2px 0 var(--primary), -2px 2px 0 var(--primary), 2px 2px 0 var(--primary), 0px 2px 0 var(--primary), 2px 0px 0 var(--primary), 0px -2px 0 var(--primary), -2px 0px 0 var(--primary);
+  text-shadow: -1.5px -1.5px 0 var(--primary), 1.5px -1.5px 0 var(--primary), -1.5px 1.5px 0 var(--primary), 1.5px 1.5px 0 var(--primary), 0px 1.5px 0 var(--primary), 1.5px 0px 0 var(--primary), 0px -1.5px 0 var(--primary), -1.5px 0px 0 var(--primary);
 }
 .result .inner .title-wrapper .result-img-wrapper {
   display: flex;
@@ -1251,7 +1281,7 @@ html {
 .question-manage-wrapper .inner .scroll-position {
   position: fixed;
   bottom: 30px;
-  right: calc(50% - 195px + 20px);
+  right: max(50% - 195px + 20px, 20px);
   z-index: 10;
 }
 .question-manage-wrapper .inner .scroll-position .scroll-wrapper {

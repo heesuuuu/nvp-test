@@ -101,6 +101,10 @@ html {
   overflow-x: hidden;
 }
 
+input, textarea, select {
+  font-size: 16px !important;
+}
+
 fieldset,
 img {
   border: 0 none;

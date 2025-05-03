@@ -1,6 +1,7 @@
 .home-wrapper {
-    width: 390px;
+    width: 100%;
     height: 100vh;
+    margin: 0 auto;
     position: relative;
     display: flex;
     .home-content {
@@ -38,6 +39,7 @@
                 z-index: -1;
                 background-image: url("/images/Items/HighlightImg.svg");
                 background-repeat: no-repeat;
+                background-position: center;
                 :nth-child(1) {
                     font-size: 40px;
                     font-weight: 100;
