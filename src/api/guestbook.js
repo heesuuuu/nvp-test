@@ -2,7 +2,7 @@
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const response = await fetch('http://api.nvp.kr/v1/guestbooks');
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guestbook`);
             if (!response.ok) {
                 throw new Error('API 요청 실패');
             }
