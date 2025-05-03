@@ -16,7 +16,7 @@ export default InputField;
 export const InputDefault = styled.input`
     background-color: ${(props) => props.background || "var(--white)"};
     color: var(--black);
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     padding: 15px;
     border: ${(props) => props.border || "none"};
@@ -42,7 +42,7 @@ export const InputDefault = styled.input`
 export const InputTextarea = styled.textarea`
     background-color: ${(props) => props.background || "var(--white)"};
     color: var(--black);
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "225px"};
     padding: 15px;
     border: ${(props) => props.border || "none"};
@@ -93,7 +93,7 @@ export const PasswordWrapper = styled.div`
     /* align-items: center; */
     justify-content: space-between;
     border-radius: 10px;
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: 51px;
     background-color: ${(props) => props.background || " var(--white)"};
     padding: 15px;

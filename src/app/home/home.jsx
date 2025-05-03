@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import "../../scss/styles.scss";
-import { ButtonEnroll } from "@/components/common/Button";
+import {  MainButton } from "@/components/common/Button";
 
 const Home = () => {
     const router = useRouter();
@@ -34,9 +34,9 @@ const Home = () => {
 
                 <div className="start-btn-wrapper">
                     <div>총 테스트 인원: {total}명</div>
-                    <ButtonEnroll onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
+                    <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
                         테스트 시작하기
-                    </ButtonEnroll>
+                    </MainButton>
                 </div>
             </div>
         </div>

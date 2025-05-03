@@ -28,6 +28,32 @@ export const ButtonDafult = styled.button`
     background-color: ${(props) => props.backgroundColor || "var(--white)"};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    width: ${(props) => props.width || "100%"};
+    height: ${(props) => props.height || "51px"};
+    /* padding: 8px 16px; */
+    border: none;
+    border-radius: 7px;
+    /* font-weight: 600; */
+    font-size: ${(props) => props.fontSize || "13px"};
+    font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
+
+    &:hover {
+        background-color: ${(props) => props.hoverbg || "var(--active)"};
+        color: var(--white);
+    }
+    &:active {
+        background-color: ${(props) => props.activebg || "var(--active)"};
+        color: var(--white);
+    }
+`;
+////////////////////////////////////
+//등록,확인 버튼
+////////////////////////////////////
+
+export const MainButton = styled.button`
+    background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
+    color: ${(props) => props.color || "var(--white)"};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
     width: ${(props) => props.width || "351px"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
@@ -54,7 +80,7 @@ export const ButtonEnroll = styled.button`
     background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: none;
@@ -80,7 +106,7 @@ export const ButtonEnroll = styled.button`
 export const ButtonCancel = styled.button`
     background-color: ${(props) => props.background || "transparent"};
     color: ${(props) => props.color || "var(--primary)"};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: ${(props) => props.border || " 1px solid var(--blue-80)"};
