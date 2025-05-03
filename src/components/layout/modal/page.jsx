@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = fal
     if (!isOpen) return null;
     return (
         <>
-            <div className="modal-bg">
+            <div className="modal-bg">x
                 <div className="modal-wrapper">
                     {/* {title && <div className="modal-title">{title}</div>} */}
                     {title && (
@@ -40,10 +40,10 @@ const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = fal
                     )}
 
                     <div className="modal-btn-wrapper">
-                        <ButtonCancel width="144px" background="var(--gary-20)" onClick={onClose}>
+                        <ButtonCancel  background="var(--gary-20)" onClick={onClose}>
                             취소
                         </ButtonCancel>
-                        <ButtonEnroll width="144px" onClick={onConfirm}>
+                        <ButtonEnroll  onClick={onConfirm}>
                             확인
                         </ButtonEnroll>
                     </div>

@@ -28,7 +28,7 @@ export const ButtonDafult = styled.button`
     background-color: ${(props) => props.backgroundColor || "var(--white)"};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: none;
@@ -54,7 +54,7 @@ export const ButtonEnroll = styled.button`
     background-color: ${({ disabled }) => (disabled ? "var(--secondary)" : "var(--primary)")};
     color: ${(props) => props.color || "var(--white)"};
     cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: none;
@@ -80,7 +80,7 @@ export const ButtonEnroll = styled.button`
 export const ButtonCancel = styled.button`
     background-color: ${(props) => props.background || "transparent"};
     color: ${(props) => props.color || "var(--primary)"};
-    width: ${(props) => props.width || "351px"};
+    width: ${(props) => props.width || "100%"};
     height: ${(props) => props.height || "51px"};
     /* padding: 8px 16px; */
     border: ${(props) => props.border || " 1px solid var(--blue-80)"};

@@ -38,10 +38,10 @@ const edit = () => {
                 </div>
             </div>
             <div className="test-button-wrapper">
-                <ButtonCancel onClick={handlePage} background="var(--gray-20)" color="var(--white)" width="166px">
+                <ButtonCancel onClick={handlePage} background="var(--gray-20)" color="var(--white)" >
                     취소
                 </ButtonCancel>
-                <ButtonEnroll width="166px">수정하기</ButtonEnroll>
+                <ButtonEnroll >수정하기</ButtonEnroll>
             </div>
         </div>
     );

@@ -6,7 +6,7 @@
     background-image: url("/images/Items/result-background-img.jpg");
     background-repeat: no-repeat;
     background-size: contain;
-    background-color: #BDD8EB;
+    background-color: #bdd8eb;
     .inner {
         display: grid;
         gap: 55px;
@@ -121,26 +121,27 @@
             }
         }
     }
-    
 
     // 페이지 이동 버튼
     .page-btn-wrapper {
         flex-direction: column;
         @include flexCenter;
         gap: 15px;
+        a {
+            width: 100%;
+            .page-btn {
+                font-size: 13px;
+                font-weight: regular;
+                letter-spacing: 16%;
+                @include flexCenter;
 
-        .page-btn {
-            font-size: 13px;
-            font-weight: regular;
-            letter-spacing: 16%;
-            @include flexCenter;
-
-            svg {
-                margin-left: 5px;
-            }
-            &.blue-button {
-                &:hover {
-                    background-color: var(--blue-700) !important;
+                svg {
+                    margin-left: 5px;
+                }
+                &.blue-button {
+                    &:hover {
+                        background-color: var(--blue-700) !important;
+                    }
                 }
             }
         }

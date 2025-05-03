@@ -7,7 +7,7 @@ export const SearchWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
-    width: 351px;
+    width: 100%;
     height: 51px;
     background-color: var(--white);
     padding: 15px;
