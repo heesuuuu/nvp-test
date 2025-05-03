@@ -6,17 +6,12 @@ import { Search } from "@/components/common/Search";
 import { WrithButton } from "@/components/common/Button";
 import GuestBookItem from "./guestbookitem/page";
 import Link from "next/link";
+import { format, formatDistanceToNow } from "date-fns";
+import { ko } from "date-fns/locale";
 import axios from "axios";
 
 const guestbook = () => {
-    const initalregistbooks = Array.from({ length: 10 }, (_, idx) => ({
-        id: idx,
-        name: `User${idx + 1}`,
-        content: `Content${idx + 1}`,
-        createdAt: new Date().toISOString(),
-    }));
-
-    const [registItems, setRegistItems] = useState(initalregistbooks);
+    const [registItems, setRegistItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
 
     const handleDeleteGuestbook = (id, inputPassword) => {
@@ -29,12 +24,13 @@ const guestbook = () => {
             alert("비밀번호가 일치하지 않습니다.");
         }
     };
+    axios.get("/api/guestbooks");
+
     useEffect(() => {
         const fetchGuestbooks = async () => {
             try {
-                const res = await axios.get("https://api.nvp.kr/v1/questbooks?limit=10");
+                const res = await axios.get("/api/guestbooks");
                 console.log("Api 응답 확인:", res.data);
-                console.log("API 응답 전체:", res);
 
                 setRegistItems(res.data.data);
             } catch (error) {
@@ -51,9 +47,6 @@ const guestbook = () => {
                   item.guestBookInfo?.toLowerCase().includes(searchValue.toLowerCase())
           )
         : [];
-    // const handleSearch = () => {
-    //     setSearchValue(searchValue)
-    // }
     return (
         <>
             <div className="inner-wrapper">
@@ -66,18 +59,33 @@ const guestbook = () => {
                     </Link>
                 </div>
             </div>
+
             <section className="guestbook-list-wrapper">
-                {filteredGuestbooks.map((item) => (
-                    <GuestBookItem
-                        key={item.guestBookId}
-                        name={item.guestBookNickname}
-                        content={item.guestBookInfo}
-                        createdAt={item.createdAt}
-                        isRegist={!!registItems.find((regist) => regist.guestBookId === item.guestBookId)}
-                        onDelete={handleDeleteGuestbook}
-                    />
-                ))}
-                {/* <GuestBookItem /> */}
+                {filteredGuestbooks.map((item) => {
+                    const d = new Date(item.createdAt);
+                    d.setHours(d.getHours()+9)
+                    const now = Date.now();
+                    const diff = (now - d) / 1000;
+
+                    let formattedDate = "";
+                    if (diff < 60) {
+                        formattedDate = "방금 전";
+                    } else if (diff < 60 * 60 * 24 * 3) {
+                        formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
+                    } else {
+                        formattedDate = format(d, "PPP EEE p", { locale: ko });
+                    }
+                    return (
+                        <GuestBookItem
+                            key={item.guestBookId ?? index}
+                            name={item.guestBookNickname}
+                            content={item.guestBookInfo}
+                            createdAt={formattedDate}
+                            isRegist={!!registItems.find((regist) => regist.guestBookId === item.guestBookId)}
+                            onDelete={handleDeleteGuestbook}
+                        />
+                    );
+                })}
             </section>
         </>
     );
