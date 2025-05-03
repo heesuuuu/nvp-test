@@ -23,7 +23,7 @@ const Write = () => {
     const [passwordTouched, setPasswordTouched] = useState(false);
 
     const isNameValid = guestBookNickname.trim().length > 0 && guestBookNickname.trim().length <= 10;
-    const isContentValid = guestBookInfo.trim().length >= 4 && guestBookInfo.trim().length <= 50;
+    const isContentValid = guestBookInfo.trim().length >= 4 && guestBookInfo.trim().length <= 70;
     const isPasswordValid = guestBookPassword.trim().length >= 4 && guestBookPassword.trim().length <= 8;
     const isFormValid = isNameValid && isContentValid && passwordValid;
 
@@ -36,13 +36,13 @@ const Write = () => {
         e.preventDefault();
         if (!isFormValid) return;
         try {
-            await axios.post("https://api.nvp.kr/v1/questbooks", {
+            const response = await axios.post("/api/guestbooks", {
                 guestBookNickname,
                 guestBookInfo,
                 guestBookPassword,
             });
+            console.log("방명록 등록 성공", response.data);
             router.push("/user/guestbook");
-            console.log("Api 응답 확인:", res.data);
 
         } catch (error) {
             console.log("방명록 저장 실패", error);
@@ -99,7 +99,6 @@ const Write = () => {
                         <InputTextarea
                             placeholder="글을 작성해 주세요 
                             (4 ~ 70자 이내)"
-                            // placeholder={`글을 작성해 주세요.\n(4자 이상 50자 이내)`}
                             value={guestBookInfo}
                             onChange={(e) => setGuestBookInfo(e.target.value)}
                             onBlur={() => setContentTouched(true)}

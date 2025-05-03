@@ -7,16 +7,16 @@ import axios from "axios";
 const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [password, setPassword] = useState("");
-    const getTimeAgo = (timestamp) => {
-        const time = new Date(timestamp);
-        const now = new Date();
-        const diff = Math.floor((now - time) / 1000);
+    // const getTimeAgo = (timestamp) => {
+    //     const time = new Date(timestamp);
+    //     const now = new Date();
+    //     const diff = Math.floor((now - time) / 1000);
 
-        if (diff < 60) return `${diff}초 전`;
-        if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
-        if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
-        return `${Math.floor(diff / 86400)}일 전`;
-    };
+    //     if (diff < 60) return `${diff}초 전`;
+    //     if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+    //     if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+    //     return `${Math.floor(diff / 86400)}일 전`;
+    // };
 
     const handleDelete = async (id, inputPassword) => {
         console.log("삭제 확인", "비밀번호:", password);
@@ -46,7 +46,7 @@ const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
                 <div className="title-wrapper">
                     <div className="title-header">
                         <div className="name">{name}</div>
-                        <div className="time">{getTimeAgo(createdAt)}</div>
+                        <div className="time">{createdAt}</div>
                     </div>
                     <button onClick={() => setIsModalOpen(true)}>
                         <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
