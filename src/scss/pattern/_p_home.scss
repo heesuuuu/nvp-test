@@ -96,8 +96,12 @@
         color: var(--white);
         font-weight: 400;
         padding: 0 20px;
+
         .start-button {
             font-weight: normal;
+        }
+        @media (min-width: 768px) {
+            width: 40%;
         }
     }
 }

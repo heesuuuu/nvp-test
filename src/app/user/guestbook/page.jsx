@@ -13,6 +13,7 @@ import axios from "axios";
 const guestbook = () => {
     const [registItems, setRegistItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const handleDeleteGuestbook = (id, inputPassword) => {
         const guestbookToDelete = registItems.find((item) => item.guestBookId === id);
@@ -24,12 +25,12 @@ const guestbook = () => {
             alert("비밀번호가 일치하지 않습니다.");
         }
     };
-    axios.get("/api/guestbooks");
+    // axios.get(`${apiUrl}/guestbooks`);
 
     useEffect(() => {
         const fetchGuestbooks = async () => {
             try {
-                const res = await axios.get("/api/guestbooks");
+                const res = await axios.get(`${apiUrl}/guestbooks`);
                 console.log("Api 응답 확인:", res.data);
 
                 setRegistItems(res.data.data);
@@ -77,7 +78,7 @@ const guestbook = () => {
                     }
                     return (
                         <GuestBookItem
-                            key={item.guestBookId ?? index}
+                            key={item.guestBookId}
                             name={item.guestBookNickname}
                             content={item.guestBookInfo}
                             createdAt={formattedDate}

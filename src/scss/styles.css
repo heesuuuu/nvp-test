@@ -922,6 +922,11 @@ html {
 .home-wrapper .start-btn-wrapper .start-button {
   font-weight: normal;
 }
+@media (min-width: 768px) {
+  .home-wrapper .start-btn-wrapper {
+    width: 40%;
+  }
+}
 
 .inner {
   position: relative;

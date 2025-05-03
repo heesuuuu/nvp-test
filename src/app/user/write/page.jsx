@@ -10,6 +10,7 @@ import axios from "axios";
 
 const Write = () => {
     const router = useRouter();
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const exception = (value) => value.replace(/[!@#$%^&*_-]/g, "");
 
@@ -35,19 +36,19 @@ const Write = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isFormValid) return;
+        const postData = {
+            guestBookNickname,
+            guestBookInfo,
+            guestBookPassword,
+        };
         try {
-            const response = await axios.post("/api/guestbooks", {
-                guestBookNickname,
-                guestBookInfo,
-                guestBookPassword,
-            });
-            console.log("방명록 등록 성공", response.data);
+            const res = await axios.post(`${apiUrl}/guestbooks`, postData);
+            console.log("방명록 등록 성공", res.data);
             router.push("/user/guestbook");
-
         } catch (error) {
             console.log("방명록 저장 실패", error);
-            if (error.response) {
-                console.log("서버 응답 오류:", error.response.data);
+            if (error.res) {
+                console.log("서버 응답 오류:", error.res.data);
             } else {
                 console.log("네트워크 오류 또는 서버 연결 실패:", error.message);
             }
