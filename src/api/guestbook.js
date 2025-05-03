@@ -1,8 +1,7 @@
-// pages/api/guestbooks.js
 export default async function handler(req, res) {
     if (req.method === 'POST') {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guestbook`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/guestbook`);
             if (!response.ok) {
                 throw new Error('API 요청 실패');
             }
