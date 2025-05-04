@@ -3,35 +3,42 @@ export default async function handler(req, res) {
 
     try {
         if (req.method === 'GET') {
-            // 방명록 목록 가져오기
             const response = await fetch(`${apiUrl}/guestbooks`);
-
-            if (!response.ok) {
-                throw new Error(`API responded with status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`API responded with status: ${response.status}`);
             const data = await response.json();
             return res.status(200).json(data);
         }
+
         else if (req.method === 'POST') {
-            // 방명록 작성하기
             const response = await fetch(`${apiUrl}/guestbooks`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(req.body)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(req.body),
             });
-
-            if (!response.ok) {
-                throw new Error(`API responded with status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`API responded with status: ${response.status}`);
             const data = await response.json();
             return res.status(200).json(data);
         }
+
+        else if (req.method === 'DELETE') {
+            const { id } = req.query;
+            if (!id) {
+                return res.status(400).json({
+                    success: false,
+                    error: { code: 400, message: '방명록 ID가 필요합니다.' },
+                });
+            }
+
+            const response = await fetch(`${apiUrl}/guestbooks/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) throw new Error(`API responded with status: ${response.status}`);
+            return res.status(200).json({ success: true });
+        }
+
         else {
-            res.setHeader('Allow', ['GET', 'POST']);
+            res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
             return res.status(405).end(`Method ${req.method} Not Allowed`);
         }
     } catch (error) {
@@ -40,8 +47,8 @@ export default async function handler(req, res) {
             success: false,
             error: {
                 code: 500,
-                message: error.message || 'Internal Server Error'
-            }
+                message: error.message || 'Internal Server Error',
+            },
         });
     }
 }

@@ -15,16 +15,23 @@ const guestbook = () => {
     const [searchValue, setSearchValue] = useState("");
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const handleDeleteGuestbook = (id, inputPassword) => {
-        const guestbookToDelete = registItems.find((item) => item.guestBookId === id);
-        if (guestbookToDelete && guestbookToDelete.password === inputPassword) {
-            const updatedGuestbooks = registItems.filter((item) => item.guestBookId !== id);
+    const handleDeleteGuestbook = async (id, inputPassword) => {
+        console.log("삭제 확인 id",id);
+        
+        try {
+            const res = await axios.delete(`${apiUrl}/guestbooks/${id}`, {
+                params: { password: inputPassword },
+            })
+            console.log("삭제 성공", res.data);
+            const updatedGuestbooks = registItems.filter(item => item.guestBookId !== id);
             setRegistItems(updatedGuestbooks);
-            alert("방명록이 삭제되었습니다.");
-        } else {
-            alert("비밀번호가 일치하지 않습니다.");
+            alert("방명록이 삭제됨")
+        }catch(error){
+                console.error("삭제 실패", error);
+                alert("비밀번호가 일치하지 않거나 삭제에 실패 했음");
+            }
         }
-    };
+        
     // axios.get(`${apiUrl}/guestbooks`);
 
     useEffect(() => {
@@ -79,6 +86,7 @@ const guestbook = () => {
                     return (
                         <GuestBookItem
                             key={item.guestBookId}
+                            id={item.guestBookId}
                             name={item.guestBookNickname}
                             content={item.guestBookInfo}
                             createdAt={formattedDate}

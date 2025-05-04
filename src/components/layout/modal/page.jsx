@@ -3,7 +3,7 @@ import "../../../scss/styles.scss";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { InputPassword } from "@/components/common/InputField";
 
-const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = false }) => {
+const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = false, password, onPasswordChange }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -19,7 +19,7 @@ const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = fal
     if (!isOpen) return null;
     return (
         <>
-            <div className="modal-bg">x
+            <div className="modal-bg">
                 <div className="modal-wrapper">
                     {/* {title && <div className="modal-title">{title}</div>} */}
                     {title && (
@@ -35,17 +35,15 @@ const Modal = ({ isOpen, onClose, onConfirm, title, txt, showPasswordInput = fal
                     {showPasswordInput && (
                         <div className="modal-input-wrapper">
                             <div className="pw-title">비밀번호</div>
-                            <InputPassword backgroundColor="#E5F5FA" />
+                            <InputPassword backgroundColor="#E5F5FA" value={password} onChange={onPasswordChange} />
                         </div>
                     )}
 
                     <div className="modal-btn-wrapper">
-                        <ButtonCancel  background="var(--gary-20)" onClick={onClose}>
+                        <ButtonCancel background="var(--gary-20)" onClick={onClose}>
                             취소
                         </ButtonCancel>
-                        <ButtonEnroll  onClick={onConfirm}>
-                            확인
-                        </ButtonEnroll>
+                        <ButtonEnroll onClick={() => onConfirm(password)}>확인</ButtonEnroll>
                     </div>
                 </div>
             </div>
