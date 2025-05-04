@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
-import { validatePassword } from "@/utils/validation";
+import api from '@/utils/axios';
 
 const login = () => {
     const router = useRouter();
@@ -18,15 +18,30 @@ const login = () => {
 
     useEffect(() => {
         const isAdminnameValid = adminname.trim().length > 0;
-        const isPasswordOk = validatePassword(password);
-        setIsFormValid(isAdminnameValid && isPasswordOk);
+        setIsFormValid(isAdminnameValid);
     }, [adminname, password]);
 
     const handleConfirm = (e) => {
         e.preventDefault();
         if (!isFormValid) return;
-        console.log("관리자 로그인!");
-        router.push("/admin");
+
+        // 로그인 요청
+        api.post('/v1/admins/login', {
+            id: adminname,
+            password: password
+        }).then(res => {
+            console.log(res);
+            console.log(res.status);
+            if(res.status === 200) {
+                router.push("/admin");
+            }
+            else alert('로그인 실패')
+        }).catch(err => {
+            alert('로그인 실패!');
+            console.log(err.status);
+            console.error(err);
+        });
+            
     };
     return (
         <div className="login-wrapper">
@@ -46,9 +61,9 @@ const login = () => {
                             onChange={(e) => setAdminname(e.target.value)}
                             onBlur={() => setIdTouched(true)}
                         ></InputDefault>
-                        {(idTouched || adminname.length > 0) && !adminname.trim().length <= 10 && (
+                        {/* {(idTouched || adminname.length > 0) && !adminname.trim().length <= 10 && (
                             <p className="error">이름은 특수문제 제외, 1~10자 이내로 입력해주세요.</p>
-                        )}
+                        )} */}
                     </div>
                     <p className="input-title">비밀번호</p>
                     <div className="input-box">
@@ -57,9 +72,9 @@ const login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             onBlur={() => setpasswordTouched(true)}
                         />
-                        {(passwordTouched || password.length > 0) && !validatePassword(password) && (
+                        {/* {(passwordTouched || password.length > 0) && !validatePassword(password) && (
                             <p className="error">이름은 특수문제 제외, 4~10자 이내로 입력해주세요.</p>
-                        )}
+                        )} */}
                     </div>
 
                     <div className="button-wrapper">
