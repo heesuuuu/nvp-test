@@ -65,6 +65,12 @@
             gap: 5px;
             font-size: 14px;
             font-weight: bold;
+            .anonymity{
+                font-weight:300;
+                font-size: 12px;
+                color:var(--blue-100);
+                margin-left:4px;
+            }
             .error {
                 color: var(--error);
                 font-size: 12px;

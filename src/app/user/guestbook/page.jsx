@@ -8,36 +8,45 @@ import GuestBookItem from "./guestbookitem/page";
 import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
-import axios from "axios";
+import api from "@/utils/axios";
 
 const guestbook = () => {
     const [registItems, setRegistItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    const handleDeleteGuestbook = async (id, inputPassword) => {
-        console.log("삭제 확인 id",id);
-        
-        try {
-            const res = await axios.delete(`${apiUrl}/guestbooks/${id}`, {
-                params: { password: inputPassword },
-            })
-            console.log("삭제 성공", res.data);
-            const updatedGuestbooks = registItems.filter(item => item.guestBookId !== id);
-            setRegistItems(updatedGuestbooks);
-            alert("방명록이 삭제됨")
-        }catch(error){
-                console.error("삭제 실패", error);
-                alert("비밀번호가 일치하지 않거나 삭제에 실패 했음");
-            }
+    const handleDeleteGuestbook = async (id, password) => {
+        console.log("삭제 확인 id", id);
+
+        if (!password) {
+            alert("비밀번호를 입력해주세요.");
+            return false;
         }
-        
-    // axios.get(`${apiUrl}/guestbooks`);
+        try {
+            const res = await api.delete(`v1/guestbooks/${id}`, {
+                params: { password },
+            });
+            console.log("삭제 성공", res.data);
+
+            if (res.data && res.data.success === true) {
+                const updatedGuestbooks = registItems.filter((item) => item.guestBookId !== id);
+                setRegistItems(updatedGuestbooks);
+
+                alert("방명록이 삭제되었습니다!");
+                return true;
+            } else {
+                const errorMessage = res.data?.error?.message || "비밀번호가 일치하지 않거나 삭제에 실패했습니다.";
+                alert(errorMessage);
+                return false;
+            }
+        } catch (error) {
+            console.error("삭제 실패", error);
+        }
+    };
 
     useEffect(() => {
         const fetchGuestbooks = async () => {
             try {
-                const res = await axios.get(`${apiUrl}/guestbooks`);
+                const res = await api.get("v1/guestbooks");
                 console.log("Api 응답 확인:", res.data);
 
                 setRegistItems(res.data.data);
@@ -71,7 +80,7 @@ const guestbook = () => {
             <section className="guestbook-list-wrapper">
                 {filteredGuestbooks.map((item) => {
                     const d = new Date(item.createdAt);
-                    d.setHours(d.getHours()+9)
+                    d.setHours(d.getHours() + 9);
                     const now = Date.now();
                     const diff = (now - d) / 1000;
 
@@ -90,7 +99,7 @@ const guestbook = () => {
                             name={item.guestBookNickname}
                             content={item.guestBookInfo}
                             createdAt={formattedDate}
-                            isRegist={!!registItems.find((regist) => regist.guestBookId === item.guestBookId)}
+                            isRegist={true}
                             onDelete={handleDeleteGuestbook}
                         />
                     );

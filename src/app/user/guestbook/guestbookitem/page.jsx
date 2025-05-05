@@ -7,13 +7,18 @@ import axios from "axios";
 const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [password, setPassword] = useState("");
+
     const handleDelete = async () => {
         console.log("삭제 확인", "비밀번호:", password);
-        if (onDelete) {
-            await onDelete(id, password);
+        if (!password) {
+            alert("비밀번호를 입력해주세요.");
+            return;
         }
-        setIsModalOpen(false);
-        setPassword("");
+        const success = await onDelete(id, password);
+        if (success) {
+            setIsModalOpen(false);
+            setPassword("");
+        }
     };
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);

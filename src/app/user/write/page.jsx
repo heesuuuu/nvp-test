@@ -7,10 +7,10 @@ import Navigate from "@/components/layout/navigate/Navigate";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import api from "@/utils/axios";
 
 const Write = () => {
     const router = useRouter();
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const exception = (value) => value.replace(/[!@#$%^&*_-]/g, "");
 
@@ -23,7 +23,7 @@ const Write = () => {
     const [contentTouched, setContentTouched] = useState(false);
     const [passwordTouched, setPasswordTouched] = useState(false);
 
-    const isNameValid = guestBookNickname.trim().length > 0 && guestBookNickname.trim().length <= 10;
+    const isNameValid = guestBookNickname.trim().length <= 10;
     const isContentValid = guestBookInfo.trim().length >= 4 && guestBookInfo.trim().length <= 70;
     const isPasswordValid = guestBookPassword.trim().length >= 4 && guestBookPassword.trim().length <= 8;
     const isFormValid = isNameValid && isContentValid && passwordValid;
@@ -36,13 +36,16 @@ const Write = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isFormValid) return;
+
+        const finalNickname = guestBookNickname.trim() === "" ? "익명" : guestBookNickname;
+
         const postData = {
-            guestBookNickname,
+            guestBookNickname: finalNickname,
             guestBookInfo,
             guestBookPassword,
         };
         try {
-            const res = await axios.post(`${apiUrl}/guestbooks`, postData);
+            const res = await api.post("v1/guestbooks", postData);
             console.log("방명록 등록 성공", res.data);
             router.push("/user/guestbook");
         } catch (error) {
@@ -54,7 +57,7 @@ const Write = () => {
             }
         }
 
-        console.log("방명록 제출!", { guestBookNickname, guestBookInfo, guestBookPassword });
+        // console.log("방명록 제출!", { guestBookNickname, guestBookInfo, guestBookPassword });
         router.push("/user/guestbook");
     };
 
@@ -74,7 +77,7 @@ const Write = () => {
                     {/* 이름 입력 */}
                     <div className="write-title">
                         <p>
-                            <span className="required">*</span> 이름
+                            이름 <span className="anonymity"> 미입력시 익명으로 등록됩니다.</span>
                         </p>
                         <InputDefault
                             placeholder="이름을 입력해 주세요. (특수문자 제외, 10자 이내)"
