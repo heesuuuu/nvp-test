@@ -21,15 +21,16 @@ export default async function handler(req, res) {
         }
 
         else if (req.method === 'DELETE') {
-            const { id } = req.query;
-            if (!id) {
+            const { id, password } = req.query;
+
+            if (!id || !password) {
                 return res.status(400).json({
                     success: false,
-                    error: { code: 400, message: '방명록 ID가 필요합니다.' },
+                    error: { code: 400, message: 'ID와 비밀번호가 필요합니다.' },
                 });
             }
 
-            const response = await fetch(`${apiUrl}/guestbooks/${id}`, {
+            const response = await fetch(`${apiUrl}/guestbooks/${id}?password=${encodeURIComponent(password)}`, {
                 method: 'DELETE',
             });
 
