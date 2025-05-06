@@ -80,7 +80,7 @@ const guestbook = () => {
             <section className="guestbook-list-wrapper">
                 {filteredGuestbooks.map((item) => {
                     const d = new Date(item.createdAt);
-                    d.setHours(d.getHours() + 9);
+                    d.setHours(d.getHours());
                     const now = Date.now();
                     const diff = (now - d) / 1000;
 
