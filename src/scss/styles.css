@@ -935,9 +935,14 @@ html {
   background-color: var(--gray-20);
 }
 .inner .question-title {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
   font-family: var(--font-family-gowun);
-  font-size: 20px;
-  padding: 10vh 0;
+  font-size: 17px;
   text-align: center;
   font-weight: bold;
 }
@@ -966,7 +971,6 @@ html {
   background-color: #bdd8eb;
 }
 .result .inner {
-  display: grid;
   gap: 55px;
 }
 .result .inner .result-top-title {
@@ -995,6 +999,7 @@ html {
   text-shadow: -1.5px -1.5px 0 var(--primary), 1.5px -1.5px 0 var(--primary), -1.5px 1.5px 0 var(--primary), 1.5px 1.5px 0 var(--primary), 0px 1.5px 0 var(--primary), 1.5px 0px 0 var(--primary), 0px -1.5px 0 var(--primary), -1.5px 0px 0 var(--primary);
 }
 .result .inner .title-wrapper .result-img-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1046,7 +1051,11 @@ html {
   text-align: center;
   padding: 5px 10px;
 }
+.result .inner .des-wrapper {
+  width: 100%;
+}
 .result .inner .des-wrapper .description {
+  width: 100%;
   background-color: var(--white);
   padding: 15px;
   border-radius: 10px;

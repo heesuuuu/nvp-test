@@ -8,7 +8,6 @@
     background-size: contain;
     background-color: #bdd8eb;
     .inner {
-        display: grid;
         gap: 55px;
         .result-top-title {
             text-align: center;
@@ -36,6 +35,7 @@
                 }
             }
             .result-img-wrapper {
+                width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -91,7 +91,9 @@
         // result 설명
 
         .des-wrapper {
+            width: 100%;
             .description {
+                width: 100%;
                 background-color: var(--white);
                 padding: 15px;
                 border-radius: 10px;
