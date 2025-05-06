@@ -10,6 +10,10 @@
         "build:sass": "sass src/scss/styles.scss src/assets/css/output/styles.css --source-map"
     },
     "dependencies": {
+        "@emotion/react": "11.11.1",
+        "@emotion/styled": "11.11.0",
+        "@mui/icons-material": "5.15.17",
+        "@mui/material": "5.15.17",
         "apexcharts": "^4.7.0",
         "axios": "^1.8.4",
         "date-fns": "^4.1.0",

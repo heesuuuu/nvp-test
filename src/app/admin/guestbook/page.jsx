@@ -43,18 +43,18 @@ const AdminGuestbook = () => {
 
     const handleDelete = async () => {
         try {
-            await api.delete("/v1/admins/guestbooks", {
-                data: { guestBookId: selectedItems },
-            });
+            if (selectedItems.length === 1) {
+                await api.delete(`/v1/admins/guestbooks/${selectedItems[0]}`);
+            } else {
+                await api.delete("/v1/admins/guestbooks", {
+                    data: { guestBookIds: selectedItems },
+                });
+            }
 
             const updatedItems = registItems.filter((item) => !selectedItems.includes(item.guestBookId));
             setIsModalOpen(false);
             setRegistItems(updatedItems);
             setSelectedItems([]);
-
-            // 삭제 후 목록 새로 불러오기
-            const updated = await api.get("/v1/admins/guestbooks");
-            setRegistItems(updated.data.data);
         } catch (error) {
             console.error("방명록 삭제 실패", error);
             alert("삭제 실패");
