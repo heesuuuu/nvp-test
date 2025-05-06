@@ -1,52 +1,72 @@
-import Navigate from "@/components/layout/navigate/Navigate";
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import "../../../../scss/styles.scss";
 import Rank from "@/components/layout/rank/Rank";
 import { ButtonEnroll } from "@/components/common/Button";
 import Link from "next/link";
 import { Fire, Retry } from "@/components/common/icon/TestResult";
+import api from "@/utils/axios";
 
 const Result = () => {
+    const [resultData, setResultData] = useState(null);
+    useEffect(() => {
+        const fetchResult = async () => {
+            try {
+                const res = await api.get("/v1/results");
+                setResultData(res.data.data);
+            } catch (error) {
+                console.error("결과 불러오기 실패", error);
+            }
+        };
+        fetchResult();
+    }, []);
     return (
         <div className="result">
             <div className="inner">
-                {/* <Navigate title="포지션 테스트 결과" /> */}
                 <div className="result-top-title">포지션 테스트 결과</div>
-                <div className="title-wrapper">
-                    <div className="result-title">
-                        <div>코트 위 내 자리는...</div>
-                        <div>
-                            <p>팀의 에너지 핵폭탄!</p>
+                {resultData && (
+                    <div className="title-wrapper">
+                        <div className="result-title">
+                            <div>코트 위 내 자리는...</div>
+                            <div>
+                                <p>{resultData.resultModifier}!</p>
+                            </div>
+                        </div>
+                        <div className="result-img-wrapper">
+                            <div className="result-img">
+                                <img src={`/images/Position/${resultData.result}.png`} />
+                            </div>
+                            <div className="result-position">
+                                <p>{resultData.resultStatusKo}</p>
+                            </div>
                         </div>
                     </div>
-                    <div className="result-img-wrapper">
-                        <div className="result-img">
-                            <img src="/images/Position/LeftRight.png" />
-                        </div>
-                        <div className="result-position">
-                            <p>레프트</p>
-                        </div>
-                    </div>
-                </div>
+                )}
 
                 {/* result 설명 */}
-                <div className="des-wrapper">
-                    <div className="des-title">팀의 에너지 핵폭탄인 나는...!</div>
-                    <div className="description">
-                        <p>🎉 분위기 메이커는 나야 나!</p>
-                        어디서든 중심이 되고 싶은 당신은 레프트형! 에너지 넘치고 적극적인 당신 덕분에 팀은 언제나
-                        활기차요. 하지만 가끔 너무 앞서가다 혼자 폭주할 수도...? 그래도 없으면 심심한 사람 1위! 당신
-                        없인 경기가 안 돌아가요🔥
+                {resultData && (
+                    <div className="des-wrapper">
+                        <div className="des-title">{resultData.resultModifier}인 나는...!</div>
+                        <div className="description">
+                            <p>🎉 {resultData.resultInfo}</p>
+                            {resultData.resultInfo}🔥
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* 전체 유형 순위 */}
-                <section className="rank-wrapper">
-                    <div className="rank-title">전체 유형 순위</div>
-                    {[...Array(4)].map((_, i) => (
-                        <Rank key={i} />
-                    ))}
-                </section>
+                {resultData?.resultStatus?.length > 0 && (
+                    <section className="rank-wrapper">
+                        <div className="rank-title">전체 유형 순위</div>
+                        {resultData.resultStatus.map((status) => (
+                            <Rank
+                                key={status.resultStatusId}
+                                name={status.resultStatusKo}
+                                percent={status.resultStatusPer}
+                            />
+                        ))}
+                    </section>
+                )}
 
                 {/* 페이지 이동 버튼 */}
                 <div className="page-btn-wrapper">

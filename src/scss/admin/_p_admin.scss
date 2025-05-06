@@ -76,6 +76,7 @@
                     font-size: 15px;
                     font-weight: bold;
                     color: var(--primary);
+                    margin-right: 5px;
                 }
             }
             .answer-wrapper {
@@ -87,6 +88,7 @@
 
                 .answer-title {
                     display: flex;
+                    width: 100%;
                     padding: 15px 20px;
                     p {
                         color: var(--primary);
@@ -94,7 +96,10 @@
                     }
                     :nth-child(2) {
                         color: var(--black);
-                        width: 242px;
+                        width: 190px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow:ellipsis;
                         margin-right: 10px;
                     }
                     :nth-child(3) {
@@ -147,9 +152,13 @@
             border: 1px solid var(--primary);
             span {
                 color: var(--primary);
-                margin-right: 5px;
+                margin-right: 10px;
             }
             .title-input {
+                width: 100%;
+                padding-right: 5px;
+                overflow: hidden;
+                text-overflow: ellipsis;
                 &:focus {
                     outline: none;
                 }

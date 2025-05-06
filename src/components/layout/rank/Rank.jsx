@@ -1,6 +1,6 @@
 import React from "react";
 
-const Rank = () => {
+const Rank = (name, percent) => {
     return (
         <>
             <div className="ranking-wrapper">
@@ -9,15 +9,18 @@ const Rank = () => {
                         <div className="position">
                             <img src="/images/Position/LeftRight.png" alt="" />
                         </div>
-                        <div className="position-title">레프트</div>
+                        <div className="position-title">{name}</div>
                     </div>
 
                     <div className="state-wrapper">
                         {/* 게이지 */}
-                        <div className="gauge-wrapper"></div>
+                        <div
+                            className="gauge-wrapper"
+                            style={{ width: `${percent}%`, backgroundColor: "var(--primary)" }}
+                        ></div>
 
                         {/* 퍼센트 */}
-                        <div className="percent">52%</div>
+                        <div className="percent">{percent}%</div>
                     </div>
                 </div>
 

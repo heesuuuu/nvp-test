@@ -12,21 +12,34 @@ import { useRouter } from "next/navigation";
 const TestMain = () => {
     const router = useRouter();
     const theme = useTheme();
+    const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
 
     const handleNextStep = (answerIdx) => {
+        const selected = questions[activeStep].answers[answerIdx];
+        setAnswers((prev) => [...prev, selected.answerId]);
         setSelectedAnswer(answerIdx);
         setTimeout(() => {
             setSelectedAnswer(null);
             if (activeStep === questions.length - 1) {
-                router.push("/user/test/result");
+                const finalAnswerIds = [...answers, selected.answerId];
+
+                api.post("/v1/results/my", { answerIds: finalAnswerIds })
+                    .catch((err) => {
+                        console.error("결과 저장 실패", err);
+                    })
+                    .finally(() => {
+                        router.push("/user/test/result"); // 실패해도 이동
+                    });
             } else {
                 setActiveStep((prev) => prev + 1);
             }
         }, 200);
     };
+
+  
 
     const handleBack = () => {
         setActiveStep((prev) => prev - 1);

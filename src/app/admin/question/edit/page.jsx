@@ -1,50 +1,82 @@
 "use client";
 import Navigate from "@/components/layout/navigate/Navigate";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../../../scss/styles.scss";
-import InputField, { InputEdit } from "@/components/common/InputField";
+import { InputEdit } from "@/components/common/InputField";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import api from "@/utils/axios";
+import useQuestionStore from "@/store/questionStore";
 
-const edit = () => {
+const EditQuestionPage = () => {
     const router = useRouter();
-    const handlePage = () => {
+    // const searchParams = useSearchParams();
+    const questionData = useQuestionStore((state) => state.questionToEdit);
+    const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
+    const clearQuestionToEdit = useQuestionStore((state) => state.clearQuestionToEdit);
+
+    const handleUpdate = async () => {
+        try {
+            await api.put("/v1/admins/questions", questionData); // body에 전체 질문+답변 포함
+            alert("수정이 완료되었습니다.");
+            clearQuestionToEdit();
+            router.push("/admin/question");
+        } catch (error) {
+            console.error("질문 수정 실패", error);
+        }
+    };
+    useEffect(() => {
+        if (!questionData) {
+            alert("잘못된 접근입니다.");
+            router.push("/admin/question");
+        }
+    }, [questionData, router]);
+    if (!questionData) return null;
+
+    const handleBack = () => {
         router.push("/admin/question");
     };
+
     return (
         <div className="inner">
             <Navigate title="Test 질문지 수정" isAdmin />
             <div className="test-edit-wrapper">
                 <div className="test-title">
-                    <span>1.</span> <input type="text" defaultValue="아침에 " className="title-input" />
+                    <span>{questionData.questionId}</span>
+
+                    <input
+                        type="text"
+                        value={questionData.questionInfo}
+                        onChange={(e) => setQuestionToEdit({ ...questionData, questionInfo: e.target.value })}
+                        className="title-input"
+                    />
                 </div>
                 <div className="answer">
-                    <div className="answer-wrapper">
-                        <div className="edit-position">리베로</div>
-                        <InputEdit defaultValue="5분만 더.." height="46px" />
-                    </div>
-                    <div className="answer-wrapper">
-                        <div className="edit-position">레프트</div>
-                        <InputEdit defaultValue="오늘은 또 뭘 해볼까" height="46px" />
-                    </div>
-                    <div className="answer-wrapper">
-                        <div className="edit-position">센터</div>
-                        <InputEdit defaultValue="5분만 더.." height="46px" />
-                    </div>
-                    <div className="answer-wrapper">
-                        <div className="edit-position">세터</div>
-                        <InputEdit defaultValue="오늘은 또F" height="46px" />
-                    </div>
+                    {questionData.answers.map((answer, idx) => (
+                        <div className="answer-wrapper" key={answer.answerId}>
+                            <div className="edit-position">{answer.result}</div>
+                            <InputEdit
+                                value={answer.answer}
+                                onChange={(e) => {
+                                    const updatedAnswers = [...questionData.answers];
+                                    updatedAnswers[idx].answer = e.target.value;
+                                    setQuestionToEdit({ ...questionData, answers: updatedAnswers });
+                                }}
+                                height="46px"
+                                width="236px"
+                            />
+                        </div>
+                    ))}
                 </div>
             </div>
             <div className="test-button-wrapper">
-                <ButtonCancel onClick={handlePage} background="var(--gray-20)" color="var(--white)" >
+                <ButtonCancel onClick={handleBack} background="var(--gray-20)" color="var(--white)">
                     취소
                 </ButtonCancel>
-                <ButtonEnroll >수정하기</ButtonEnroll>
+                <ButtonEnroll onClick={handleUpdate}>수정하기</ButtonEnroll>
             </div>
         </div>
     );
 };
 
-export default edit;
+export default EditQuestionPage;

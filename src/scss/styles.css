@@ -1292,6 +1292,7 @@ html {
   font-size: 15px;
   font-weight: bold;
   color: var(--primary);
+  margin-right: 5px;
 }
 .question-manage-wrapper .inner .question-wrapper .answer-wrapper {
   background-color: var(--white);
@@ -1302,6 +1303,7 @@ html {
 }
 .question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title {
   display: flex;
+  width: 100%;
   padding: 15px 20px;
 }
 .question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title p {
@@ -1310,7 +1312,10 @@ html {
 }
 .question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title :nth-child(2) {
   color: var(--black);
-  width: 242px;
+  width: 190px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-right: 10px;
 }
 .question-manage-wrapper .inner .question-wrapper .answer-wrapper .answer-title :nth-child(3) {
