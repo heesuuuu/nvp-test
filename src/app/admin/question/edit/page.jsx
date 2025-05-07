@@ -4,13 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../../../scss/styles.scss";
 import { InputEdit } from "@/components/common/InputField";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import api from "@/utils/axios";
 import useQuestionStore from "@/store/questionStore";
 
 const EditQuestionPage = () => {
     const router = useRouter();
-    // const searchParams = useSearchParams();
     const questionData = useQuestionStore((state) => state.questionToEdit);
     const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
    
