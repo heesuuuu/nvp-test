@@ -170,16 +170,17 @@
             flex-direction: column;
             gap: 10px;
             margin-top: 15px;
-            .answer-wrapper {
+            .answer-edit-wrapper {
                 display: flex;
                 flex-direction: row;
                 .edit-position {
-                    width: 50px;
+                    width: 70px;
                     margin-right: 8px;
                     font-size: 13px;
                     font-weight: bold;
                     color: var(--primary);
-                    @include flexCenter;
+                    display: flex;
+                    align-items:center;
                 }
             }
         }

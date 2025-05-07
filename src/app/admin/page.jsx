@@ -1,17 +1,44 @@
-'use client";';
+"use client";
 import { PageButton } from "@/components/common/Button";
-import { GuestBookIcon, GuestChart, TestQuestion, AdminLogout } from "@/components/common/icon/AdminIcon";
+import { GuestBookIcon, GuestChart, TestQuestion, AdminLogout, AdminLogin } from "@/components/common/icon/AdminIcon";
 import Navigate from "@/components/layout/navigate/Navigate";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "../../scss/styles.scss";
+import api from "@/utils/axios";
+import { useRouter } from "next/navigation";
 
 const admin = () => {
+    const router = useRouter();
+    const [isAdmin, setIsAdmin] = useState(null);
+
+    useEffect(() => {
+        api.get("/v1/admins/questions", { withCredentials: true })
+            .then(() => setIsAdmin(true))
+            .catch(() => setIsAdmin(false));
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            const res = await api.delete("/v1/admins/logout", { withCredentials: true });
+            if (res.data.success) {
+                alert("로그아웃 되었습니다.");
+                router.push("/admin");
+            } else {
+                console.error("로그아웃 실패", res.data.error.message);
+                alert("로그아웃 오류");
+            }
+        } catch (error) {
+            console.error("요청 실패", error);
+            alert("네트워크 오류");
+        }
+    };
+    if (isAdmin === null) return null;
     return (
         <>
             <div className="inner">
-                <Navigate  isAdmin />
+                <Navigate isAdmin />
                 <div className="admin-wrapper">
                     <Link href="/admin/guestbook">
                         <PageButton
@@ -37,9 +64,18 @@ const admin = () => {
                             hoverColor="var(--white)"
                         ></PageButton>
                     </Link>
-                    <Link href="/admin/guestbook">
-                        <PageButton text="관리자 로그아웃" Icon={AdminLogout} hoverColor="var(--white)"></PageButton>
-                    </Link>
+                    {isAdmin === null ? null : isAdmin ? (
+                        <PageButton
+                            text="관리자 로그아웃"
+                            Icon={AdminLogout}
+                            onClick={handleLogout}
+                            hoverColor="var(--white)"
+                        ></PageButton>
+                    ) : (
+                        <Link href="/admin/login">
+                            <PageButton text="관리자 로그인" Icon={AdminLogin} hoverColor="var(--white)"></PageButton>
+                        </Link>
+                    )}
                 </div>
             </div>
         </>

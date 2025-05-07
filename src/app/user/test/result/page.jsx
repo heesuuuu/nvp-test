@@ -6,66 +6,68 @@ import { ButtonEnroll } from "@/components/common/Button";
 import Link from "next/link";
 import { Fire, Retry } from "@/components/common/icon/TestResult";
 import api from "@/utils/axios";
+import { useSearchParams } from "next/navigation";
 
 const Result = () => {
     const [resultData, setResultData] = useState(null);
+    const searchParams = useSearchParams();
+    const resultId = searchParams.get("resultId");
     useEffect(() => {
-        const fetchResult = async () => {
-            try {
-                const res = await api.get("/v1/results");
-                setResultData(res.data.data);
-            } catch (error) {
-                console.error("결과 불러오기 실패", error);
-            }
-        };
-        fetchResult();
-    }, []);
+        api.get("/v1/results").then((res) => {
+            const match = res.data.data.find((r) => r.resultId === Number(resultId));
+            setResultData(match);
+        });
+    }, [resultId]);
     return (
         <div className="result">
             <div className="inner">
                 <div className="result-top-title">포지션 테스트 결과</div>
                 {resultData && (
-                    <div className="title-wrapper">
-                        <div className="result-title">
-                            <div>코트 위 내 자리는...</div>
-                            <div>
-                                <p>{resultData.resultModifier}!</p>
+                    <>
+                        <div className="title-wrapper">
+                            <div className="result-title">
+                                <div>코트 위 내 자리는...</div>
+                                <div>
+                                    <p>{resultData.resultModifier}!</p>
+                                </div>
+                            </div>
+                            <div className="result-img-wrapper">
+                                <div className="result-img">
+                                    <img src={`/images/Position/${resultData.result}.png`} />
+                                </div>
+                                <div className="result-position">
+                                    <p>{resultData.resultKo}</p>
+                                </div>
                             </div>
                         </div>
-                        <div className="result-img-wrapper">
-                            <div className="result-img">
-                                <img src={`/images/Position/${resultData.result}.png`} />
-                            </div>
-                            <div className="result-position">
-                                <p>{resultData.resultStatusKo}</p>
-                            </div>
-                        </div>
-                    </div>
-                )}
 
-                {/* result 설명 */}
-                {resultData && (
-                    <div className="des-wrapper">
-                        <div className="des-title">{resultData.resultModifier}인 나는...!</div>
-                        <div className="description">
-                            <p>🎉 {resultData.resultInfo}</p>
-                            {resultData.resultInfo}🔥
-                        </div>
-                    </div>
-                )}
+                        {/* result 설명 */}
+                        {resultData && (
+                            <div className="des-wrapper">
+                                <div className="des-title">
+                                    <span>{resultData.resultModifier}</span>인 나는...!
+                                </div>
+                                <div className="description">
+                                    {/* <p>🎉 {resultData.resultInfo}</p> */}
+                                    {resultData.resultInfo}🔥
+                                </div>
+                            </div>
+                        )}
 
-                {/* 전체 유형 순위 */}
-                {resultData?.resultStatus?.length > 0 && (
-                    <section className="rank-wrapper">
-                        <div className="rank-title">전체 유형 순위</div>
-                        {resultData.resultStatus.map((status) => (
-                            <Rank
-                                key={status.resultStatusId}
-                                name={status.resultStatusKo}
-                                percent={status.resultStatusPer}
-                            />
-                        ))}
-                    </section>
+                        {/* 전체 유형 순위 */}
+                        {resultData?.resultStatus?.length > 0 && (
+                            <section className="rank-wrapper">
+                                <div className="rank-title">전체 유형 순위</div>
+                                {resultData.resultStatus.map((status) => (
+                                    <Rank
+                                        key={status.resultStatusId}
+                                        name={status.resultStatusKo}
+                                        percent={status.resultStatusPer}
+                                    />
+                                ))}
+                            </section>
+                        )}
+                    </>
                 )}
 
                 {/* 페이지 이동 버튼 */}

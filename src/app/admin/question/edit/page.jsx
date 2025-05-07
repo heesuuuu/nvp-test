@@ -1,6 +1,6 @@
 "use client";
 import Navigate from "@/components/layout/navigate/Navigate";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../../scss/styles.scss";
 import { InputEdit } from "@/components/common/InputField";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
@@ -13,20 +13,21 @@ const EditQuestionPage = () => {
     // const searchParams = useSearchParams();
     const questionData = useQuestionStore((state) => state.questionToEdit);
     const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
-    const clearQuestionToEdit = useQuestionStore((state) => state.clearQuestionToEdit);
+   
+    const didRun = useRef(false)
 
     const handleUpdate = async () => {
         try {
             await api.put("/v1/admins/questions", questionData); // body에 전체 질문+답변 포함
             alert("수정이 완료되었습니다.");
-            clearQuestionToEdit();
             router.push("/admin/question");
         } catch (error) {
             console.error("질문 수정 실패", error);
         }
     };
     useEffect(() => {
-        if (!questionData) {
+        if (!questionData && !didRun.current) {
+            didRun.current=true;
             alert("잘못된 접근입니다.");
             router.push("/admin/question");
         }
@@ -53,7 +54,7 @@ const EditQuestionPage = () => {
                 </div>
                 <div className="answer">
                     {questionData.answers.map((answer, idx) => (
-                        <div className="answer-wrapper" key={answer.answerId}>
+                        <div className="answer-edit-wrapper" key={answer.answerId}>
                             <div className="edit-position">{answer.result}</div>
                             <InputEdit
                                 value={answer.answer}
