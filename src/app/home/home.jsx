@@ -1,17 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../scss/styles.scss";
-import {  MainButton } from "@/components/common/Button";
+import { MainButton } from "@/components/common/Button";
+import api from "@/utils/axios";
 
 const Home = () => {
     const router = useRouter();
-    const seriesData = [30, 40, 35, 50];
-    const total = seriesData.reduce((acc, cur) => acc + cur, 0);
+    const [total, setTotal] = useState(0);
 
     const handleStart = () => {
         router.push("/user/test");
     };
+
+    useEffect(() => {
+        api.get("/v1/admins/results")
+            .then((res) => {
+                if (res.data.success) {
+                    setTotal(res.data.data.total);
+                } else {
+                    console.error("서버 에러", res.data.error.message);
+                }
+            })
+            .catch((err) => {
+                console.error("총 인원 조회 실패", err.response?.data || err);
+            });
+    },[]);
 
     return (
         <div className="home-wrapper">

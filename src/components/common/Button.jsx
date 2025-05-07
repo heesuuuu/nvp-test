@@ -287,10 +287,21 @@ const StyledPageButton = styled.button`
     }
 `;
 
-export const PageButton = ({ text, desc, Icon, hoverColor = "var(--white)", defaultColor = "var(--primary)" }) => {
+export const PageButton = ({
+    text,
+    desc,
+    Icon,
+    onClick,
+    hoverColor = "var(--white)",
+    defaultColor = "var(--primary)",
+}) => {
     const [isHover, setIsHover] = React.useState(false);
     return (
-        <StyledPageButton onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <StyledPageButton
+            onClick={onClick}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+        >
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <Icon fill={isHover ? hoverColor : defaultColor} />
                 <p>{text}</p>

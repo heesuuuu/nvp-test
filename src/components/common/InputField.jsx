@@ -76,6 +76,8 @@ export const InputEdit = styled.input`
     border-bottom: 1px solid var(--blue-80);
     font-size: 14px;
     transition: border 0.2s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &::placeholder {
         color: var(--gray-default);
     }

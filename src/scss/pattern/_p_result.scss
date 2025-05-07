@@ -1,14 +1,12 @@
 .result {
     position: relative;
     width: 100%;
-    // height: 100vh;
     padding-bottom: 80px;
     background-image: url("/images/Items/result-background-img.jpg");
     background-repeat: no-repeat;
     background-size: contain;
     background-color: #bdd8eb;
     .inner {
-        display: grid;
         gap: 55px;
         .result-top-title {
             text-align: center;
@@ -36,6 +34,7 @@
                 }
             }
             .result-img-wrapper {
+                width: 100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -91,7 +90,9 @@
         // result 설명
 
         .des-wrapper {
+            width: 100%;
             .description {
+                width: 100%;
                 background-color: var(--white);
                 padding: 15px;
                 border-radius: 10px;
@@ -106,6 +107,9 @@
                 background-color: var(--white);
                 padding: 10px;
                 border-radius: 7px;
+                span{
+                    font-weight: bold;
+                }
             }
         }
 

@@ -45,7 +45,7 @@ const Write = () => {
             guestBookPassword,
         };
         try {
-            const res = await api.post("v1/guestbooks", postData);
+            const res = await api.post("/v1/guestbooks", postData);
             console.log("방명록 등록 성공", res.data);
             router.push("/user/guestbook");
         } catch (error) {
@@ -56,9 +56,6 @@ const Write = () => {
                 console.log("네트워크 오류 또는 서버 연결 실패:", error.message);
             }
         }
-
-        // console.log("방명록 제출!", { guestBookNickname, guestBookInfo, guestBookPassword });
-        router.push("/user/guestbook");
     };
 
     const handleConfirmCancel = () => {

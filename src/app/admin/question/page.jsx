@@ -1,17 +1,35 @@
 "use client";
 import { EditButton, NumberButton, ScrollButton } from "@/components/common/Button";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 
 import { scrollToBottom, scrollToTop } from "@/utils/scroll";
 import { useRouter } from "next/navigation";
+import api from "@/utils/axios";
+import useQuestionStore from "@/store/questionStore";
 
 const question = () => {
     const router = useRouter();
-    const handlePage = () => {
-        router.push("/admin/question/edit/");
+    const [questionsList, setQuestionsList] = useState([]);
+    const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
+
+    const handlePage = (question) => {
+        setQuestionToEdit(question);
+        router.push("/admin/question/edit");
     };
+
+    useEffect(() => {
+        const adminQuestions = async () => {
+            try {
+                const res = await api.get("/v1/admins/questions");
+                setQuestionsList(res.data.data);
+            } catch (error) {
+                console.error("가져오기 실패", error);
+            }
+        };
+        adminQuestions();
+    }, []);
 
     return (
         <div className="question-manage-wrapper">
@@ -19,7 +37,7 @@ const question = () => {
                 <Navigate title="Test 질문지 관리" isAdmin />
                 <div>
                     <section className="num-wrapper">
-                        {[...Array(10)].map((_, i) => (
+                        {questionsList.map((_, i) => (
                             <NumberButton
                                 key={i + 1}
                                 onClick={() => {
@@ -33,26 +51,26 @@ const question = () => {
                             </NumberButton>
                         ))}
                     </section>
-                    {[...Array(10)].map((_, qIndex) => (
-                        <section key={qIndex} className="question-wrapper" id={`question-${qIndex}`}>
+                    {questionsList.map((q, qIndex) => (
+                        <section key={q.questionId} className="question-wrapper" id={`question-${qIndex}`}>
                             <div className="question-header">
                                 <div className="admin-question-title">
-                                    Q{qIndex + 1}. 아침에 눈을 떴을 때 당신의 반응은?
+                                    Q{qIndex + 1}. {q.questionInfo}
                                 </div>
-                                <EditButton onClick={handlePage} />
+                                <EditButton onClick={() => handlePage(q)} />
                             </div>
 
                             <div>
                                 <div className="answer-wrapper">
-                                    {[...Array(4)].map((_, aIndex) => (
+                                    {q.answers.map((a, aIndex) => (
                                         <div className="answer-title" key={aIndex}>
-                                            <p>A1.</p>
-                                            <div>오늘은 또 어쩌고 저쩌고</div>
-                                            <div>position</div>
+                                            <p>A{aIndex + 1}.</p>
+                                            <div>{a.answer}</div>
+                                            <div>{a.result}</div>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="answer-line"></div>
+                                {qIndex !== questionsList.length - 1 && <div className="answer-line"></div>}
                             </div>
                         </section>
                     ))}
