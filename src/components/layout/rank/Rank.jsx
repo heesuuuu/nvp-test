@@ -20,3 +20,4 @@ const Rank = ({ name, percent }) => {
         </div>
     );
 };
+export default Rank;
