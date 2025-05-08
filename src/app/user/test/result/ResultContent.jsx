@@ -111,13 +111,13 @@ const Result = () => {
                             height="35"
                         />
                         <Link href={"https://www.youtube.com/@NVP-lh3op"} target="_blank">
-                            <img src="/images/SNS/youtube.svg" alt="Nvp-youtube" />
+                            <img src="/images/SNS/youtube.png" alt="Nvp-youtube" />
                         </Link>
                         <Link href={"https://www.instagram.com/nsu_nvp_volleyball/"} target="_blank">
-                            <img src="/images/SNS/instagram.svg" alt="Nvp-instagram" />
+                            <img src="/images/SNS/instagram.png" alt="Nvp-instagram" />
                         </Link>
 
-                        <img src="/images/SNS/NvpLogo.svg" alt="Nvp-instagram" onClick={handle} />
+                        <img src="/images/SNS/NvpLogo.png" alt="Nvp-instagram" onClick={handle} />
 
                         <img
                             src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Left%20Light%20Skin%20Tone.png"
