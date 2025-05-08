@@ -59,12 +59,22 @@ const TestMain = () => {
 
     const currentQuestion = questions[activeStep];
 
+    //답변 랜덤으로
+    const shuffleArray = (array) => {
+        return [...array].sort(() => Math.random() - 0.5);
+    };
+
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
                 const res = await api.get("/v1/questions");
-                setQuestions(res.data.data);
-                console.log("질문 리스트", res.data.data);
+
+                const shuffledQuestions = res.data.data.map((q) => ({
+                    ...q,
+                    answers: shuffleArray(q.answers),
+                }));
+                setQuestions(shuffledQuestions);
+                console.log("질문 리스트", shuffledQuestions);
             } catch (error) {
                 console.error("가져오기 실패", error);
             }

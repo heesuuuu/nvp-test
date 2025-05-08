@@ -78,32 +78,45 @@ const guestbook = () => {
             </div>
 
             <section className="guestbook-list-wrapper">
-                {filteredGuestbooks.map((item) => {
-                    const d = new Date(item.createdAt);
-                    d.setHours(d.getHours());
-                    const now = Date.now();
-                    const diff = (now - d) / 1000;
+                {filteredGuestbooks.length > 0 ? (
+                    filteredGuestbooks.map((item) => {
+                        const d = new Date(item.createdAt);
+                        d.setHours(d.getHours());
+                        const now = Date.now();
+                        const diff = (now - d) / 1000;
 
-                    let formattedDate = "";
-                    if (diff < 60) {
-                        formattedDate = "방금 전";
-                    } else if (diff < 60 * 60 * 24 * 3) {
-                        formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
-                    } else {
-                        formattedDate = format(d, "PPP EEE p", { locale: ko });
-                    }
-                    return (
-                        <GuestBookItem
-                            key={item.guestBookId}
-                            id={item.guestBookId}
-                            name={item.guestBookNickname}
-                            content={item.guestBookInfo}
-                            createdAt={formattedDate}
-                            isRegist={true}
-                            onDelete={handleDeleteGuestbook}
+                        let formattedDate = "";
+                        if (diff < 60) {
+                            formattedDate = "방금 전";
+                        } else if (diff < 60 * 60 * 24 * 3) {
+                            formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
+                        } else {
+                            formattedDate = format(d, "PPP EEE p", { locale: ko });
+                        }
+                        return (
+                            <GuestBookItem
+                                key={item.guestBookId}
+                                id={item.guestBookId}
+                                name={item.guestBookNickname}
+                                content={item.guestBookInfo}
+                                createdAt={formattedDate}
+                                isRegist={true}
+                                onDelete={handleDeleteGuestbook}
+                            />
+                        );
+                    })
+                ) : (
+                    <div className="none-guestbook">
+                        "방명록이 기다리고 있어요. 소중한 한 줄을 남겨주세요
+                        <img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Love%20Letter.png"
+                            alt="Love Letter"
+                            width="25"
+                            height="25"
                         />
-                    );
-                })}
+                        "
+                    </div>
+                )}
             </section>
         </>
     );
