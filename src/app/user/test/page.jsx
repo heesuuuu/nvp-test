@@ -33,14 +33,18 @@ const TestMain = () => {
                         const matched = q.answers.find((a) => a.answerId === id);
                         if (matched) {
                             const key = matched.result;
+
                             position[key] = (position[key] || 0) + 1;
                             break;
                         }
                     }
                 });
-
+                console.log("최종 선택된 answerId 배열:", finalAnswerIds);
+                console.log("계산된 포지션 객체:", position);
                 api.post("/v1/results/my", { position }).then((res) => {
+                    console.log("서버 응답 데이터:", res.data);
                     const result = res.data.data;
+                    sessionStorage.setItem("latestResult", JSON.stringify(result));
                     router.push(`/user/test/result?resultId=${result.resultId}`);
                 });
             } else {
@@ -55,12 +59,22 @@ const TestMain = () => {
 
     const currentQuestion = questions[activeStep];
 
+    //답변 랜덤으로
+    const shuffleArray = (array) => {
+        return [...array].sort(() => Math.random() - 0.5);
+    };
+
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
                 const res = await api.get("/v1/questions");
-                setQuestions(res.data.data);
-                console.log("질문 리스트", res.data.data);
+
+                const shuffledQuestions = res.data.data.map((q) => ({
+                    ...q,
+                    answers: shuffleArray(q.answers),
+                }));
+                setQuestions(shuffledQuestions);
+                console.log("질문 리스트", shuffledQuestions);
             } catch (error) {
                 console.error("가져오기 실패", error);
             }

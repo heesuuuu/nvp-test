@@ -1,23 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "../../../../scss/styles.scss";
-import Rank from "@/components/layout/rank/Rank";
 import { ButtonEnroll } from "@/components/common/Button";
 import Link from "next/link";
 import { Fire, Retry } from "@/components/common/icon/TestResult";
 import api from "@/utils/axios";
 import { useSearchParams } from "next/navigation";
+import { Rank } from "@/components/layout/rank/Rank";
 
 const Result = () => {
     const [resultData, setResultData] = useState(null);
     const searchParams = useSearchParams();
     const resultId = searchParams.get("resultId");
-    useEffect(() => {
-        api.get("/v1/results").then((res) => {
-            const match = res.data.data.find((r) => r.resultId === Number(resultId));
-            setResultData(match);
-        });
-    }, [resultId]);
+     useEffect(() => {
+         const stored = sessionStorage.getItem("latestResult");
+         if (stored) {
+             const parsed = JSON.parse(stored);
+             setResultData(parsed);
+         }
+     }, []);
+
+
     return (
         <div className="result">
             <div className="inner">
@@ -63,6 +66,7 @@ const Result = () => {
                                         key={status.resultStatusId}
                                         name={status.resultStatusKo}
                                         percent={status.resultStatusPer}
+                                        type={status.resultStatusName}
                                     />
                                 ))}
                             </section>
@@ -74,8 +78,8 @@ const Result = () => {
                 <div className="page-btn-wrapper">
                     <Link href={"/user/guestbook/"}>
                         <ButtonEnroll style={{ backgroundColor: "var(--blue-500)" }} className="page-btn blue-button">
-                            방명록 보러가기
-                            <Fire />
+                            방명록 보러가기<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Fire.webp" alt="Fire" width="25" height="25" />
+                            {/* <Fire /> */}
                         </ButtonEnroll>
                     </Link>
                     <Link href="/">
@@ -90,12 +94,24 @@ const Result = () => {
                 <div className="sns-wrapper">
                     <div className="sns-title">NVP 구경하러 가기</div>
                     <div className="sns-link">
+                        <img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Right%20Light%20Skin%20Tone.png"
+                            alt="Backhand Index Pointing Right Light Skin Tone"
+                            width="35"
+                            height="35"
+                        />
                         <Link href={"https://www.youtube.com/@NVP-lh3op"} target="_blank">
                             <img src="/images/SNS/youtube.svg" alt="Nvp-youtube" />
                         </Link>
                         <Link href={"https://www.instagram.com/nsu_nvp_volleyball/"} target="_blank">
                             <img src="/images/SNS/instagram.svg" alt="Nvp-instagram" />
                         </Link>
+                        <img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Left%20Light%20Skin%20Tone.png"
+                            alt="Backhand Index Pointing Left Light Skin Tone"
+                            width="35"
+                            height="35"
+                        />
                     </div>
                 </div>
             </div>

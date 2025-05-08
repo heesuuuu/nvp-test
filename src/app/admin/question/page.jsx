@@ -13,6 +13,7 @@ const question = () => {
     const router = useRouter();
     const [questionsList, setQuestionsList] = useState([]);
     const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
+    const positionOrder = ["LEFT", "CENTER", "SETTER", "LIBERO"];
 
     const handlePage = (question) => {
         setQuestionToEdit(question);
@@ -62,13 +63,18 @@ const question = () => {
 
                             <div>
                                 <div className="answer-wrapper">
-                                    {q.answers.map((a, aIndex) => (
-                                        <div className="answer-title" key={aIndex}>
-                                            <p>A{aIndex + 1}.</p>
-                                            <div>{a.answer}</div>
-                                            <div>{a.result}</div>
-                                        </div>
-                                    ))}
+                                    {[...q.answers]
+                                        .sort((a, b) => {
+                                            const order = ["LEFT", "CENTER", "SETTER", "LIBERO"];
+                                            return order.indexOf(a.result) - order.indexOf(b.result);
+                                        })
+                                        .map((a, aIndex) => (
+                                            <div className="answer-title" key={aIndex}>
+                                                <p>A{aIndex + 1}.</p>
+                                                <div>{a.answer}</div>
+                                                <div>{a.result}</div>
+                                            </div>
+                                        ))}
                                 </div>
                                 {qIndex !== questionsList.length - 1 && <div className="answer-line"></div>}
                             </div>

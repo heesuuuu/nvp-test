@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
-import api from '@/utils/axios';
+import api from "@/utils/axios";
 
 const login = () => {
     const router = useRouter();
@@ -26,22 +26,22 @@ const login = () => {
         if (!isFormValid) return;
 
         // 로그인 요청
-        api.post('/v1/admins/login', {
+        api.post("/v1/admins/login", {
             id: adminname,
-            password: password
-        }).then(res => {
-            console.log(res);
-            console.log(res.status);
-            if(res.status === 200) {
-                router.push("/admin");
-            }
-            else alert('로그인 실패')
-        }).catch(err => {
-            alert('로그인 실패!');
-            console.log(err.status);
-            console.error(err);
-        });
-            
+            password: password,
+        })
+            .then((res) => {
+                console.log(res);
+                console.log(res.status);
+                if (res.status === 200) {
+                    router.push("/admin");
+                } else alert("로그인 실패");
+            })
+            .catch((err) => {
+                alert("로그인 실패!");
+                console.log(err.status);
+                console.error(err);
+            });
     };
     return (
         <div className="login-wrapper">
@@ -52,7 +52,7 @@ const login = () => {
                         올바른 아이디, 비밀번호를 입력하시면 <br /> 관리자 모드에 들어갈 수 있어요 :)
                     </p>
                 </section>
-                <form className="input-wrapper">
+                <form className="input-wrapper" onSubmit={handleConfirm}>
                     <p className="input-title">아이디</p>
                     <div className="input-box">
                         <InputDefault
@@ -86,12 +86,7 @@ const login = () => {
                         >
                             취소
                         </ButtonCancel>
-                        <ButtonEnroll
-                            onClick={handleConfirm}
-                            disabled={!isFormValid}
-                            width="168px"
-                            activebg="var(--active)"
-                        >
+                        <ButtonEnroll type="submit" disabled={!isFormValid} width="168px" activebg="var(--active)">
                             확인
                         </ButtonEnroll>
                     </div>

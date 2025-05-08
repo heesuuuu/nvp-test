@@ -23,6 +23,12 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    .none-guestbook{
+        @include flexCenter;
+        text-align: center;
+        color: var(--blue-200);
+        height: 200px;
+    }
 }
 .guestbook-wrapper {
     background-color: var(--white);
