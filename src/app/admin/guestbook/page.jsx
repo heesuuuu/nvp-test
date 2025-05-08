@@ -97,37 +97,42 @@ const AdminGuestbook = () => {
                     </div>
                 </div>
             </div>
-            {registItems.length > 0 && (
-                <section className="guestbook-list-wrapper">
-                    {filteredGuestbooks.map((item) => {
-                        const d = new Date(item.createdAt);
-                        d.setHours(d.getHours());
-                        const now = Date.now();
-                        const diff = (now - d) / 1000;
+            <section className="guestbook-list-wrapper">
+                {registItems.length > 0 ? (
+                    <>
+                        {filteredGuestbooks.map((item) => {
+                            const d = new Date(item.createdAt);
+                            d.setHours(d.getHours());
+                            const now = Date.now();
+                            const diff = (now - d) / 1000;
 
-                        let formattedDate = "";
-                        if (diff < 60) {
-                            formattedDate = "방금 전";
-                        } else if (diff < 60 * 60 * 24 * 3) {
-                            formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
-                        } else {
-                            formattedDate = format(d, "PPP EEE p", { locale: ko });
-                        }
-                        return (
-                            <AdminGuestBookItem
-                                key={item.guestBookId}
-                                id={item.guestBookId}
-                                name={item.guestBookNickname}
-                                content={item.guestBookInfo}
-                                createdAt={formattedDate}
-                                isRegist={true}
-                                isSelected={selectedItems.includes(item.guestBookId)}
-                                toggleSelect={() => toggleSelect(item.guestBookId)}
-                            />
-                        );
-                    })}
-                </section>
-            )}
+                            let formattedDate = "";
+                            if (diff < 60) {
+                                formattedDate = "방금 전";
+                            } else if (diff < 60 * 60 * 24 * 3) {
+                                formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
+                            } else {
+                                formattedDate = format(d, "PPP EEE p", { locale: ko });
+                            }
+                            return (
+                                <AdminGuestBookItem
+                                    key={item.guestBookId}
+                                    id={item.guestBookId}
+                                    name={item.guestBookNickname}
+                                    content={item.guestBookInfo}
+                                    createdAt={formattedDate}
+                                    isRegist={true}
+                                    isSelected={selectedItems.includes(item.guestBookId)}
+                                    toggleSelect={() => toggleSelect(item.guestBookId)}
+                                />
+                            );
+                        })}
+                    </>
+                ) : (
+                    <div className="none-guestbook">등록된 방명록이 없습니다.</div>
+                )}
+            </section>
+
             <Modal
                 className="delete-modal"
                 isOpen={isModalOpen}

@@ -17,11 +17,11 @@ const Home = () => {
         api.post("/v1/visitors/hit")
 
             .then((res) => {
-                const totalCount = res?.data;
+                const totalCount = res?.data?.data;
                 if (res.data.success && typeof totalCount === "number") {
                     setTotal(totalCount);
                 } else {
-                    console.error("서버 에러", res.data.error.message);
+                    console.error("서버 에러", res.data);
                 }
             })
             .catch((err) => {

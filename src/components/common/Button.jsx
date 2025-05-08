@@ -88,6 +88,7 @@ export const ButtonEnroll = styled.button`
     /* font-weight: 600; */
     font-size: ${(props) => props.fontSize || "13px"};
     font-family: ${(props) => props.fontFamily || "var(--font-family-base)"};
+    
 
     &:hover {
         background-color: ${(props) => props.hoverbg || "var(--active)"};
