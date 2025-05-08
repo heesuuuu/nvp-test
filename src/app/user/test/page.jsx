@@ -82,7 +82,7 @@ const TestMain = () => {
             try {
                 const res = await api.get("/v1/questions");
 
-                const shuffledQuestions = res.data.data.map((q) => ({
+                const shuffledQuestions = shuffleArray( res.data.data).map((q) => ({
                     ...q,
                     answers: shuffleArray(q.answers),
                 }));
