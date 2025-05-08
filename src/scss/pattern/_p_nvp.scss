@@ -1,0 +1,11 @@
+.nvp-wrapper {
+    @include flexCenter;
+    @include posXY;
+    flex-direction: column;
+    width: 100%;
+    font-size: 14px;
+    color: var(--blue-400);
+    .nvp-title {
+        text-align: center;
+    }
+}

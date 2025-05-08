@@ -5,12 +5,16 @@ import { ButtonEnroll } from "@/components/common/Button";
 import Link from "next/link";
 import { Fire, Retry } from "@/components/common/icon/TestResult";
 import api from "@/utils/axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Rank } from "@/components/layout/rank/Rank";
 
 const Result = () => {
     const [resultData, setResultData] = useState(null);
     const searchParams = useSearchParams();
+    const router = useRouter()
+    const handle = () => {
+        router.push("/user/nvp")
+    }
     const resultId = searchParams.get("resultId");
      useEffect(() => {
          const stored = sessionStorage.getItem("latestResult");
@@ -60,7 +64,7 @@ const Result = () => {
                         {/* 전체 유형 순위 */}
                         {resultData?.resultStatus?.length > 0 && (
                             <section className="rank-wrapper">
-                                <div className="rank-title">전체 유형 순위</div>
+                                <div className="rank-title">가장 많이 나온 포지션은?</div>
                                 {resultData.resultStatus.map((status) => (
                                     <Rank
                                         key={status.resultStatusId}
@@ -78,7 +82,13 @@ const Result = () => {
                 <div className="page-btn-wrapper">
                     <Link href={"/user/guestbook/"}>
                         <ButtonEnroll style={{ backgroundColor: "var(--blue-500)" }} className="page-btn blue-button">
-                            방명록 보러가기<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Fire.webp" alt="Fire" width="25" height="25" />
+                            방명록 보러가기
+                            <img
+                                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Fire.webp"
+                                alt="Fire"
+                                width="25"
+                                height="25"
+                            />
                             {/* <Fire /> */}
                         </ButtonEnroll>
                     </Link>
@@ -106,6 +116,9 @@ const Result = () => {
                         <Link href={"https://www.instagram.com/nsu_nvp_volleyball/"} target="_blank">
                             <img src="/images/SNS/instagram.svg" alt="Nvp-instagram" />
                         </Link>
+
+                        <img src="/images/SNS/NvpLogo.svg" alt="Nvp-instagram" onClick={handle} />
+
                         <img
                             src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Left%20Light%20Skin%20Tone.png"
                             alt="Backhand Index Pointing Left Light Skin Tone"
