@@ -634,6 +634,7 @@ html {
   justify-content: center;
   align-items: center;
   gap: 13px;
+  width: 100%;
 }
 .ranking-wrapper .position-wrapper .position-img-wrapper {
   width: -moz-fit-content;
@@ -672,11 +673,9 @@ html {
   gap: 13px;
 }
 .ranking-wrapper .position-wrapper .state-wrapper .gauge-wrapper {
-  width: 200px;
-  height: 4px;
-  background-color: var(--gray-10);
-  border-radius: 100px;
-  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: width 0.3s ease;
 }
 .ranking-wrapper .position-wrapper .state-wrapper .percent {
   font-family: var(--font-family-gowun);
@@ -1072,6 +1071,9 @@ html {
   padding: 10px;
   border-radius: 7px;
 }
+.result .inner .des-wrapper .des-title span {
+  font-weight: bold;
+}
 .result .inner .rank-wrapper {
   width: 100%;
   height: auto;
@@ -1117,9 +1119,16 @@ html {
   color: var(--blue-300);
   padding-bottom: 20px;
 }
+.result .sns-wrapper .sns-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
 .result .sns-wrapper .sns-link {
   display: flex;
   gap: 18px;
+  justify-content: center;
 }
 
 .inner-wrapper {
@@ -1362,9 +1371,13 @@ html {
 }
 .inner .test-edit-wrapper .test-title span {
   color: var(--primary);
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .inner .test-edit-wrapper .test-title .title-input {
+  width: 100%;
+  padding-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   border: none;
 }
 .inner .test-edit-wrapper .test-title .title-input:focus {
@@ -1376,18 +1389,17 @@ html {
   gap: 10px;
   margin-top: 15px;
 }
-.inner .test-edit-wrapper .answer .answer-wrapper {
+.inner .test-edit-wrapper .answer .answer-edit-wrapper {
   display: flex;
   flex-direction: row;
 }
-.inner .test-edit-wrapper .answer .answer-wrapper .edit-position {
-  width: 50px;
+.inner .test-edit-wrapper .answer .answer-edit-wrapper .edit-position {
+  width: 70px;
   margin-right: 8px;
   font-size: 13px;
   font-weight: bold;
   color: var(--primary);
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 .inner .test-button-wrapper {
@@ -1458,4 +1470,16 @@ html {
   border-bottom: 2px solid var(--blue-80);
   padding-bottom: 10px;
   margin-bottom: 10px;
+}
+
+.apexcharts-legend {
+  display: flex !important;
+  justify-content: center !important;
+  flex-direction: column;
+  flex-wrap: nowrap !important;
+}
+
+.apexcharts-legend-series {
+  display: flex !important;
+  align-items: center;
 }/*# sourceMappingURL=styles.css.map */

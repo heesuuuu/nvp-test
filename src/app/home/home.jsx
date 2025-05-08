@@ -14,18 +14,20 @@ const Home = () => {
     };
 
     useEffect(() => {
-        api.get("/v1/admins/results")
+        api.post("/v1/visitors/hit")
+
             .then((res) => {
-                if (res.data.success) {
-                    setTotal(res.data.data.total);
+                const totalCount = res?.data;
+                if (res.data.success && typeof totalCount === "number") {
+                    setTotal(totalCount);
                 } else {
                     console.error("서버 에러", res.data.error.message);
                 }
             })
             .catch((err) => {
-                console.error("총 인원 조회 실패", err.response?.data || err);
+                console.error("방문자 수 조회 실패", err.response?.data || err);
             });
-    },[]);
+    }, []);
 
     return (
         <div className="home-wrapper">
@@ -40,14 +42,14 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="position">
-                    <img src="/images/Position/MiddleBlocker.png" alt="속공수 캐릭터" />
-                    <img src="/images/Position/Setter.png" alt="세터 캐릭터" />
-                    <img src="/images/Position/Libero.png" alt="수비 캐릭터" />
-                    <img src="/images/Position/LeftRight.png" alt="공격 캐릭터" />
+                    <img src="/images/Position/CENTER.png" alt="속공수 캐릭터" />
+                    <img src="/images/Position/SETTER.png" alt="세터 캐릭터" />
+                    <img src="/images/Position/LIBERO.png" alt="수비 캐릭터" />
+                    <img src="/images/Position/LEFT.png" alt="공격 캐릭터" />
                 </div>
 
                 <div className="start-btn-wrapper">
-                    <div>총 테스트 인원: {total}명</div>
+                    <div>방문자 수: {total}명</div>
                     <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
                         테스트 시작하기
                     </MainButton>

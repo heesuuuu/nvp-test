@@ -33,14 +33,18 @@ const TestMain = () => {
                         const matched = q.answers.find((a) => a.answerId === id);
                         if (matched) {
                             const key = matched.result;
+
                             position[key] = (position[key] || 0) + 1;
                             break;
                         }
                     }
                 });
-
+                console.log("최종 선택된 answerId 배열:", finalAnswerIds);
+                console.log("계산된 포지션 객체:", position);
                 api.post("/v1/results/my", { position }).then((res) => {
+                    console.log("서버 응답 데이터:", res.data);
                     const result = res.data.data;
+                    sessionStorage.setItem("latestResult", JSON.stringify(result));
                     router.push(`/user/test/result?resultId=${result.resultId}`);
                 });
             } else {
