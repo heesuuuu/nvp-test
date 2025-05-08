@@ -16,11 +16,22 @@ const TestMain = () => {
     const [questions, setQuestions] = useState([]);
     const [activeStep, setActiveStep] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [selectedAnswers, setSelectedAnswers] = useState([]);
 
     const handleNextStep = (answerIdx) => {
         const selected = questions[activeStep].answers[answerIdx];
-        setAnswers((prev) => [...prev, selected.answerId]);
+
         setSelectedAnswer(answerIdx);
+
+        const newAnswers = [...answers];
+        newAnswers[activeStep] = selected.answerId;
+        setAnswers(newAnswers);
+
+        // 선택된 인덱스 저장
+        const updatedSelected = [...selectedAnswers];
+        updatedSelected[activeStep] = answerIdx;
+        setSelectedAnswers(updatedSelected);
+
         setTimeout(() => {
             setSelectedAnswer(null);
 
@@ -56,6 +67,8 @@ const TestMain = () => {
     const handleBack = () => {
         setActiveStep((prev) => prev - 1);
     };
+    // 렌더링 시 현재 질문에 대해 선택한 답변이 있는 경우 표시
+    const currentSelectedIndex = selectedAnswers[activeStep] ?? null;
 
     const currentQuestion = questions[activeStep];
 
@@ -96,8 +109,14 @@ const TestMain = () => {
                     <ButtonDafult
                         key={a.answerId}
                         style={{
-                            backgroundColor: selectedAnswer === idx ? "var(--primary)" : "var(--white)",
-                            color: selectedAnswer === idx ? "var(--white)" : "var(--black)",
+                            backgroundColor:
+                                selectedAnswer === idx || selectedAnswers[activeStep] === idx
+                                    ? "var(--primary)"
+                                    : "var(--white)",
+                            color:
+                                selectedAnswer === idx || selectedAnswers[activeStep] === idx
+                                    ? "var(--white)"
+                                    : "var(--black)",
                         }}
                         onClick={() => handleNextStep(idx)}
                     >
@@ -129,8 +148,8 @@ const TestMain = () => {
                 nextButton={
                     <Button
                         size="small"
-                        onClick={() => handleNextStep(selectedAnswer)}
-                        disabled={activeStep === questions.length - 1 || selectedAnswer === null}
+                        onClick={() => handleNextStep(selectedAnswers[activeStep])}
+                        disabled={selectedAnswers[activeStep] == null}
                         sx={{
                             color: "var(--primary)",
 
