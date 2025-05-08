@@ -107,7 +107,7 @@
                 background-color: var(--white);
                 padding: 10px;
                 border-radius: 7px;
-                span{
+                span {
                     font-weight: bold;
                 }
             }
@@ -153,27 +153,36 @@
 
     // sns
     .sns-wrapper {
-    @include flexCenter;
-    flex-direction: column;
+        @include flexCenter;
+        flex-direction: column;
 
-    .sns-title {
-        font-size: 15px;
-        color: var(--blue-300);
-        padding-bottom: 20px;
+        .sns-title {
+            font-size: 15px;
+            color: var(--blue-300);
+            padding-bottom: 20px;
+        }
+
+        .sns-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px; // 손가락과 아이콘 간격 조정
+        }
+
+        .sns-link {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            a {
+                .sns-img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            .sns-img{
+                width: 40px;
+                    height: 40px;
+            }
+        }
     }
-
-    .sns-row {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 12px; // 손가락과 아이콘 간격 조정
-    }
-
-    .sns-link {
-        display: flex;
-        gap: 18px;
-        justify-content: center;
-    }
-}
-
 }
