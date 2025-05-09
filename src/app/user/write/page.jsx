@@ -103,11 +103,11 @@ const Write = () => {
                             value={guestBookInfo}
                             onChange={(e) => setGuestBookInfo(e.target.value)}
                             onBlur={() => setContentTouched(true)}
-                            height="225px"
+                            height="145px"
                         />
 
                         {!isContentValid && contentTouched && (
-                            <p className="error">내용은 4~7자이내로 작성해 주세요.</p>
+                            <p className="error">내용은 4~70자이내로 작성해 주세요.</p>
                         )}
                         <p className="check">제출 이후 수정은 어렵기 때문에, 다시 한 번 확인해 주세요!</p>
                     </div>

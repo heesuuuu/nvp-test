@@ -2,8 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../scss/styles.scss";
-import { MainButton } from "@/components/common/Button";
+import { ButtonEnroll, MainButton, PageButton } from "@/components/common/Button";
 import api from "@/utils/axios";
+import Link from "next/link";
+import { GuestBookIcon } from "@/components/common/icon/AdminIcon";
 
 const Home = () => {
     const router = useRouter();
@@ -53,6 +55,33 @@ const Home = () => {
                     <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
                         테스트 시작하기
                     </MainButton>
+                    <Link href={"/user/guestbook/"}>
+                        <ButtonEnroll
+                            style={{ backgroundColor: "var(--blue-500)" }}
+                            fontSize="18px"
+                            className="page-btn blue-button main-guestbook"
+                        >
+                            방명록 보러가기
+                            <img
+                                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Animals%20and%20Nature/Fire.webp"
+                                alt="Fire"
+                                width="25"
+                                height="25"
+                            />
+                            {/* <Fire /> */}
+                        </ButtonEnroll>
+                    </Link>
+                    {/* <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
+                        방명록 보러가기
+                    </MainButton> */}
+                    {/* <Link href="/admin/guestbook">
+                        <PageButton
+                            text="방명록 관리"
+                            desc="방명록 삭제"
+                            Icon={GuestBookIcon}
+                            hoverColor="var(--white)"
+                        ></PageButton>
+                    </Link> */}
                 </div>
             </div>
         </div>
