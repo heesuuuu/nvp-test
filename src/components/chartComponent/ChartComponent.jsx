@@ -20,10 +20,9 @@ const ChartComponent = ({ data = [0, 0, 0, 0] }) => {
         },
         labels: ["공격(Left)", "수비(Libero)", "세터(Setter)", "센터(Center)"],
         dataLabels: {
-            formatter: function (val, opts) {
-                const seriesValue = opts.w.config.series[opts.seriesIndex];
-                return `${Math.round(seriesValue)}명`;
-            },
+            formatter: function (val) {
+        return `${Math.round(val)}%`;
+    },
         },
         legend: {
             position: "bottom",

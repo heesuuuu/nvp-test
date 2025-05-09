@@ -6,7 +6,6 @@ import ChartComponent from "@/components/chartComponent/ChartComponent";
 import api from "@/utils/axios";
 
 const stats = () => {
-    // const seriesData = [30, 40, 35, 50];
     const [seriesData, setSeriesData] = useState([0, 0, 0, 0]);
     const [total, setTotal] = useState(0);
 
