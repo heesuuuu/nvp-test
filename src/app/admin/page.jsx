@@ -1,6 +1,6 @@
 "use client";
 import { PageButton } from "@/components/common/Button";
-import { GuestBookIcon, GuestChart, TestQuestion, AdminLogout, AdminLogin } from "@/components/common/icon/AdminIcon";
+import { GuestBookIcon, GuestChart, TestQuestion, AdminLogout, AdminLogin, UserHome } from "@/components/common/icon/AdminIcon";
 import Navigate from "@/components/layout/navigate/Navigate";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -61,6 +61,14 @@ const admin = () => {
                             text="사용자 차트"
                             desc="포지션, 총 테스트 인원"
                             Icon={GuestChart}
+                            hoverColor="var(--white)"
+                        ></PageButton>
+                    </Link>
+                    <Link href="/">
+                        <PageButton
+                            text="테스트 메인화면"
+                            desc=""
+                            Icon={UserHome}
                             hoverColor="var(--white)"
                         ></PageButton>
                     </Link>
