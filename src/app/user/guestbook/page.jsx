@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 import { Search } from "@/components/common/Search";
@@ -13,6 +13,10 @@ import api from "@/utils/axios";
 const guestbook = () => {
     const [registItems, setRegistItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
+    const [cursor, setCursor] = useState(null);
+    const [hasNext, setHasNext] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
 
     const handleDeleteGuestbook = async (id, password) => {
         console.log("삭제 확인 id", id);
@@ -43,34 +47,80 @@ const guestbook = () => {
         }
     };
 
+    const fetchGuestbooks = async () => {
+        if (loading || !hasNext) return;
+        setLoading(true);
+
+        try {
+            const trimmedKeyword = searchValue.trim();
+            const isSearchMode = trimmedKeyword.length > 0;
+            const url = isSearchMode ? "/v1/guestbooks/search" : "/v1/guestbooks";
+
+            const res = await api.get(url, {
+                params: {
+                    ...(cursor !== null ? { cursor } : {}),
+                    limit: 10,
+                    ...(isSearchMode ? { keyword: trimmedKeyword } : {}),
+                },
+            });
+
+            const data = res.data?.data || {};
+            const guestBookResList = data.guestBookResList || [];
+            const nextCursor = data.nextCursor ?? null;
+            const nextPageExists = data.hasNext ?? false;
+            const total = data.total ?? 0;
+
+            setTotalCount(total);
+            setRegistItems((prev) => {
+                const combined = [...prev, ...guestBookResList];
+                const unique = Array.from(new Map(combined.map((item) => [item.guestBookId, item])).values());
+                return unique;
+            });
+            setCursor(nextCursor);
+            setHasNext(nextPageExists);
+        } catch (error) {
+            console.error("❌ 방명록 불러오기 실패:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchGuestbooks = async () => {
-            try {
-                const res = await api.get("v1/guestbooks");
-                console.log("Api 응답 확인:", res.data);
+        setRegistItems([]);
+        setCursor(null);
+        setHasNext(true);
+    }, [searchValue]);
 
-                setRegistItems(res.data.data);
-            } catch (error) {
-                console.log("방명록 불러오기 실패", error);
-            }
-        };
-        fetchGuestbooks();
-    }, []);
+    useEffect(() => {
+        if (cursor === null) {
+            fetchGuestbooks();
+        }
+    }, [cursor, searchValue]);
 
-    const filteredGuestbooks = Array.isArray(registItems)
-        ? registItems.filter(
-              (item) =>
-                  item.guestBookNickname?.toLowerCase().includes(searchValue.toLowerCase()) ||
-                  item.guestBookInfo?.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        : [];
+    const observer = React.useRef();
+    const lastItemRef = useCallback(
+        (node) => {
+            if (loading) return;
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasNext) {
+                    fetchGuestbooks();
+                }
+            });
+
+            if (node) observer.current.observe(node);
+        },
+        [loading, hasNext, searchValue]
+    );
+
     return (
         <>
             <div className="inner-wrapper">
                 <Navigate title="방명록" />
                 <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                 <div className="guestbook-title">
-                    <p>총 방명록 {registItems.length}개</p>
+                    <p>총 방명록 {totalCount}개</p>
                     <Link href={"/user/write"} className="write-button">
                         <WrithButton />
                     </Link>
@@ -78,8 +128,9 @@ const guestbook = () => {
             </div>
 
             <section className="guestbook-list-wrapper">
-                {filteredGuestbooks.length > 0 ? (
-                    filteredGuestbooks.map((item) => {
+                {registItems.length > 0 ? (
+                    registItems.map((item, index) => {
+                        const isLastItem = index == registItems.length - 1;
                         const d = new Date(item.createdAt);
                         d.setHours(d.getHours());
                         const now = Date.now();
@@ -96,6 +147,7 @@ const guestbook = () => {
                         return (
                             <GuestBookItem
                                 key={item.guestBookId}
+                                ref={isLastItem ? lastItemRef : null}
                                 id={item.guestBookId}
                                 name={item.guestBookNickname}
                                 content={item.guestBookInfo}
@@ -117,6 +169,7 @@ const guestbook = () => {
                         "
                     </div>
                 )}
+                {loading && <p className="loading">불러오는 중...</p>}
             </section>
         </>
     );

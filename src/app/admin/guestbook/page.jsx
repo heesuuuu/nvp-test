@@ -2,7 +2,7 @@
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { Search } from "@/components/common/Search";
 import Navigate from "@/components/layout/navigate/Navigate";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import "../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 import AdminGuestBookItem from "./guestbookitem/page";
@@ -12,33 +12,84 @@ import { ko } from "date-fns/locale";
 
 const AdminGuestbook = () => {
     const [registItems, setRegistItems] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    useEffect(() => {
-        const fetchGuestbooks = async () => {
-            try {
-                const res = await api.get("/v1/admins/guestbooks");
-                console.log("방명록 목록 ", res.data);
-                setRegistItems(res.data.data);
-            } catch (error) {
-                console.error("방명록 목록 불러오기 실패", error);
-            }
-        };
-        fetchGuestbooks();
-    }, []);
-
-    // search
-
-    const [selectedItems, setSelectedItems] = useState([]);
     const [searchValue, setSearchValue] = useState("");
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [cursor, setCursor] = useState(null);
+    const [hasNext, setHasNext] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
+
+    const fetchGuestbooks = async () => {
+        if (loading || !hasNext) return;
+        setLoading(true);
+        try {
+            const isSearchMode = searchValue.trim() !== "";
+            const url = isSearchMode ? "/v1/admins/search" : "/v1/admins/guestbooks";
+            const params = {
+                limit: 10,
+                ...(cursor !== null ? { cursor } : {}),
+                ...(isSearchMode ? { keyword: searchValue } : {}),
+            };
+
+            const res = await api.get(url, { params });
+            const data = res.data?.data || {};
+            const guestBookResList = data.guestBookResList || [];
+            const nextCursor = data.nextCursor ?? null;
+            const nextPageExists = data.hasNext ?? false;
+            const total = data.total ?? 0;
+
+            setTotalCount(total);
+            setRegistItems((prev) => {
+                const combined = [...prev, ...guestBookResList];
+                const unique = Array.from(new Map(combined.map((item) => [item.guestBookId, item])).values());
+                return unique;
+            });
+            setCursor(nextCursor);
+            setHasNext(nextPageExists);
+        } catch (error) {
+            console.error("방명록 목록 불러오기 실패", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        const fetchInitialGuestbooks = async () => {
+            setRegistItems([]);
+            setCursor(null);
+            setHasNext(true);
+            await fetchGuestbooks();
+        };
+
+        fetchInitialGuestbooks();
+    }, [searchValue]);
+
+    // useEffect(() => {
+    //     if (cursor === null) {
+    //         fetchGuestbooks();
+    //     }
+    // }, [cursor, searchValue]);
+
+    const observer = useRef();
+    const lastItemRef = useCallback(
+        (node) => {
+            if (loading || !hasNext) return;
+            if (observer.current) observer.current.disconnect();
+
+            observer.current = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && hasNext && !loading) {
+                    fetchGuestbooks();
+                }
+            });
+
+            if (node) observer.current.observe(node);
+        },
+        [loading, hasNext, searchValue]
+    );
+
 
     const toggleSelect = (id) => {
-        setSelectedItems(
-            (prev) =>
-                prev.includes(id)
-                    ? prev.filter((itemId) => itemId !== id) // 선택 해제
-                    : [...prev, id] // 선택 추가
-        );
+        setSelectedItems((prev) => (prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]));
     };
 
     const handleDelete = async () => {
@@ -50,7 +101,6 @@ const AdminGuestbook = () => {
                     data: { guestBookIds: selectedItems },
                 });
             }
-
             const updatedItems = registItems.filter((item) => !selectedItems.includes(item.guestBookId));
             setIsModalOpen(false);
             setRegistItems(updatedItems);
@@ -60,20 +110,14 @@ const AdminGuestbook = () => {
             alert("삭제 실패");
         }
     };
-    const filteredGuestbooks = Array.isArray(registItems)
-        ? registItems.filter(
-              (item) =>
-                  item.guestBookNickname?.toLowerCase().includes(searchValue.toLowerCase()) ||
-                  item.guestBookInfo?.toLowerCase().includes(searchValue.toLowerCase())
-          )
-        : [];
+
     return (
         <>
             <div className="inner-wrapper">
                 <Navigate title="방명록 관리" isAdmin />
                 <Search setSearchValue={setSearchValue} searchValue={searchValue} />
                 <div className="guestbook-title">
-                    <p>선택항목 {registItems.length}개</p>
+                    <p>전체 방명록 {totalCount}개</p>
                     <div className="delete-btn-wrapper">
                         <ButtonCancel
                             width="65px"
@@ -97,37 +141,36 @@ const AdminGuestbook = () => {
                     </div>
                 </div>
             </div>
+
             <section className="guestbook-list-wrapper">
                 {registItems.length > 0 ? (
-                    <>
-                        {filteredGuestbooks.map((item) => {
-                            const d = new Date(item.createdAt);
-                            d.setHours(d.getHours());
-                            const now = Date.now();
-                            const diff = (now - d) / 1000;
+                    registItems.map((item, index) => {
+                        const isLastItem = index === registItems.length - 1;
+                        const d = new Date(item.createdAt);
+                        d.setHours(d.getHours());
+                        const now = Date.now();
+                        const diff = (now - d) / 1000;
 
-                            let formattedDate = "";
-                            if (diff < 60) {
-                                formattedDate = "방금 전";
-                            } else if (diff < 60 * 60 * 24 * 3) {
-                                formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
-                            } else {
-                                formattedDate = format(d, "PPP EEE p", { locale: ko });
-                            }
-                            return (
-                                <AdminGuestBookItem
-                                    key={item.guestBookId}
-                                    id={item.guestBookId}
-                                    name={item.guestBookNickname}
-                                    content={item.guestBookInfo}
-                                    createdAt={formattedDate}
-                                    isRegist={true}
-                                    isSelected={selectedItems.includes(item.guestBookId)}
-                                    toggleSelect={() => toggleSelect(item.guestBookId)}
-                                />
-                            );
-                        })}
-                    </>
+                        let formattedDate = "";
+                        if (diff < 60) formattedDate = "방금 전";
+                        else if (diff < 60 * 60 * 24 * 3)
+                            formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
+                        else formattedDate = format(d, "PPP EEE p", { locale: ko });
+
+                        return (
+                            <AdminGuestBookItem
+                                key={item.guestBookId}
+                                id={item.guestBookId}
+                                name={item.guestBookNickname}
+                                content={item.guestBookInfo}
+                                createdAt={formattedDate}
+                                isRegist={true}
+                                isSelected={selectedItems.includes(item.guestBookId)}
+                                toggleSelect={() => toggleSelect(item.guestBookId)}
+                                ref={isLastItem ? lastItemRef : null}
+                            />
+                        );
+                    })
                 ) : (
                     <div className="none-guestbook">등록된 방명록이 없습니다.</div>
                 )}

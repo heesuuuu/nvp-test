@@ -26,6 +26,7 @@ export const StyledSearchInput = styled.input`
 `;
 
 export const Search = ({ searchValue, setSearchValue, handleSearch }) => {
+    
     const valueDelete = () => {
         setSearchValue("");
     };
@@ -34,7 +35,7 @@ export const Search = ({ searchValue, setSearchValue, handleSearch }) => {
     };
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            handleSearch();
+            // handleSearch();
         }
     }
     return (

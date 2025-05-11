@@ -4,7 +4,7 @@ import "../../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 import axios from "axios";
 
-const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
+const GuestBookItem = ({ id, name, content, createdAt, onDelete, ref }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [password, setPassword] = useState("");
 
@@ -26,7 +26,7 @@ const GuestBookItem = ({ id, name, content, createdAt, onDelete }) => {
 
     return (
         <>
-            <div className="guestbook-wrapper">
+            <div className="guestbook-wrapper" ref={ref}>
                 <div className="title-wrapper">
                     <div className="title-header">
                         <div className="name">{name}</div>

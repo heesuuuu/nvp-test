@@ -52,13 +52,19 @@ const Home = () => {
 
                 <div className="start-btn-wrapper">
                     <div>방문자 수: {total}명</div>
-                    <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
+                    <MainButton onClick={handleStart} style={{ fontSize: "16px" }} className="start-button">
                         테스트 시작하기
+                        <img
+                            src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Travel%20and%20Places/Rocket.webp"
+                            alt="Rocket"
+                            width="25"
+                            height="25"
+                        />
                     </MainButton>
                     <Link href={"/user/guestbook/"}>
                         <ButtonEnroll
                             style={{ backgroundColor: "var(--blue-500)" }}
-                            fontSize="18px"
+                            fontSize="15px"
                             className="page-btn blue-button main-guestbook"
                         >
                             방명록 보러가기
