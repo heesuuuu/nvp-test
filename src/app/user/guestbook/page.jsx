@@ -48,7 +48,7 @@ const guestbook = () => {
     };
 
     const fetchGuestbooks = async () => {
-        if (loading || !hasNext) return;
+        if (loading) return;
         setLoading(true);
 
         try {

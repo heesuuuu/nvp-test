@@ -21,7 +21,7 @@ const AdminGuestbook = () => {
     const [totalCount, setTotalCount] = useState(0);
 
     const fetchGuestbooks = async () => {
-        if (loading || !hasNext) return;
+        if (loading) return;
         setLoading(true);
         try {
             const isSearchMode = searchValue.trim() !== "";
@@ -54,21 +54,16 @@ const AdminGuestbook = () => {
         }
     };
     useEffect(() => {
-        const fetchInitialGuestbooks = async () => {
-            setRegistItems([]);
-            setCursor(null);
-            setHasNext(true);
-            await fetchGuestbooks();
-        };
-
-        fetchInitialGuestbooks();
+        setRegistItems([]);
+        setCursor(null);
+        setHasNext(true);
     }, [searchValue]);
 
-    // useEffect(() => {
-    //     if (cursor === null) {
-    //         fetchGuestbooks();
-    //     }
-    // }, [cursor, searchValue]);
+    useEffect(() => {
+        if (cursor === null && !loading) {
+            fetchGuestbooks();
+        }
+    }, [cursor, searchValue]);
 
     const observer = useRef();
     const lastItemRef = useCallback(
@@ -86,7 +81,6 @@ const AdminGuestbook = () => {
         },
         [loading, hasNext, searchValue]
     );
-
 
     const toggleSelect = (id) => {
         setSelectedItems((prev) => (prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]));
