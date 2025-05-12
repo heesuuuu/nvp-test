@@ -47,8 +47,8 @@ const guestbook = () => {
         }
     };
 
-    const fetchGuestbooks = async () => {
-        if (loading) return;
+    const fetchGuestbooks = async (isInitial = false) => {
+        if (!isInitial && (loading || !hasNext)) return;
         setLoading(true);
 
         try {
@@ -86,16 +86,21 @@ const guestbook = () => {
     };
 
     useEffect(() => {
-        setRegistItems([]);
-        setCursor(null);
-        setHasNext(true);
+        const fetchInitial = async () => {
+            setRegistItems([]);
+            setCursor(null);
+            setHasNext(true);
+            await fetchGuestbooks(true);
+        };
+
+        fetchInitial();
     }, [searchValue]);
 
     useEffect(() => {
-        if (cursor === null) {
+        if (cursor === null && !loading) {
             fetchGuestbooks();
         }
-    }, [cursor, searchValue]);
+    }, [cursor]);
 
     const observer = React.useRef();
     const lastItemRef = useCallback(
@@ -104,8 +109,8 @@ const guestbook = () => {
             if (observer.current) observer.current.disconnect();
 
             observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && hasNext) {
-                    fetchGuestbooks();
+                if (entries[0].isIntersecting && hasNext && !loading) {
+                    fetchGuestbooks(false);
                 }
             });
 
@@ -169,7 +174,7 @@ const guestbook = () => {
                         "
                     </div>
                 )}
-                {loading && <p className="loading">불러오는 중...</p>}
+                {loading && hasNext && <p className="loading">불러오는 중...</p>}
             </section>
         </>
     );

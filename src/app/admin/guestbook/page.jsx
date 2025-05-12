@@ -20,8 +20,8 @@ const AdminGuestbook = () => {
     const [loading, setLoading] = useState(false);
     const [totalCount, setTotalCount] = useState(0);
 
-    const fetchGuestbooks = async () => {
-        if (loading) return;
+    const fetchGuestbooks = async (isInitial = false) => {
+        if (!isInitial && (loading || !hasNext)) return;
         setLoading(true);
         try {
             const isSearchMode = searchValue.trim() !== "";
@@ -57,6 +57,7 @@ const AdminGuestbook = () => {
         setRegistItems([]);
         setCursor(null);
         setHasNext(true);
+        fetchGuestbooks(true);
     }, [searchValue]);
 
     useEffect(() => {
@@ -73,7 +74,7 @@ const AdminGuestbook = () => {
 
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && hasNext && !loading) {
-                    fetchGuestbooks();
+                    fetchGuestbooks(false);
                 }
             });
 
