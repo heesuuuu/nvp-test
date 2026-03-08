@@ -1,9 +1,10 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 import ChartComponent from "@/components/chartComponent/ChartComponent";
 import api from "@/utils/axios";
+import { resultsApi } from "@/lib/storage";
 
 const stats = () => {
     const [seriesData, setSeriesData] = useState([0, 0, 0, 0]);
@@ -12,25 +13,31 @@ const stats = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const res = await api.get("/v1/admins/results")
+                const res = await api.get("/v1/admins/results");
                 const resultData = res.data.data;
-
-                setTotal(resultData.total)
+                setTotal(resultData.total);
                 const positions = resultData.resultStatus;
-
                 setSeriesData([
                     positions.LEFT || 0,
                     positions.LIBERO || 0,
                     positions.SETTER || 0,
                     positions.CENTER || 0,
-                ])
-            } catch (error) {
-                console.error("포지션 통계 불러오기 실패",error);
-                
+                ]);
+            } catch {
+                // 서버 실패 시 → localStorage 집계 fallback
+                const { total, resultStatus } = resultsApi.getStats();
+                setTotal(total);
+                setSeriesData([
+                    resultStatus.LEFT || 0,
+                    resultStatus.LIBERO || 0,
+                    resultStatus.SETTER || 0,
+                    resultStatus.CENTER || 0,
+                ]);
             }
-        }
-        fetchStats()
-    },[])
+        };
+        fetchStats();
+    }, []);
+
     return (
         <div className="inner">
             <Navigate title="포지션 통계" isAdmin />

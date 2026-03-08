@@ -1,40 +1,40 @@
 "use client";
-import Navigate from "@/components/layout/navigate/Navigate";
-import React, { useEffect, useRef, useState } from "react";
-import "../../../../scss/styles.scss";
-import { InputEdit } from "@/components/common/InputField";
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
-import { useParams, useRouter } from "next/navigation";
+import { InputEdit } from "@/components/common/InputField";
+import Navigate from "@/components/layout/navigate/Navigate";
+import React, { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import api from "@/utils/axios";
+import { questionsApi } from "@/lib/storage";
 import useQuestionStore from "@/store/questionStore";
 
 const EditQuestionPage = () => {
     const router = useRouter();
     const questionData = useQuestionStore((state) => state.questionToEdit);
     const setQuestionToEdit = useQuestionStore((state) => state.setQuestionToEdit);
-   
-    const didRun = useRef(false)
+    const didRun = useRef(false);
 
-    const handleUpdate = async () => {
-        try {
-            await api.put("/v1/admins/questions", questionData); // body에 전체 질문+답변 포함
-            alert("수정이 완료되었습니다.");
-            router.push("/admin/question");
-        } catch (error) {
-            console.error("질문 수정 실패", error);
-        }
-    };
     useEffect(() => {
         if (!questionData && !didRun.current) {
-            didRun.current=true;
+            didRun.current = true;
             alert("잘못된 접근입니다.");
             router.push("/admin/question");
         }
     }, [questionData, router]);
+
     if (!questionData) return null;
 
-    const handleBack = () => {
-        router.push("/admin/question");
+    const handleUpdate = async () => {
+        try {
+            await api.put("/v1/admins/questions", questionData);
+            alert("수정이 완료되었습니다.");
+            router.push("/admin/question");
+        } catch {
+            // 서버 실패 시 → localStorage fallback
+            questionsApi.update(questionData);
+            alert("수정이 완료되었습니다.");
+            router.push("/admin/question");
+        }
     };
 
     return (
@@ -43,7 +43,6 @@ const EditQuestionPage = () => {
             <div className="test-edit-wrapper">
                 <div className="test-title">
                     <span>{questionData.questionId}</span>
-
                     <input
                         type="text"
                         value={questionData.questionInfo}
@@ -59,7 +58,7 @@ const EditQuestionPage = () => {
                                 value={answer.answer}
                                 onChange={(e) => {
                                     const updatedAnswers = [...questionData.answers];
-                                    updatedAnswers[idx].answer = e.target.value;
+                                    updatedAnswers[idx] = { ...updatedAnswers[idx], answer: e.target.value };
                                     setQuestionToEdit({ ...questionData, answers: updatedAnswers });
                                 }}
                                 height="46px"
@@ -70,7 +69,11 @@ const EditQuestionPage = () => {
                 </div>
             </div>
             <div className="test-button-wrapper">
-                <ButtonCancel onClick={handleBack} background="var(--gray-20)" color="var(--white)">
+                <ButtonCancel
+                    onClick={() => router.push("/admin/question")}
+                    background="var(--gray-20)"
+                    color="var(--white)"
+                >
                     취소
                 </ButtonCancel>
                 <ButtonEnroll onClick={handleUpdate}>수정하기</ButtonEnroll>
