@@ -1,33 +1,43 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../scss/styles.scss";
-import { ButtonEnroll, MainButton, PageButton } from "@/components/common/Button";
-import api from "@/utils/axios";
+import { ButtonEnroll, MainButton } from "@/components/common/Button";
 import Link from "next/link";
-import { GuestBookIcon } from "@/components/common/icon/AdminIcon";
+import api from "@/utils/axios";
+import { visitorsApi } from "@/lib/storage";
 
 const Home = () => {
     const router = useRouter();
     const [total, setTotal] = useState(0);
+    const didHit = useRef(false);
 
     const handleStart = () => {
         router.push("/user/test");
     };
 
     useEffect(() => {
-        api.post("/v1/visitors/hit")
+        if (didHit.current) return;
+        didHit.current = true;
 
+        api.post("/v1/visitors/hit")
             .then((res) => {
                 const totalCount = res?.data?.data;
                 if (res.data.success && typeof totalCount === "number") {
                     setTotal(totalCount);
-                } else {
-                    console.error("서버 에러", res.data);
                 }
             })
-            .catch((err) => {
-                console.error("방문자 수 조회 실패", err.response?.data || err);
+            .catch(() => {
+                // 서버 실패 시 → localStorage fallback
+                const alreadyVisited = sessionStorage.getItem("nvp_visited");
+                if (alreadyVisited) {
+                    const current = parseInt(localStorage.getItem("nvp_visitors") || "0");
+                    setTotal(current);
+                    return;
+                }
+                sessionStorage.setItem("nvp_visited", "true");
+                const count = visitorsApi.hit();
+                setTotal(count);
             });
     }, []);
 
@@ -49,7 +59,6 @@ const Home = () => {
                     <img src="/images/Position/LIBERO.png" alt="수비 캐릭터" />
                     <img src="/images/Position/LEFT.png" alt="공격 캐릭터" />
                 </div>
-
                 <div className="start-btn-wrapper">
                     <div>방문자 수: {total}명</div>
                     <MainButton onClick={handleStart} style={{ fontSize: "16px" }} className="start-button">
@@ -74,20 +83,8 @@ const Home = () => {
                                 width="25"
                                 height="25"
                             />
-                            {/* <Fire /> */}
                         </ButtonEnroll>
                     </Link>
-                    {/* <MainButton onClick={handleStart} style={{ fontSize: "20px" }} className="start-button">
-                        방명록 보러가기
-                    </MainButton> */}
-                    {/* <Link href="/admin/guestbook">
-                        <PageButton
-                            text="방명록 관리"
-                            desc="방명록 삭제"
-                            Icon={GuestBookIcon}
-                            hoverColor="var(--white)"
-                        ></PageButton>
-                    </Link> */}
                 </div>
             </div>
         </div>
