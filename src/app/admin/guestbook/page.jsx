@@ -2,13 +2,14 @@
 import { ButtonCancel, ButtonEnroll } from "@/components/common/Button";
 import { Search } from "@/components/common/Search";
 import Navigate from "@/components/layout/navigate/Navigate";
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "../../../scss/styles.scss";
 import Modal from "@/components/layout/modal/page";
 import AdminGuestBookItem from "./guestbookitem/page";
 import api from "@/utils/axios";
 import { format, formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
+import { guestbooksApi } from "@/lib/storage";
 
 const AdminGuestbook = () => {
     const [registItems, setRegistItems] = useState([]);
@@ -19,8 +20,9 @@ const AdminGuestbook = () => {
     const [hasNext, setHasNext] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalCount, setTotalCount] = useState(0);
+    const [isOffline, setIsOffline] = useState(false);
 
-    const fetchGuestbooks = async (isInitial = false) => {
+    const fetchGuestbooks = async (isInitial = false, currentCursor = null) => {
         if (!isInitial && (loading || !hasNext)) return;
         setLoading(true);
         try {
@@ -28,10 +30,9 @@ const AdminGuestbook = () => {
             const url = isSearchMode ? "/v1/admins/search" : "/v1/admins/guestbooks";
             const params = {
                 limit: 10,
-                ...(cursor !== null ? { cursor } : {}),
+                ...(currentCursor !== null ? { cursor: currentCursor } : {}),
                 ...(isSearchMode ? { keyword: searchValue } : {}),
             };
-
             const res = await api.get(url, { params });
             const data = res.data?.data || {};
             const guestBookResList = data.guestBookResList || [];
@@ -39,48 +40,49 @@ const AdminGuestbook = () => {
             const nextPageExists = data.hasNext ?? false;
             const total = data.total ?? 0;
 
+            setIsOffline(false);
             setTotalCount(total);
             setRegistItems((prev) => {
+                if (isInitial) return guestBookResList;
                 const combined = [...prev, ...guestBookResList];
-                const unique = Array.from(new Map(combined.map((item) => [item.guestBookId, item])).values());
-                return unique;
+                return Array.from(new Map(combined.map((item) => [item.guestBookId, item])).values());
             });
             setCursor(nextCursor);
             setHasNext(nextPageExists);
-        } catch (error) {
-            console.error("방명록 목록 불러오기 실패", error);
+        } catch {
+            // 서버 실패 시 → localStorage fallback
+            setIsOffline(true);
+            const data = guestbooksApi.getPage({ cursor: currentCursor, limit: 10, keyword: searchValue });
+            setTotalCount(data.total);
+            setRegistItems((prev) => {
+                if (isInitial) return data.guestBookResList;
+                const combined = [...prev, ...data.guestBookResList];
+                return Array.from(new Map(combined.map((item) => [item.guestBookId, item])).values());
+            });
+            setCursor(data.nextCursor);
+            setHasNext(data.hasNext);
         } finally {
             setLoading(false);
         }
     };
-    useEffect(() => {
-        setRegistItems([]);
-        setCursor(null);
-        setHasNext(true);
-        fetchGuestbooks(true);
-    }, [searchValue]);
 
     useEffect(() => {
-        if (cursor === null && !loading) {
-            fetchGuestbooks();
-        }
-    }, [cursor, searchValue]);
+        setCursor(null);
+        setHasNext(true);
+        fetchGuestbooks(true, null);
+    }, [searchValue]);
 
     const observer = useRef();
     const lastItemRef = useCallback(
         (node) => {
             if (loading || !hasNext) return;
             if (observer.current) observer.current.disconnect();
-
             observer.current = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting && hasNext && !loading) {
-                    fetchGuestbooks(false);
-                }
+                if (entries[0].isIntersecting && hasNext && !loading) fetchGuestbooks(false, cursor);
             });
-
             if (node) observer.current.observe(node);
         },
-        [loading, hasNext, searchValue]
+        [loading, hasNext, cursor]
     );
 
     const toggleSelect = (id) => {
@@ -88,21 +90,35 @@ const AdminGuestbook = () => {
     };
 
     const handleDelete = async () => {
+        if (isOffline) {
+            // 서버 없을 때 → localStorage fallback
+            if (selectedItems.length === 1) guestbooksApi.delete(selectedItems[0], null);
+            else guestbooksApi.deleteMany(selectedItems);
+            setRegistItems((prev) => prev.filter((item) => !selectedItems.includes(item.guestBookId)));
+            setTotalCount((prev) => prev - selectedItems.length);
+            setIsModalOpen(false);
+            setSelectedItems([]);
+            return;
+        }
         try {
             if (selectedItems.length === 1) {
                 await api.delete(`/v1/admins/guestbooks/${selectedItems[0]}`);
             } else {
-                await api.delete("/v1/admins/guestbooks", {
-                    data: { guestBookIds: selectedItems },
-                });
+                await api.delete("/v1/admins/guestbooks", { data: { guestBookIds: selectedItems } });
             }
-            const updatedItems = registItems.filter((item) => !selectedItems.includes(item.guestBookId));
+            setRegistItems((prev) => prev.filter((item) => !selectedItems.includes(item.guestBookId)));
+            setTotalCount((prev) => prev - selectedItems.length);
             setIsModalOpen(false);
-            setRegistItems(updatedItems);
             setSelectedItems([]);
-        } catch (error) {
-            console.error("방명록 삭제 실패", error);
-            alert("삭제 실패");
+        } catch {
+            // 서버 실패 시 → localStorage fallback
+            if (selectedItems.length === 1) guestbooksApi.delete(selectedItems[0], null);
+            else guestbooksApi.deleteMany(selectedItems);
+            setRegistItems((prev) => prev.filter((item) => !selectedItems.includes(item.guestBookId)));
+            setTotalCount((prev) => prev - selectedItems.length);
+            setIsModalOpen(false);
+            setSelectedItems([]);
+            alert("삭제 완료 (오프라인 모드)");
         }
     };
 
@@ -136,22 +152,17 @@ const AdminGuestbook = () => {
                     </div>
                 </div>
             </div>
-
             <section className="guestbook-list-wrapper">
                 {registItems.length > 0 ? (
                     registItems.map((item, index) => {
                         const isLastItem = index === registItems.length - 1;
                         const d = new Date(item.createdAt);
-                        d.setHours(d.getHours());
-                        const now = Date.now();
-                        const diff = (now - d) / 1000;
-
+                        const diff = (Date.now() - d) / 1000;
                         let formattedDate = "";
                         if (diff < 60) formattedDate = "방금 전";
                         else if (diff < 60 * 60 * 24 * 3)
                             formattedDate = formatDistanceToNow(d, { addSuffix: true, locale: ko });
                         else formattedDate = format(d, "PPP EEE p", { locale: ko });
-
                         return (
                             <AdminGuestBookItem
                                 key={item.guestBookId}
@@ -170,7 +181,6 @@ const AdminGuestbook = () => {
                     <div className="none-guestbook">등록된 방명록이 없습니다.</div>
                 )}
             </section>
-
             <Modal
                 className="delete-modal"
                 isOpen={isModalOpen}

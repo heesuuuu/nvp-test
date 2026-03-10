@@ -1,37 +1,37 @@
 {
-  "name": "nvp-test",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "build:sass": "sass src/scss/styles.scss src/assets/css/output/styles.css --source-map"
-  },
-  "dependencies": {
-    "@emotion/react": "11.11.1",
-    "@emotion/styled": "11.11.0",
-    "@mui/icons-material": "5.15.17",
-    "@mui/material": "5.15.17",
-    "apexcharts": "^4.7.0",
-    "axios": "^1.8.4",
-    "date-fns": "^4.1.0",
-    "next": "15.3.8",
-    "next-swagger-doc": "^0.4.1",
-    "react": "^19.0.0",
-    "react-apexcharts": "^1.7.0",
-    "react-dom": "^19.0.0",
-    "sass": "^1.87.0",
-    "styled-components": "^6.1.17",
-    "zustand": "^5.0.4"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "babel-loader": "^10.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.1",
-    "tailwindcss": "^4"
-  }
+    "name": "nvp-test",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev --turbopack",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "build:sass": "sass src/scss/styles.scss src/assets/css/output/styles.css --source-map"
+    },
+    "dependencies": {
+        "@emotion/react": "11.11.1",
+        "@emotion/styled": "11.11.0",
+        "@mui/icons-material": "5.15.17",
+        "@mui/material": "5.15.17",
+        "apexcharts": "^4.7.0",
+        "axios": "^1.8.4",
+        "date-fns": "^4.1.0",
+        "next": "^16.1.6",
+        "next-swagger-doc": "^0.4.1",
+        "react": "^19.0.0",
+        "react-apexcharts": "^1.7.0",
+        "react-dom": "^19.0.0",
+        "sass": "^1.87.0",
+        "styled-components": "^6.1.17",
+        "zustand": "^5.0.4"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@tailwindcss/postcss": "^4",
+        "babel-loader": "^10.0.0",
+        "eslint": "^9",
+        "eslint-config-next": "15.3.1",
+        "tailwindcss": "^4"
+    }
 }

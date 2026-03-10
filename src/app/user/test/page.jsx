@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import "../../../scss/styles.scss";
 import Navigate from "@/components/layout/navigate/Navigate";
 import { ButtonDafult } from "@/components/common/Button";
-
 import { Button, MobileStepper, useTheme } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import api from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import { questionsApi, resultsApi } from "@/lib/storage";
+import { buildResultData } from "@/lib/positionData";
+
+const shuffleArray = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 const TestMain = () => {
     const router = useRouter();
@@ -18,92 +21,82 @@ const TestMain = () => {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [selectedAnswers, setSelectedAnswers] = useState([]);
 
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const res = await api.get("/v1/questions");
+                const shuffled = shuffleArray(res.data.data).map((q) => ({
+                    ...q,
+                    answers: shuffleArray(q.answers),
+                }));
+                setQuestions(shuffled);
+            } catch {
+                // 서버 실패 시 → localStorage(mockData) fallback
+                const raw = questionsApi.getAll();
+                setQuestions(shuffleArray(raw).map((q) => ({ ...q, answers: shuffleArray(q.answers) })));
+            }
+        };
+        fetchQuestions();
+    }, []);
+
+    const calcPosition = (finalAnswerIds, qs) => {
+        const position = {};
+        finalAnswerIds.forEach((id) => {
+            for (const q of qs) {
+                const matched = q.answers.find((a) => a.answerId === id);
+                if (matched) {
+                    position[matched.result] = (position[matched.result] || 0) + 1;
+                    break;
+                }
+            }
+        });
+        return position;
+    };
+
     const handleNextStep = (answerIdx) => {
         const selected = questions[activeStep].answers[answerIdx];
-
         setSelectedAnswer(answerIdx);
 
         const newAnswers = [...answers];
         newAnswers[activeStep] = selected.answerId;
         setAnswers(newAnswers);
 
-        // 선택된 인덱스 저장
         const updatedSelected = [...selectedAnswers];
         updatedSelected[activeStep] = answerIdx;
         setSelectedAnswers(updatedSelected);
 
-        setTimeout(() => {
+        setTimeout(async () => {
             setSelectedAnswer(null);
 
             if (activeStep === questions.length - 1) {
-                const finalAnswerIds = [...answers, selected.answerId];
-                // position 객체
-                const position = {};
-                finalAnswerIds.forEach((id) => {
-                    for (const q of questions) {
-                        const matched = q.answers.find((a) => a.answerId === id);
-                        if (matched) {
-                            const key = matched.result;
+                const position = calcPosition(newAnswers, questions);
 
-                            position[key] = (position[key] || 0) + 1;
-                            break;
-                        }
-                    }
-                });
-                console.log("최종 선택된 answerId 배열:", finalAnswerIds);
-                console.log("계산된 포지션 객체:", position);
-                api.post("/v1/results/my", { position }).then((res) => {
-                    console.log("서버 응답 데이터:", res.data);
+                try {
+                    // 서버에 결과 저장 시도
+                    const res = await api.post("/v1/results/my", { position });
                     const result = res.data.data;
                     sessionStorage.setItem("latestResult", JSON.stringify(result));
                     router.push(`/user/test/result?resultId=${result.resultId}`);
-                });
+                } catch {
+                    // 서버 실패 시 → localStorage fallback
+                    const result = resultsApi.save(position, buildResultData);
+                    sessionStorage.setItem("latestResult", JSON.stringify(result));
+                    router.push(`/user/test/result?resultId=${result.resultId}`);
+                }
             } else {
                 setActiveStep((prev) => prev + 1);
             }
         }, 200);
     };
 
-    const handleBack = () => {
-        setActiveStep((prev) => prev - 1);
-    };
-    // 렌더링 시 현재 질문에 대해 선택한 답변이 있는 경우 표시
-    const currentSelectedIndex = selectedAnswers[activeStep] ?? null;
-
+    const handleBack = () => setActiveStep((prev) => prev - 1);
     const currentQuestion = questions[activeStep];
-
-    //답변 랜덤으로
-    const shuffleArray = (array) => {
-        return [...array].sort(() => Math.random() - 0.5);
-    };
-
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const res = await api.get("/v1/questions");
-
-                const shuffledQuestions = shuffleArray( res.data.data).map((q) => ({
-                    ...q,
-                    answers: shuffleArray(q.answers),
-                }));
-                setQuestions(shuffledQuestions);
-                console.log("질문 리스트", shuffledQuestions);
-            } catch (error) {
-                console.error("가져오기 실패", error);
-            }
-        };
-        fetchQuestions();
-    }, []);
     if (!currentQuestion) return null;
 
     return (
         <div className="inner">
             <Navigate title="MBTI는 끝났다. 이제는 VBPI" step={`${activeStep + 1}/${questions.length}`} />
-
-            {/* 질문 */}
             <div className="question-title">{currentQuestion.questionInfo}</div>
-
-            {/* 답변 */}
             <div className="answer-wrapper">
                 {currentQuestion.answers.map((a, idx) => (
                     <ButtonDafult
@@ -124,22 +117,13 @@ const TestMain = () => {
                     </ButtonDafult>
                 ))}
             </div>
-
-            {/* Stepper */}
             <MobileStepper
                 sx={{
                     maxWidth: 500,
-                    // flexGrow: 1,
                     padding: 0,
                     backgroundColor: "transparent",
-                    "& .MuiLinearProgress-root": {
-                        height: 4,
-                        // borderRadius: 4,
-                        backgroundColor: "var(--gray-20)", // 배경 선 색상
-                    },
-                    "& .MuiLinearProgress-bar": {
-                        backgroundColor: "var(--primary)", // 진행된 선 색상
-                    },
+                    "& .MuiLinearProgress-root": { height: 4, backgroundColor: "var(--gray-20)" },
+                    "& .MuiLinearProgress-bar": { backgroundColor: "var(--primary)" },
                 }}
                 variant="progress"
                 steps={questions.length}
@@ -152,15 +136,10 @@ const TestMain = () => {
                         disabled={selectedAnswers[activeStep] == null}
                         sx={{
                             color: "var(--primary)",
-
-                            "&:hover": {
-                                backgroundColor: "rgb(97 173 196 / 22%)",
-                                color: "var(--primary)",
-                            },
+                            "&:hover": { backgroundColor: "rgb(97 173 196 / 22%)", color: "var(--primary)" },
                         }}
                     >
-                        Next
-                        {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                        Next {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                     </Button>
                 }
                 backButton={
@@ -170,17 +149,11 @@ const TestMain = () => {
                         disabled={activeStep === 0}
                         sx={{
                             color: "var(--primary)",
-                            "&:hover": {
-                                backgroundColor: "rgb(97 173 196 / 22%)",
-                                color: "var(--primary)",
-                            },
-                            "&disables": {
-                                color: "rgba(0, 0, 0, 0.26)",
-                            },
+                            "&:hover": { backgroundColor: "rgb(97 173 196 / 22%)", color: "var(--primary)" },
+                            "&disabled": { color: "rgba(0, 0, 0, 0.26)" },
                         }}
                     >
-                        {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                        Back
+                        {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />} Back
                     </Button>
                 }
             />
